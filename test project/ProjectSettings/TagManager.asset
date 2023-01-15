@@ -8,13 +8,13 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Item
+  - Player
   - Water
   - UI
   - Wall
   - Vault
-  - Slow
-  - 
+  - Floor
+  - Item
   - 
   - 
   - 

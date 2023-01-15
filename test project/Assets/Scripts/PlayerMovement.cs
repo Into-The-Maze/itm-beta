@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEditor;
+using UnityEngine.EventSystems;
+using Unity.VisualScripting;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public float maxStamina = 50f;
     float stamina;
     string movementType = "walking";
+    float moveDirection = 0;
 
     public LayerMask wallMask;
     //public LayerMask playerMask;
@@ -27,25 +31,55 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         MovementType(ref movementType, ref stamina, speed, maxStamina);
+        (bool, int) movement = GetRotation();
+        Movement(movement.Item1, movement.Item2, speed);
     }
 
-    static void Movement(ref float speed)
-    {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        float moveDirection = horizontal * 90;
-        if (vertical == 1)
-        {
-            moveDirection = moveDirection / 2;
-        }
-        else if (vertical == -1)
-        {
-            moveDirection = 180;
-            moveDirection -= (horizontal * 45);
-        }
-        //Debug.Log($"{moveDirection}");
 
-        
+    //gets rotation of player and if they are moving
+    static (bool isMoving, int degreesFromNorth) GetRotation()
+    {
+        int horizontal = Convert.ToInt16(Input.GetAxisRaw("Horizontal"));
+        int vertical = Convert.ToInt16(Input.GetAxisRaw("Vertical"));
+        (int, int) hv = (horizontal, vertical);
+        switch (hv)
+        {
+            case (0, 1):
+                return (true, 0);
+            case (1, 1):
+                return (true, 45);
+            case (1, 0):
+                return (true, 90);
+            case (1, -1):
+                return (true, 135);
+            case (0, -1):
+                return (true, 180);
+            case (-1, -1):
+                return (true, 225);
+            case (-1, 0):
+                return (true, 270);
+            case (-1, 1):
+                return (true, 315);
+            default:
+                return (false, 0);
+        }
+    }
+
+    //moves the player with wasd at the correct speeds
+    static void Movement(bool isMoving, int moveDirection, float speed)
+    {
+        if (isMoving)
+        {
+            //add speed to current direction up to max speed
+            Vector2 moveVector;
+            moveVector.x = Mathf.Cos(moveDirection)*speed; 
+            moveVector.y = Mathf.Sin(moveDirection)*speed;
+            
+        }
+        else
+        {
+            //slow down to stop when not moving
+        }
     }
 
     //changes movement speed and stamina depending on wether play is running, sneaking or walking

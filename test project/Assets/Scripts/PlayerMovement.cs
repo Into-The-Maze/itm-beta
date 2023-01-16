@@ -9,7 +9,9 @@ using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f;
+    public Rigidbody2D playerBody;
+
+    public float speed = 10f;
     public float weight = 10f;
     public float maxSpeed = 10f;
     public float maxStamina = 50f;
@@ -31,13 +33,13 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         MovementType(ref movementType, ref stamina, speed, maxStamina);
-        (bool, int) movement = GetRotation();
-        Movement(movement.Item1, movement.Item2, speed);
+        (bool, float) movement = GetRotation();
+        Movement(movement.Item1, movement.Item2, speed, maxSpeed, playerBody);
     }
 
 
     //gets rotation of player and if they are moving
-    static (bool isMoving, int degreesFromNorth) GetRotation()
+    static (bool, float) GetRotation()
     {
         int horizontal = Convert.ToInt16(Input.GetAxisRaw("Horizontal"));
         int vertical = Convert.ToInt16(Input.GetAxisRaw("Vertical"));
@@ -47,37 +49,42 @@ public class PlayerMovement : MonoBehaviour
             case (0, 1):
                 return (true, 0);
             case (1, 1):
-                return (true, 45);
+                return (true, Convert.ToSingle(0.25 * Math.PI));
             case (1, 0):
-                return (true, 90);
+                return (true, Convert.ToSingle(0.5 * Math.PI));
             case (1, -1):
-                return (true, 135);
+                return (true, Convert.ToSingle(0.75 * Math.PI));
             case (0, -1):
-                return (true, 180);
+                return (true, Convert.ToSingle(Math.PI));
             case (-1, -1):
-                return (true, 225);
+                return (true, Convert.ToSingle(1.25 * Math.PI));
             case (-1, 0):
-                return (true, 270);
+                return (true, Convert.ToSingle(1.5 * Math.PI));
             case (-1, 1):
-                return (true, 315);
+                return (true, Convert.ToSingle(1.75 * Math.PI));
             default:
                 return (false, 0);
         }
     }
 
     //moves the player with wasd at the correct speeds
-    static void Movement(bool isMoving, int moveDirection, float speed)
+    static void Movement(bool isMoving, float radiansFromNorth, float speed, float maxSpeed, Rigidbody2D playerBody)
     {
         if (isMoving)
         {
-            //add speed to current direction up to max speed
             Vector2 moveVector;
-            moveVector.x = Mathf.Cos(moveDirection)*speed; 
-            moveVector.y = Mathf.Sin(moveDirection)*speed;
-            
+            moveVector.y = Mathf.Cos(radiansFromNorth); 
+            moveVector.x = Mathf.Sin(radiansFromNorth);
+            Debug.Log(radiansFromNorth);
+            Debug.Log(moveVector);
+            Debug.Log(playerBody.velocity);
+            playerBody.velocity += moveVector * Time.deltaTime * speed;
+            // clamp to max speed
         }
         else
         {
+            playerBody.velocity = Vector2.zero;
+
             //slow down to stop when not moving
         }
     }

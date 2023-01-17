@@ -429,8 +429,8 @@ MonoBehaviour:
   playerBody: {fileID: 622508040}
   currentSpeed: 0
   weight: 10
-  maxSpeed: 100
-  acceleration: 0.5
+  maxSpeed: 1000
+  acceleration: 100
   maxStamina: 50
   stamina: 0
   movementType: 0

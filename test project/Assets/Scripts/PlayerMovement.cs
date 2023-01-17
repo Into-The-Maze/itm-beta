@@ -11,9 +11,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D playerBody;
 
-    public float speed = 10f;
+    public float currentSpeed = 0f;
     public float weight = 10f;
     public float maxSpeed = 10f;
+    public float acceleration = 5f;
     public float maxStamina = 50f;
     float stamina;
     string movementType = "walking";
@@ -32,9 +33,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        MovementType(ref movementType, ref stamina, speed, maxStamina);
+        MovementType(ref movementType, ref stamina, ref maxSpeed, maxStamina);
         (bool, float) movement = GetRotation();
-        Movement(movement.Item1, movement.Item2, speed, maxSpeed, playerBody);
+        Movement(movement.Item1, movement.Item2, ref currentSpeed, maxSpeed, playerBody, acceleration);
     }
 
 
@@ -68,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //moves the player with wasd at the correct speeds
-    static void Movement(bool isMoving, float radiansFromNorth, float speed, float maxSpeed, Rigidbody2D playerBody)
+    static void Movement(bool isMoving, float radiansFromNorth, ref float currentSpeed, float maxSpeed, Rigidbody2D playerBody, float acceleration)
     {
         if (isMoving)
         {
@@ -78,19 +79,17 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log(radiansFromNorth);
             Debug.Log(moveVector);
             Debug.Log(playerBody.velocity);
-            playerBody.velocity += moveVector * Time.deltaTime * speed;
-            // clamp to max speed
+            currentSpeed = Mathf.Clamp(currentSpeed + acceleration, 0, maxSpeed);
         }
         else
         {
-            playerBody.velocity = Vector2.zero;
-
-            //slow down to stop when not moving
+            currentSpeed = Mathf.Clamp(currentSpeed - acceleration, 0, maxSpeed);
         }
+        playerBody.velocity = moveVector * Time.deltaTime * currentSpeed;
     }
 
     //changes movement speed and stamina depending on wether play is running, sneaking or walking
-    static void MovementType(ref string movementType, ref float stamina, float speed, float maxStamina)
+    static void MovementType(ref string movementType, ref float stamina, ref float maxSpeed, float maxStamina)
     {
         if (Input.GetKeyDown("left shift") && stamina > 10)
         {
@@ -109,19 +108,19 @@ public class PlayerMovement : MonoBehaviour
 
         if (movementType == "running")
         {
-            speed = 10f;
+            maxSpeed = 10f;
             stamina = Mathf.Clamp(stamina - (10 * Time.deltaTime), 0, maxStamina + 1);
             //Debug.Log($"running {stamina}");
         }
         else if (movementType == "sneaking")
         {
-            speed = 3f;
+            maxSpeed = 3f;
             stamina = Mathf.Clamp(stamina + (10 * Time.deltaTime), 0, maxStamina + 1);
             //Debug.Log($"sneaking {stamina}");
         }
         else
         {
-            speed = 6f;
+            maxSpeed = 6f;
             stamina = Mathf.Clamp(stamina + (5 * Time.deltaTime), 0, maxStamina + 1);
             //Debug.Log($"walking {stamina}");
         }

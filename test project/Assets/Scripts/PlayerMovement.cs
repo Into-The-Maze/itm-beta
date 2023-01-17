@@ -25,14 +25,12 @@ public class PlayerMovement : MonoBehaviour
     //public LayerMask itemMask;
     //public LayerMask vaultMask;
 
-    void Start()
-    {
+    void Start() {
         maxStamina--;
         stamina = maxStamina;
     }
 
-    void Update()
-    {
+    void Update() {
         MovementType(ref movementType, ref stamina, ref maxSpeed, maxStamina);
         (bool, float) movement = GetRotation();
         Movement(movement.Item1, movement.Item2, ref currentSpeed, maxSpeed, playerBody, acceleration);
@@ -40,8 +38,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     //gets rotation of player and if they are moving
-    static (bool, float) GetRotation()
-    {
+    static (bool, float) GetRotation() {
         int horizontal = Convert.ToInt16(Input.GetAxisRaw("Horizontal"));
         int vertical = Convert.ToInt16(Input.GetAxisRaw("Vertical"));
         (int, int) hv = (horizontal, vertical);
@@ -69,10 +66,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //moves the player with wasd at the correct speeds
-    static void Movement(bool isMoving, float radiansFromNorth, ref float currentSpeed, float maxSpeed, Rigidbody2D playerBody, float acceleration)
-    {
-        if (isMoving)
-        {
+    static void Movement(bool isMoving, float radiansFromNorth, ref float currentSpeed, float maxSpeed, Rigidbody2D playerBody, float acceleration) {
+        if (isMoving) {
             Vector2 moveVector;
             moveVector.y = Mathf.Cos(radiansFromNorth); 
             moveVector.x = Mathf.Sin(radiansFromNorth);
@@ -81,51 +76,44 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log(playerBody.velocity);
             currentSpeed = Mathf.Clamp(currentSpeed + acceleration, 0, maxSpeed);
         }
-        else
-        {
+        else {
             currentSpeed = Mathf.Clamp(currentSpeed - acceleration, 0, maxSpeed);
         }
         playerBody.velocity = moveVector * Time.deltaTime * currentSpeed;
     }
 
     //changes movement speed and stamina depending on wether play is running, sneaking or walking
-    static void MovementType(ref string movementType, ref float stamina, ref float maxSpeed, float maxStamina)
-    {
-        if (Input.GetKeyDown("left shift") && stamina > 10)
-        {
-            movementType = MovementType.Walking;
+    static void MovementType(ref string movementType, ref float stamina, ref float maxSpeed, float maxStamina) {
+        if (Input.GetKeyDown("left shift") && stamina > 10) {
+            movementType = MovementType.Running;
         }
-        else if (Input.GetKeyDown("left ctrl"))
-        {
+        else if (Input.GetKeyDown("left ctrl")) {
             movementType = MovementType.Sneaking;
         }
         else if ((Input.GetKeyUp("left ctrl") && movementType == MovementType.Sneaking) || 
             (Input.GetKeyUp("left shift") && movementType == MovementType.Running) ||
-            stamina == 0)
-        {
+            stamina == 0) {
             movementType = MovementType.Walking;
         }   
 
-        if (movementType == MovementType.Running)
-        {
+        if (movementType == MovementType.Running) {
             maxSpeed = 10f;
             stamina = Mathf.Clamp(stamina - (10 * Time.deltaTime), 0, maxStamina + 1);
             //Debug.Log($"running {stamina}");
         }
-        else if (movementType == MovementType.Sneaking)
-        {
+        else if (movementType == MovementType.Sneaking) {
             maxSpeed = 3f;
             stamina = Mathf.Clamp(stamina + (10 * Time.deltaTime), 0, maxStamina + 1);
             //Debug.Log($"sneaking {stamina}");
         }
-        else
-        {
+        else {
             maxSpeed = 6f;
             stamina = Mathf.Clamp(stamina + (5 * Time.deltaTime), 0, maxStamina + 1);
             //Debug.Log($"walking {stamina}");
         }
     }
-    
+
+    //enum for movement type
     private enum MovementType {
         Walking,
         Running,

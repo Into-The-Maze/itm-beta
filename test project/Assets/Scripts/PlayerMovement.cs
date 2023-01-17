@@ -7,18 +7,20 @@ using UnityEngine.EventSystems;
 using Unity.VisualScripting;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
-public class PlayerMovement : MonoBehaviour
-{
-    public Rigidbody2D playerBody;
+public class PlayerMovement : MonoBehaviour {
 
-    public float currentSpeed = 0f;
-    public float weight = 10f;
-    public float maxSpeed = 1000f;
-    public float acceleration = 100f;
-    public float maxStamina = 50f;
-    public float stamina;
-    public MovementType movementType = MovementType.Walking;
-    public float moveDirection = 0;
+    private Rigidbody2D playerBody;
+
+    float currentSpeed = 0f;
+    //float weight = 10f;
+    float maxSpeed = 3f;
+    float acceleration = 0.002f;
+    static float maxStamina = 50f;
+    float stamina = maxStamina;
+    float moveDirection = 0;
+    float speedModifier = 0f;
+
+    MovementType movementType = MovementType.Walking;
 
     public LayerMask wallMask;
     //public LayerMask playerMask;
@@ -26,19 +28,19 @@ public class PlayerMovement : MonoBehaviour
     //public LayerMask vaultMask;
 
     void Start() {
-        maxStamina--;
-        stamina = maxStamina;
+        playerBody = GetComponent<Rigidbody2D>();
     }
 
     void Update() {
-        ChangeMovementType(ref movementType, ref stamina, ref maxSpeed, maxStamina);
+        ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
         (bool, float) movement = GetRotation();
-        Movement(movement.Item1, movement.Item2, ref currentSpeed, maxSpeed, playerBody, acceleration);
+        Movement(speedModifier, movement.Item1, movement.Item2, ref currentSpeed, maxSpeed, playerBody, acceleration);
     }
 
 
-    //gets rotation of player and if they are moving
     static (bool, float) GetRotation() {
+        //gets rotation of player and if they are moving
+
         int horizontal = Convert.ToInt16(Input.GetAxisRaw("Horizontal"));
         int vertical = Convert.ToInt16(Input.GetAxisRaw("Vertical"));
         (int, int) hv = (horizontal, vertical);
@@ -61,28 +63,40 @@ public class PlayerMovement : MonoBehaviour
             case (-1, 1):
                 return (true, Convert.ToSingle(1.75 * Math.PI));
             default:
-                return (false, 0);
+                return (false, Convert.ToSingle(Math.PI));
         }
     }
 
-    //moves the player with wasd at the correct speeds
-    static void Movement(bool isMoving, float radiansFromNorth, ref float currentSpeed, float maxSpeed, Rigidbody2D playerBody, float acceleration) {
+    static void Movement(float speedModifier, bool isMoving, float radiansFromNorth, ref float currentSpeed, float maxSpeed, Rigidbody2D playerBody, float acceleration) {
+        //moves the player with wasd at the correct speeds
+
         Vector2 moveVector;
         moveVector.y = Mathf.Cos(radiansFromNorth);
         moveVector.x = Mathf.Sin(radiansFromNorth);
+        Vector2 lastVector;
+        lastVector.x = 0f;
+        lastVector.y = 0f;
+
         if (isMoving) {
-            //Debug.Log($"{radiansFromNorth}, {moveVector}, {playerBody.velocity}");
-            currentSpeed = Mathf.Clamp((currentSpeed + acceleration), 0, maxSpeed - 1);
+            currentSpeed = Mathf.Clamp((currentSpeed + acceleration), 0, ((maxSpeed - 1) * speedModifier));
+            playerBody.velocity = moveVector * currentSpeed * Time.deltaTime * 1000;
+            lastVector = moveVector;
+            Debug.Log($"{playerBody.velocity.magnitude}");
         }
         else {
-            currentSpeed = Mathf.Clamp((currentSpeed - acceleration), 0, maxSpeed - 1);
+            currentSpeed = Mathf.Clamp((currentSpeed - acceleration), 0, ((maxSpeed - 1) * speedModifier));
+            playerBody.velocity = lastVector * currentSpeed * Time.deltaTime * 1000;
         }
-        playerBody.velocity = moveVector * currentSpeed * Time.deltaTime * 1000;
-        //Debug.Log($"{moveVector}, {playerBody.velocity}, {currentSpeed}, {playerBody.velocity.magnitude}, {acceleration}");
+        //Debug.Log($"moveVector:{moveVector}, " +
+        //    $"velocity:{playerBody.velocity}, " +
+        //    $"currentSpeed:{currentSpeed}, " +
+        //    $"velocity.magnitude:{playerBody.velocity.magnitude}, " +
+        //    $"acceleration:{acceleration}");
     }
 
-    //changes movement speed and stamina depending on wether play is running, sneaking or walking
-    static void ChangeMovementType(ref MovementType movementType, ref float stamina, ref float maxSpeed, float maxStamina) {
+    static void ChangeMovementType(ref MovementType movementType, ref float stamina, ref float speedModifier, float maxStamina) {
+        //changes movement speed and stamina depending on wether play is running, sneaking or walking
+
         if (Input.GetKeyDown("left shift") && stamina > 10) {
             movementType = MovementType.Running;
         }
@@ -96,24 +110,24 @@ public class PlayerMovement : MonoBehaviour
         }   
 
         if (movementType == MovementType.Running) {
-            maxSpeed = 10f;
-            stamina = Mathf.Clamp(stamina - (10 * Time.deltaTime), 0, maxStamina + 1);
-            //Debug.Log($"running {stamina}");
+            speedModifier = 1.5f;
+            stamina = Mathf.Clamp(stamina - (10 * Time.deltaTime), 0, maxStamina);
+            Debug.Log($"running {stamina}");
         }
         else if (movementType == MovementType.Sneaking) {
-            maxSpeed = 3f;
-            stamina = Mathf.Clamp(stamina + (10 * Time.deltaTime), 0, maxStamina + 1);
-            //Debug.Log($"sneaking {stamina}");
+            speedModifier = 0.5f;
+            stamina = Mathf.Clamp(stamina + (10 * Time.deltaTime), 0, maxStamina);
+            Debug.Log($"sneaking {stamina}");
         }
         else {
-            maxSpeed = 6f;
-            stamina = Mathf.Clamp(stamina + (5 * Time.deltaTime), 0, maxStamina + 1);
-            //Debug.Log($"walking {stamina}");
+            speedModifier = 1f;
+            stamina = Mathf.Clamp(stamina + (5 * Time.deltaTime), 0, maxStamina);
+            Debug.Log($"walking {stamina}");
         }
     }
 
-    //enum for movement type
     public enum MovementType {
+        //enum for movement type
         Walking,
         Running,
         Sneaking

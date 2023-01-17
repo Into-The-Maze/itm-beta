@@ -16,9 +16,9 @@ public class PlayerMovement : MonoBehaviour
     public float maxSpeed = 10f;
     public float acceleration = 5f;
     public float maxStamina = 50f;
-    float stamina;
-    string movementType = "walking";
-    float moveDirection = 0;
+    public float stamina;
+    public MovementType movementType = MovementType.Walking;
+    public float moveDirection = 0;
 
     public LayerMask wallMask;
     //public LayerMask playerMask;
@@ -93,26 +93,26 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown("left shift") && stamina > 10)
         {
-            movementType = "running";
+            movementType = MovementType.Walking;
         }
         else if (Input.GetKeyDown("left ctrl"))
         {
-            movementType = "sneaking";
+            movementType = MovementType.Sneaking;
         }
-        else if ((Input.GetKeyUp("left ctrl") && movementType == "sneaking") || 
-            (Input.GetKeyUp("left shift") && movementType == "running") ||
+        else if ((Input.GetKeyUp("left ctrl") && movementType == MovementType.Sneaking) || 
+            (Input.GetKeyUp("left shift") && movementType == MovementType.Running) ||
             stamina == 0)
         {
-            movementType = "walking";
+            movementType = MovementType.Walking;
         }   
 
-        if (movementType == "running")
+        if (movementType == MovementType.Running)
         {
             maxSpeed = 10f;
             stamina = Mathf.Clamp(stamina - (10 * Time.deltaTime), 0, maxStamina + 1);
             //Debug.Log($"running {stamina}");
         }
-        else if (movementType == "sneaking")
+        else if (movementType == MovementType.Sneaking)
         {
             maxSpeed = 3f;
             stamina = Mathf.Clamp(stamina + (10 * Time.deltaTime), 0, maxStamina + 1);
@@ -124,5 +124,11 @@ public class PlayerMovement : MonoBehaviour
             stamina = Mathf.Clamp(stamina + (5 * Time.deltaTime), 0, maxStamina + 1);
             //Debug.Log($"walking {stamina}");
         }
+    }
+    
+    private enum MovementType {
+        Walking,
+        Running,
+        Sneaking
     }
 }

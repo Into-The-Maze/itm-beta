@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour {
     float speedModifier = 1f;
     (bool, float) movement;
     float lastRadiansFromNorth = 0f;
+    float previousMovementDirection = 0f;
 
     MovementType movementType = MovementType.Walking;
 
@@ -42,7 +43,7 @@ public class PlayerMovement : MonoBehaviour {
 
     }
     void FixedUpdate() {
-        Movement(speedModifier, movement.Item1, movement.Item2, ref currentSpeed, maxSpeed, playerBody, acceleration);
+        Movement(speedModifier, movement.Item1, ref previousMovementDirection, movement.Item2, ref currentSpeed, maxSpeed, playerBody, acceleration);
     }
 
     static (bool, float) GetRotation(ref float lastRadiansFromNorth) {
@@ -79,27 +80,31 @@ public class PlayerMovement : MonoBehaviour {
                 return (true, Convert.ToSingle(1.75 * Math.PI));
             default:
                 return (false, lastRadiansFromNorth);
-                //0 unused
         }
     }
 
-    static void Movement(float speedModifier, bool isMoving, float radiansFromNorth, ref float currentSpeed, float maxSpeed, Rigidbody2D playerBody, float acceleration) {
+    static void Movement(float speedModifier, bool isMoving, ref float previousMovementDirection, float radiansFromNorth, ref float currentSpeed, float maxSpeed, Rigidbody2D playerBody, float acceleration) {
         //moves the player with wasd at the correct speeds
 
         Vector2 moveVector;
         moveVector.y = Mathf.Cos(radiansFromNorth);
         moveVector.x = Mathf.Sin(radiansFromNorth);
         Vector2 lastVector = moveVector;
-
-        if (isMoving) {
+        if (isMoving 
+            && ((Math.Abs(radiansFromNorth - previousMovementDirection) <= Math.PI/4)
+            || playerBody.velocity.magnitude == 0))
+            {
             currentSpeed = Mathf.Clamp((currentSpeed + acceleration), 0, ((maxSpeed - 1) * speedModifier));
             playerBody.velocity = moveVector * currentSpeed;
+            previousMovementDirection = radiansFromNorth;
             //Debug.Log($"{playerBody.velocity.magnitude}");
         }
         else {
             currentSpeed = Mathf.Clamp((currentSpeed - acceleration), 0, ((maxSpeed - 1) * speedModifier));
             playerBody.velocity = lastVector * currentSpeed;
         }
+        Debug.Log($"{Math.Abs(radiansFromNorth-previousMovementDirection)}\n{previousMovementDirection}\n{radiansFromNorth}");
+        
         
         //Debug.Log(//$"moveVector:{moveVector}, " +
         //    $"velocity:{playerBody.velocity}, " +
@@ -126,17 +131,17 @@ public class PlayerMovement : MonoBehaviour {
         if (movementType == MovementType.Running) {
             speedModifier = 2f;
             stamina = Mathf.Clamp(stamina - (10 * Time.deltaTime), 0, maxStamina);
-            Debug.Log($"running {stamina}");
+            //Debug.Log($"running {stamina}");
         }
         else if (movementType == MovementType.Sneaking) {
             speedModifier = 0.5f;
             stamina = Mathf.Clamp(stamina + (10 * Time.deltaTime), 0, maxStamina);
-            Debug.Log($"sneaking {stamina}");
+            //Debug.Log($"sneaking {stamina}");
         }
         else {
             speedModifier = 1f;
             stamina = Mathf.Clamp(stamina + (5 * Time.deltaTime), 0, maxStamina);
-            Debug.Log($"walking {stamina}");
+            //Debug.Log($"walking {stamina}");
         }
     }
 

@@ -7,6 +7,12 @@ using UnityEngine.EventSystems;
 using Unity.VisualScripting;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
+
+//ouch
+Vector2 lastVector;
+lastVector.x = 0;
+lastVector.y = 0;
+
 public class PlayerMovement : MonoBehaviour {
 
     private Rigidbody2D playerBody;
@@ -20,6 +26,8 @@ public class PlayerMovement : MonoBehaviour {
     float moveDirection = 0;
     float speedModifier = 1f;
     (bool, float) movement;
+    
+    
 
     MovementType movementType = MovementType.Walking;
 
@@ -37,9 +45,10 @@ public class PlayerMovement : MonoBehaviour {
     void Update(){
         ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
         movement = GetRotation();
+
     }
     void FixedUpdate() {
-        Movement(speedModifier, movement.Item1, movement.Item2, ref currentSpeed, maxSpeed, playerBody, acceleration);
+        Movement(speedModifier, movement.Item1, movement.Item2, ref currentSpeed, maxSpeed, playerBody, acceleration, lastVector);
     }
 
 
@@ -79,25 +88,26 @@ public class PlayerMovement : MonoBehaviour {
         Vector2 moveVector;
         moveVector.y = Mathf.Cos(radiansFromNorth);
         moveVector.x = Mathf.Sin(radiansFromNorth);
-        Vector2 lastVector;
-        lastVector.x = 0f;
-        lastVector.y = 0f;
+        
+        
 
         if (isMoving) {
             currentSpeed = Mathf.Clamp((currentSpeed + acceleration), 0, ((maxSpeed - 1) * speedModifier));
             playerBody.velocity = moveVector * currentSpeed;
             lastVector = moveVector;
-            Debug.Log($"{playerBody.velocity.magnitude}");
+            //Debug.Log($"{playerBody.velocity.magnitude}");
         }
         else {
             currentSpeed = Mathf.Clamp((currentSpeed - acceleration), 0, ((maxSpeed - 1) * speedModifier));
-            playerBody.velocity = lastVector * currentSpeed;
+            playerBody.velocity = lastVector * (maxSpeed - currentSpeed);
         }
-        //Debug.Log($"moveVector:{moveVector}, " +
+        lastVector.x = moveVector.x;
+        lastVector.y = moveVector.y;
+        Debug.Log(//$"moveVector:{moveVector}, " +
         //    $"velocity:{playerBody.velocity}, " +
-        //    $"currentSpeed:{currentSpeed}, " +
+            $"currentSpeed:{currentSpeed}, " +
         //    $"velocity.magnitude:{playerBody.velocity.magnitude}, " +
-        //    $"acceleration:{acceleration}");
+            $"acceleration:{acceleration}");
     }
 
     static void ChangeMovementType(ref MovementType movementType, ref float stamina, ref float speedModifier, float maxStamina) {

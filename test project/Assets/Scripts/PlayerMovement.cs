@@ -18,7 +18,6 @@ public class PlayerMovement : MonoBehaviour {
     float acceleration = 0.1f;
     static float maxStamina = 50f;
     float stamina = maxStamina;
-    float moveDirection = 0;
     float speedModifier = 1f;
     (bool, float) movement;
     float lastRadiansFromNorth = 0f;
@@ -35,11 +34,13 @@ public class PlayerMovement : MonoBehaviour {
         playerBody = GetComponent<Rigidbody2D>();
         ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
         movement = GetRotation(ref lastRadiansFromNorth);
+        lastRadiansFromNorth = movement.Item2;
     }
 
     void Update(){
         ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
         movement = GetRotation(ref lastRadiansFromNorth);
+        lastRadiansFromNorth = movement.Item2;
 
     }
     void FixedUpdate() {
@@ -55,28 +56,20 @@ public class PlayerMovement : MonoBehaviour {
         switch (hv)
         {
             case (0, 1):
-                lastRadiansFromNorth = 0f;
                 return (true, 0);
             case (1, 1):
-                lastRadiansFromNorth = Convert.ToSingle(0.25 * Math.PI);
                 return (true, Convert.ToSingle(0.25 * Math.PI));
             case (1, 0):
-                lastRadiansFromNorth = Convert.ToSingle(0.5 * Math.PI);
                 return (true, Convert.ToSingle(0.5 * Math.PI));
             case (1, -1):
-                lastRadiansFromNorth = Convert.ToSingle(0.75 * Math.PI);
                 return (true, Convert.ToSingle(0.75 * Math.PI));
             case (0, -1):
-                lastRadiansFromNorth = Convert.ToSingle(Math.PI);
                 return (true, Convert.ToSingle(Math.PI));
             case (-1, -1):
-                lastRadiansFromNorth = Convert.ToSingle(1.25 * Math.PI);
                 return (true, Convert.ToSingle(1.25 * Math.PI));
             case (-1, 0):
-                lastRadiansFromNorth = Convert.ToSingle(1.5 * Math.PI);
                 return (true, Convert.ToSingle(1.5 * Math.PI));
             case (-1, 1):
-                lastRadiansFromNorth = Convert.ToSingle(1.75 * Math.PI);
                 return (true, Convert.ToSingle(1.75 * Math.PI));
             default:
                 return (false, lastRadiansFromNorth);
@@ -90,6 +83,7 @@ public class PlayerMovement : MonoBehaviour {
         moveVector.y = Mathf.Cos(radiansFromNorth);
         moveVector.x = Mathf.Sin(radiansFromNorth);
         Vector2 lastVector = moveVector;
+
         if (isMoving 
             && ((Math.Abs(radiansFromNorth - previousMovementDirection) <= Math.PI/4)
             || playerBody.velocity.magnitude == 0))
@@ -97,15 +91,18 @@ public class PlayerMovement : MonoBehaviour {
             currentSpeed = Mathf.Clamp((currentSpeed + acceleration), 0, ((maxSpeed - 1) * speedModifier));
             playerBody.velocity = moveVector * currentSpeed;
             previousMovementDirection = radiansFromNorth;
-            //Debug.Log($"{playerBody.velocity.magnitude}");
+            Debug.Log($"if");
+
+            //Debug.Log($"{previousMovementDirection}, {radiansFromNorth}");
         }
         else {
             currentSpeed = Mathf.Clamp((currentSpeed - acceleration), 0, ((maxSpeed - 1) * speedModifier));
             playerBody.velocity = lastVector * currentSpeed;
+            Debug.Log($"else");
         }
-        Debug.Log($"{Math.Abs(radiansFromNorth-previousMovementDirection)}\n{previousMovementDirection}\n{radiansFromNorth}");
-        
-        
+
+        //Debug.Log($"{Math.Abs(radiansFromNorth-previousMovementDirection)}\n{previousMovementDirection}\n{radiansFromNorth}");
+
         //Debug.Log(//$"moveVector:{moveVector}, " +
         //    $"velocity:{playerBody.velocity}, " +
         //    $"currentSpeed:{currentSpeed}, " +

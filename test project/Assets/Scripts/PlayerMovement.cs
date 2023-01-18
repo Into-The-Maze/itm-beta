@@ -14,14 +14,15 @@ public class PlayerMovement : MonoBehaviour {
 
     float currentSpeed = 0f;
     //float weight = 10f;
-    float maxSpeed = 6f;
-    float acceleration = 0.1f;
+    float maxSpeed = 5f;
+    float acceleration = 0.7f;
     static float maxStamina = 50f;
     float stamina = maxStamina;
     float speedModifier = 1f;
     (bool, float) movement;
     float lastRadiansFromNorth = 0f;
-    float previousMovementDirection = 0f;
+    Vector2 moveVector;
+    Vector2 lastVector;
 
     MovementType movementType = MovementType.Walking;
 
@@ -34,17 +35,15 @@ public class PlayerMovement : MonoBehaviour {
         playerBody = GetComponent<Rigidbody2D>();
         ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
         movement = GetRotation(ref lastRadiansFromNorth);
-        lastRadiansFromNorth = movement.Item2;
     }
 
     void Update(){
         ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
         movement = GetRotation(ref lastRadiansFromNorth);
-        lastRadiansFromNorth = movement.Item2;
 
     }
     void FixedUpdate() {
-        Movement(speedModifier, movement.Item1, ref previousMovementDirection, movement.Item2, ref currentSpeed, maxSpeed, playerBody, acceleration);
+        Movement(ref moveVector, ref lastVector, speedModifier, movement.Item1, ref lastRadiansFromNorth, movement.Item2, ref currentSpeed, maxSpeed, playerBody, acceleration);
     }
 
     static (bool, float) GetRotation(ref float lastRadiansFromNorth) {
@@ -76,28 +75,31 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-    static void Movement(float speedModifier, bool isMoving, ref float previousMovementDirection, float radiansFromNorth, ref float currentSpeed, float maxSpeed, Rigidbody2D playerBody, float acceleration) {
+    static void Movement(ref Vector2 moveVector, ref Vector2 lastVector, float speedModifier, bool isMoving, ref float lastRadiansFromNorth, float radiansFromNorth, ref float currentSpeed, float maxSpeed, Rigidbody2D playerBody, float acceleration) {
         //moves the player with wasd at the correct speeds
 
-        Vector2 moveVector;
         moveVector.y = Mathf.Cos(radiansFromNorth);
         moveVector.x = Mathf.Sin(radiansFromNorth);
-        Vector2 lastVector = moveVector;
 
+        Debug.Log($"{radiansFromNorth}, {lastRadiansFromNorth}");
         if (isMoving 
-            && ((Math.Abs(radiansFromNorth - previousMovementDirection) <= Math.PI/4)
-            || playerBody.velocity.magnitude == 0))
+            && ((Math.Abs(radiansFromNorth - lastRadiansFromNorth) <= (Math.PI/4 + 0.2f))
+            || playerBody.velocity.magnitude == 0 
+            || (radiansFromNorth == 0f && lastRadiansFromNorth == Convert.ToSingle(1.75 * Math.PI)) 
+            || (lastRadiansFromNorth == 0f && radiansFromNorth == Convert.ToSingle(1.75 * Math.PI))))
             {
             currentSpeed = Mathf.Clamp((currentSpeed + acceleration), 0, ((maxSpeed - 1) * speedModifier));
             playerBody.velocity = moveVector * currentSpeed;
-            previousMovementDirection = radiansFromNorth;
-            Debug.Log($"if");
+            lastRadiansFromNorth = radiansFromNorth;
+            lastVector = moveVector;
 
-            //Debug.Log($"{previousMovementDirection}, {radiansFromNorth}");
+            Debug.Log($"if");
         }
         else {
             currentSpeed = Mathf.Clamp((currentSpeed - acceleration), 0, ((maxSpeed - 1) * speedModifier));
+            
             playerBody.velocity = lastVector * currentSpeed;
+
             Debug.Log($"else");
         }
 

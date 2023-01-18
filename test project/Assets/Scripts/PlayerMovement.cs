@@ -31,7 +31,10 @@ public class PlayerMovement : MonoBehaviour {
         playerBody = GetComponent<Rigidbody2D>();
     }
 
-    void Update() {
+    void Update(){
+
+    }
+    void FixedUpdate() {
         ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
         (bool, float) movement = GetRotation();
         Movement(speedModifier, movement.Item1, movement.Item2, ref currentSpeed, maxSpeed, playerBody, acceleration);
@@ -63,7 +66,8 @@ public class PlayerMovement : MonoBehaviour {
             case (-1, 1):
                 return (true, Convert.ToSingle(1.75 * Math.PI));
             default:
-                return (false, Convert.ToSingle(Math.PI));
+                return (false, 0);
+                //0 unused
         }
     }
 
@@ -79,13 +83,13 @@ public class PlayerMovement : MonoBehaviour {
 
         if (isMoving) {
             currentSpeed = Mathf.Clamp((currentSpeed + acceleration), 0, ((maxSpeed - 1) * speedModifier));
-            playerBody.velocity = moveVector * currentSpeed * Time.deltaTime * 1000;
+            playerBody.velocity = moveVector * currentSpeed;
             lastVector = moveVector;
             Debug.Log($"{playerBody.velocity.magnitude}");
         }
         else {
             currentSpeed = Mathf.Clamp((currentSpeed - acceleration), 0, ((maxSpeed - 1) * speedModifier));
-            playerBody.velocity = lastVector * currentSpeed * Time.deltaTime * 1000;
+            playerBody.velocity = lastVector * currentSpeed;
         }
         //Debug.Log($"moveVector:{moveVector}, " +
         //    $"velocity:{playerBody.velocity}, " +
@@ -111,17 +115,17 @@ public class PlayerMovement : MonoBehaviour {
 
         if (movementType == MovementType.Running) {
             speedModifier = 1.5f;
-            stamina = Mathf.Clamp(stamina - (10 * Time.deltaTime), 0, maxStamina);
+            stamina = Mathf.Clamp(stamina - (10 * Time.fixedDeltaTime), 0, maxStamina);
             Debug.Log($"running {stamina}");
         }
         else if (movementType == MovementType.Sneaking) {
             speedModifier = 0.5f;
-            stamina = Mathf.Clamp(stamina + (10 * Time.deltaTime), 0, maxStamina);
+            stamina = Mathf.Clamp(stamina + (10 * Time.fixedDeltaTime), 0, maxStamina);
             Debug.Log($"sneaking {stamina}");
         }
         else {
             speedModifier = 1f;
-            stamina = Mathf.Clamp(stamina + (5 * Time.deltaTime), 0, maxStamina);
+            stamina = Mathf.Clamp(stamina + (5 * Time.fixedDeltaTime), 0, maxStamina);
             Debug.Log($"walking {stamina}");
         }
     }

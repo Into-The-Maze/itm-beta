@@ -8,11 +8,6 @@ using Unity.VisualScripting;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 
-//ouch
-Vector2 lastVector;
-lastVector.x = 0;
-lastVector.y = 0;
-
 public class PlayerMovement : MonoBehaviour {
 
     private Rigidbody2D playerBody;
@@ -26,8 +21,7 @@ public class PlayerMovement : MonoBehaviour {
     float moveDirection = 0;
     float speedModifier = 1f;
     (bool, float) movement;
-    
-    
+    float lastRadiansFromNorth = 0f;
 
     MovementType movementType = MovementType.Walking;
 
@@ -39,20 +33,19 @@ public class PlayerMovement : MonoBehaviour {
     void Start() {
         playerBody = GetComponent<Rigidbody2D>();
         ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
-        movement = GetRotation();
+        movement = GetRotation(ref lastRadiansFromNorth);
     }
 
     void Update(){
         ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
-        movement = GetRotation();
+        movement = GetRotation(ref lastRadiansFromNorth);
 
     }
     void FixedUpdate() {
-        Movement(speedModifier, movement.Item1, movement.Item2, ref currentSpeed, maxSpeed, playerBody, acceleration, lastVector);
+        Movement(speedModifier, movement.Item1, movement.Item2, ref currentSpeed, maxSpeed, playerBody, acceleration);
     }
 
-
-    static (bool, float) GetRotation() {
+    static (bool, float) GetRotation(ref float lastRadiansFromNorth) {
         //gets rotation of player and if they are moving
 
         int horizontal = Convert.ToInt16(Input.GetAxisRaw("Horizontal"));
@@ -61,23 +54,31 @@ public class PlayerMovement : MonoBehaviour {
         switch (hv)
         {
             case (0, 1):
+                lastRadiansFromNorth = 0f;
                 return (true, 0);
             case (1, 1):
+                lastRadiansFromNorth = Convert.ToSingle(0.25 * Math.PI);
                 return (true, Convert.ToSingle(0.25 * Math.PI));
             case (1, 0):
+                lastRadiansFromNorth = Convert.ToSingle(0.5 * Math.PI);
                 return (true, Convert.ToSingle(0.5 * Math.PI));
             case (1, -1):
+                lastRadiansFromNorth = Convert.ToSingle(0.75 * Math.PI);
                 return (true, Convert.ToSingle(0.75 * Math.PI));
             case (0, -1):
+                lastRadiansFromNorth = Convert.ToSingle(Math.PI);
                 return (true, Convert.ToSingle(Math.PI));
             case (-1, -1):
+                lastRadiansFromNorth = Convert.ToSingle(1.25 * Math.PI);
                 return (true, Convert.ToSingle(1.25 * Math.PI));
             case (-1, 0):
+                lastRadiansFromNorth = Convert.ToSingle(1.5 * Math.PI);
                 return (true, Convert.ToSingle(1.5 * Math.PI));
             case (-1, 1):
+                lastRadiansFromNorth = Convert.ToSingle(1.75 * Math.PI);
                 return (true, Convert.ToSingle(1.75 * Math.PI));
             default:
-                return (false, 0);
+                return (false, lastRadiansFromNorth);
                 //0 unused
         }
     }
@@ -88,26 +89,23 @@ public class PlayerMovement : MonoBehaviour {
         Vector2 moveVector;
         moveVector.y = Mathf.Cos(radiansFromNorth);
         moveVector.x = Mathf.Sin(radiansFromNorth);
-        
-        
+        Vector2 lastVector = moveVector;
 
         if (isMoving) {
             currentSpeed = Mathf.Clamp((currentSpeed + acceleration), 0, ((maxSpeed - 1) * speedModifier));
             playerBody.velocity = moveVector * currentSpeed;
-            lastVector = moveVector;
             //Debug.Log($"{playerBody.velocity.magnitude}");
         }
         else {
             currentSpeed = Mathf.Clamp((currentSpeed - acceleration), 0, ((maxSpeed - 1) * speedModifier));
-            playerBody.velocity = lastVector * (maxSpeed - currentSpeed);
+            playerBody.velocity = lastVector * currentSpeed;
         }
-        lastVector.x = moveVector.x;
-        lastVector.y = moveVector.y;
-        Debug.Log(//$"moveVector:{moveVector}, " +
+        
+        //Debug.Log(//$"moveVector:{moveVector}, " +
         //    $"velocity:{playerBody.velocity}, " +
-            $"currentSpeed:{currentSpeed}, " +
+        //    $"currentSpeed:{currentSpeed}, " +
         //    $"velocity.magnitude:{playerBody.velocity.magnitude}, " +
-            $"acceleration:{acceleration}");
+        //    $"acceleration:{acceleration}");
     }
 
     static void ChangeMovementType(ref MovementType movementType, ref float stamina, ref float speedModifier, float maxStamina) {

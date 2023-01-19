@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour {
     float currentSpeed = 0f;
     //float weight = 10f;
     float maxSpeed = 5f;
-    float acceleration = 0.7f;
+    float acceleration = 0.6f;
     static float maxStamina = 50f;
     float stamina = maxStamina;
     float speedModifier = 1f;
@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour {
         moveVector.y = Mathf.Cos(radiansFromNorth);
         moveVector.x = Mathf.Sin(radiansFromNorth);
 
-        Debug.Log($"{radiansFromNorth}, {lastRadiansFromNorth}");
+        //Debug.Log($"{radiansFromNorth}, {lastRadiansFromNorth}");
         if (isMoving 
             && ((Math.Abs(radiansFromNorth - lastRadiansFromNorth) <= (Math.PI/4 + 0.2f))
             || playerBody.velocity.magnitude == 0 
@@ -93,14 +93,14 @@ public class PlayerMovement : MonoBehaviour {
             lastRadiansFromNorth = radiansFromNorth;
             lastVector = moveVector;
 
-            Debug.Log($"if");
+            //Debug.Log($"if");
         }
         else {
             currentSpeed = Mathf.Clamp((currentSpeed - acceleration), 0, ((maxSpeed - 1) * speedModifier));
             
             playerBody.velocity = lastVector * currentSpeed;
 
-            Debug.Log($"else");
+            //Debug.Log($"else");
         }
 
         //Debug.Log($"{Math.Abs(radiansFromNorth-previousMovementDirection)}\n{previousMovementDirection}\n{radiansFromNorth}");

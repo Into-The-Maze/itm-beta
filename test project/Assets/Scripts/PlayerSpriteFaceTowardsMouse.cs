@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerSpriteFaceTowardsMouse : MonoBehaviour
 {
     private Camera cam;
+    
+    float turnSpeed = 200f;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -15,8 +19,7 @@ public class PlayerSpriteFaceTowardsMouse : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 perpendicular = Vector3.Cross(transform.position - mousePos, Vector3.forward);
-        transform.rotation = Quaternion.LookRotation(Vector3.forward, perpendicular);
+        Quaternion thing = Quaternion.LookRotation(Vector3.forward, transform.position - cam.ScreenToWorldPoint(Input.mousePosition));
+        transform.rotation = Quaternion.RotateTowards(transform.rotation,  thing, turnSpeed * Time.deltaTime);
     }
 }

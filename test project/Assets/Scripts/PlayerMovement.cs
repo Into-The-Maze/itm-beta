@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 using UnityEditor;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
@@ -11,6 +12,7 @@ using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 public class PlayerMovement : MonoBehaviour {
 
     private Rigidbody2D playerBody;
+    public Slider staminaBar;
 
     float currentSpeed = 0f;
     //float weight = 10f;
@@ -35,11 +37,13 @@ public class PlayerMovement : MonoBehaviour {
         playerBody = GetComponent<Rigidbody2D>();
         ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
         movement = GetRotation(ref lastRadiansFromNorth);
+        staminaBar.maxValue = maxStamina;
     }
 
     void Update(){
         ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
         movement = GetRotation(ref lastRadiansFromNorth);
+        staminaBar.value = stamina;
 
     }
     void FixedUpdate() {

@@ -84,8 +84,6 @@ public class PlayerMovement : MonoBehaviour {
 
         moveVector.y = Mathf.Cos(radiansFromNorth);
         moveVector.x = Mathf.Sin(radiansFromNorth);
-
-        //Debug.Log($"{radiansFromNorth}, {lastRadiansFromNorth}");
         if (isMoving 
             && ((Math.Abs(radiansFromNorth - lastRadiansFromNorth) <= (Math.PI/4 + 0.2f))
             || playerBody.velocity.magnitude == 0 
@@ -96,24 +94,12 @@ public class PlayerMovement : MonoBehaviour {
             playerBody.velocity = moveVector * currentSpeed;
             lastRadiansFromNorth = radiansFromNorth;
             lastVector = moveVector;
-
-            //Debug.Log($"if");
         }
         else {
             currentSpeed = Mathf.Clamp((currentSpeed - acceleration), 0, ((maxSpeed - 1) * speedModifier));
             
             playerBody.velocity = lastVector * currentSpeed;
-
-            //Debug.Log($"else");
         }
-
-        //Debug.Log($"{Math.Abs(radiansFromNorth-previousMovementDirection)}\n{previousMovementDirection}\n{radiansFromNorth}");
-
-        //Debug.Log(//$"moveVector:{moveVector}, " +
-        //    $"velocity:{playerBody.velocity}, " +
-        //    $"currentSpeed:{currentSpeed}, " +
-        //    $"velocity.magnitude:{playerBody.velocity.magnitude}, " +
-        //    $"acceleration:{acceleration}");
     }
 
     static void ChangeMovementType(ref MovementType movementType, ref float stamina, ref float speedModifier, float maxStamina) {
@@ -134,17 +120,14 @@ public class PlayerMovement : MonoBehaviour {
         if (movementType == MovementType.Running) {
             speedModifier = 2f;
             stamina = Mathf.Clamp(stamina - (10 * Time.deltaTime), 0, maxStamina);
-            //Debug.Log($"running {stamina}");
         }
         else if (movementType == MovementType.Sneaking) {
             speedModifier = 0.5f;
             stamina = Mathf.Clamp(stamina + (10 * Time.deltaTime), 0, maxStamina);
-            //Debug.Log($"sneaking {stamina}");
         }
         else {
             speedModifier = 1f;
             stamina = Mathf.Clamp(stamina + (5 * Time.deltaTime), 0, maxStamina);
-            //Debug.Log($"walking {stamina}");
         }
     }
 

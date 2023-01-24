@@ -8,7 +8,6 @@ using UnityEngine.EventSystems;
 using Unity.VisualScripting;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
-
 public class PlayerMovement : MonoBehaviour {
 
     private Rigidbody2D playerBody;

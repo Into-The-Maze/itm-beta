@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Calculation of item size for highlighting can be optimised
+
 public class InvController : MonoBehaviour
 {
     [HideInInspector] //avoids confusion with assigning script

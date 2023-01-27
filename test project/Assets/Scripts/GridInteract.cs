@@ -12,10 +12,10 @@ public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     //interfaces which check if the cursor enters/leaves the grid.
     public void OnPointerEnter(PointerEventData eventData) {
-        inventoryController.selectedItemGrid = itemGrid;
+        inventoryController.SelectedItemGrid = itemGrid;
     }
     public void OnPointerExit(PointerEventData eventData) {
-        inventoryController.selectedItemGrid = null;
+        inventoryController.SelectedItemGrid = null;
     }
 
     //can be optimised out according to russian youtube man

@@ -39,10 +39,10 @@ public class ItemGrid : MonoBehaviour
     }
 
     public bool PlaceItem(InventoryItem inventoryItem, int posX, int posY, ref InventoryItem overlapItem) {
-        if (!BoundaryCheck(posX, posY, inventoryItem.itemData.width, inventoryItem.itemData.height)) {
+        if (!BoundaryCheck(posX, posY, inventoryItem.rotateWidth, inventoryItem.rotateHeight)) {
             return false;
         }
-        if (!OverlapCheck(posX, posY, inventoryItem.itemData.width, inventoryItem.itemData.height, ref overlapItem)) {
+        if (!OverlapCheck(posX, posY, inventoryItem.rotateWidth, inventoryItem.rotateHeight, ref overlapItem)) {
             overlapItem = null;
             return false;
         }
@@ -50,11 +50,17 @@ public class ItemGrid : MonoBehaviour
             CleanGridReference(overlapItem);
         }
 
+        PlaceItem(inventoryItem, posX, posY);//calls procedure below; bad name ik
+
+        return true;
+    }
+
+    public void PlaceItem(InventoryItem inventoryItem, int posX, int posY) {
         RectTransform rectTransform = inventoryItem.GetComponent<RectTransform>();
         rectTransform.SetParent(this.rectTransform);
 
-        for (int i = 0; i < inventoryItem.itemData.width; i++) {
-            for (int j = 0; j < inventoryItem.itemData.height; j++) {
+        for (int i = 0; i < inventoryItem.rotateWidth; i++) {
+            for (int j = 0; j < inventoryItem.rotateHeight; j++) {
                 inventoryItemSlot[posX + i, posY + j] = inventoryItem;
             }
         }
@@ -64,14 +70,12 @@ public class ItemGrid : MonoBehaviour
         Vector2 position = CalculatePositionOnGrid(inventoryItem, posX, posY);
 
         rectTransform.localPosition = position;
-
-        return true;
     }
 
     public Vector2 CalculatePositionOnGrid(InventoryItem inventoryItem, int posX, int posY) {
         Vector2 position = new Vector2();
-        position.x = posX * tileWidth + tileWidth * inventoryItem.itemData.width / 2;
-        position.y = -(posY * tileHeight + tileHeight * inventoryItem.itemData.height / 2);
+        position.x = posX * tileWidth + tileWidth * inventoryItem.rotateWidth / 2;
+        position.y = -(posY * tileHeight + tileHeight * inventoryItem.rotateHeight / 2);
         return position;
     }
 
@@ -101,8 +105,8 @@ public class ItemGrid : MonoBehaviour
     }
 
     private void CleanGridReference(InventoryItem item) {
-        for (int i = 0; i < item.itemData.width; i++) {
-            for (int j = 0; j < item.itemData.height; j++) {
+        for (int i = 0; i < item.rotateWidth; i++) {
+            for (int j = 0; j < item.rotateHeight; j++) {
                 inventoryItemSlot[item.onGridPosX + i, item.onGridPosY + j] = null;
             }
         }
@@ -131,5 +135,32 @@ public class ItemGrid : MonoBehaviour
 
     internal InventoryItem GetItem(int x, int y) {
         return inventoryItemSlot[x, y];
+    }
+
+    //resource heavy: worth optimising
+    public Vector2Int? FindSpaceForObject(InventoryItem itemToInsert) {
+
+        int height = gridSizeHeight - itemToInsert.rotateHeight + 1;
+        int width = gridSizeWidth - itemToInsert.rotateWidth + 1;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (CheckAvailableSpace(j, i, itemToInsert.rotateWidth, itemToInsert.rotateHeight)) {
+                    return new Vector2Int(j, i);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private bool CheckAvailableSpace(int posX, int posY, int width, int height) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (inventoryItemSlot[posX + i, posY + j] != null) { 
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

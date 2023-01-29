@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
 
 public class GenerateMaze : MonoBehaviour
 {
@@ -49,7 +48,7 @@ public class GenerateMaze : MonoBehaviour
         Collider[] sExists = Physics.OverlapSphere(new Vector3(location.x, location.y - 1, 1), 0.1f);
         Collider[] wExists = Physics.OverlapSphere(new Vector3(location.x - 1, location.y, 1), 0.1f);
 
-        return (nExists.Length == 1 && eExists.Length == 1 && sExists.Length == 1 && wExists.Length == 1) ? true : false;
+        return (nExists.Length > 0 && eExists.Length > 0 && sExists.Length > 0 && wExists.Length > 0) ? true : false;
     }
 
     Vector3 getStartPos() {
@@ -96,7 +95,6 @@ public class GenerateMaze : MonoBehaviour
                 }   
                 cellsVisited++;
                 cellsVisitedVectors.Add(constructorPos);
-                //Debug.Log(cellsVisitedVectors)
             }
             else {
                 Vector3 retrace = (Vector3)cellsVisitedVectors[cellsVisitedVectors.Count - 1]; //causes OOB error

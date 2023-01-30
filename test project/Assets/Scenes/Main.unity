@@ -435,7 +435,8 @@ MonoBehaviour:
   items:
   - {fileID: 11400000, guid: 0383b78782d82004a9a0eab77e2f06b2, type: 2}
   - {fileID: 11400000, guid: b8c688c31ffe06946b98335412613d19, type: 2}
-  - {fileID: 11400000, guid: 856359cf51a238749b9eca16b1473aa3, type: 2}
+  - {fileID: 11400000, guid: e8978043bb1c5924cb1ea3a08f75e47f, type: 2}
+  - {fileID: 11400000, guid: abf57379f2ff2034998fceb88a923379, type: 2}
   itemPrefab: {fileID: 4735567246859390235, guid: 2f301641c98980a45bc2847da9742e5f, type: 3}
   canvasTransform: {fileID: 890730386}
 --- !u!114 &519420034
@@ -1003,7 +1004,7 @@ Transform:
   m_GameObject: {fileID: 891252456}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 622508038}
@@ -1062,12 +1063,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: b1ae7a4ab49cb6041a93f5cf09a1352d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 19b687eeb92b5614290a5a7347038bb8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.31, y: 0.31}
+  m_Size: {x: 3.2, y: 3.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

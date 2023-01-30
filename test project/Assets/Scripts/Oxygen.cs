@@ -25,4 +25,6 @@ public class Oxygen : MonoBehaviour
     //using melee
     //when out of O2, if you are underwater you take health damage
     //if not underwater, your aim becomes less accurate/weapon swings slower
+    
+    //how do i lose air by aiming - a confused maze enthusiast
 }

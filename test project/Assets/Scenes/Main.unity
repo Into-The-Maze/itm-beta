@@ -1156,10 +1156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wall: {fileID: 3700896281571399095, guid: bd4c819c55b4a124da26d5cf1414f747, type: 3}
-  mazeWidth: 10
-  mazeHeight: 10
-  mazeOriginX: 0
-  mazeOriginY: 0
+  floor: {fileID: 5567696050990112427, guid: 9c14d063f6a9ab8499bac8fdc45e7483, type: 3}
 --- !u!1 &1464133223
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,7 +31,6 @@ public class InvController : MonoBehaviour
         }
     }
 
-
     private void Awake() {
         inventoryHighlight = GetComponent<InventoryHighlight>();
     }

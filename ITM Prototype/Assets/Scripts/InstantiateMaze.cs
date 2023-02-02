@@ -6,6 +6,7 @@ using System;
 public class InstantiateMaze : MonoBehaviour {
     public GameObject wall;
     public GameObject floor;
+    public GameObject floor2;
     public GameObject player;
 
     private void Start() {
@@ -19,13 +20,13 @@ public class InstantiateMaze : MonoBehaviour {
         for (int y = 0; y < maze.GetLength(0); y++) {
             for (int x = 0; x < maze.GetLength(1); x++) {
                 if (maze[y, x] == ' ') {
-                    Instantiate(floor, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
+                    Instantiate(floor, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
                 }
                 else if (maze[y, x] == '.') {
-                    Instantiate(floor, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
+                    Instantiate(floor2, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
                 }
                 else {
-                    Instantiate(wall, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
+                    Instantiate(wall, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
                 }
             }
         }
@@ -34,13 +35,13 @@ public class InstantiateMaze : MonoBehaviour {
         for (int y = oY; y < maze.GetLength(0) + oY; y++) {
             for (int x = oX; x < maze.GetLength(1) + oX; x++) {
                 if (maze[y, x] == ' ') {
-                    Instantiate(floor, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
+                    Instantiate(floor, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
                 }
                 else if (maze[y, x] == '.') {
-                    _ = Instantiate(floor, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
+                    _ = Instantiate(floor2, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
                 }
                 else {
-                    Instantiate(wall, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
+                    Instantiate(wall, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
                 }
             }
         }

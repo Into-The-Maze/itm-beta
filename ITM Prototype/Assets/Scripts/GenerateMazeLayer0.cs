@@ -1,31 +1,28 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using Random = System.Random;
 
-public class GenerateMaze : MonoBehaviour
+public class GenerateMazeLayer0 : MonoBehaviour
 {
-    public GameObject wall;
-    public GameObject floor;
-
-    private void Start() {
-        char[,] maze = CreateLabsMaze();
-        InstantiateMaze(maze);
-        //stick your maze array into this
-        //InstantiateMaze();
-    }
-
     public static int mazeSize = 40;
+    public static Vector3 spawnPos;
+    public GameObject player;
 
-    private static char[,] CreateLabsMaze() {
+    public static char[,] CreateLabsMaze() {
         char[,] maze = CreateArray();
         Room[] roomList = new Room[0];
-        PlaceRooms(ref maze, MainRooms(), ref roomList);
-        PlaceRooms(ref maze, RandomRooms(), ref roomList);
+        PlaceDefaultAndRandomRooms(ref maze, ref roomList);
         int currentRoom = SetStartRoom(ref roomList);
         (char, int, int, int) start;
+        return Mazeify(ref maze, ref roomList, ref currentRoom, out start);
+    }
 
+    public static char[,] Mazeify(ref char[,] maze, ref Room[] roomList, ref int currentRoom, out (char, int, int, int) start) {
+        start = (' ', -1, -1, -1);
         while (!roomsVisited(roomList)) {
             start = PickStartTile(roomList, maze);
             while (start == ('!', 0, 0, 0)) {
@@ -44,6 +41,12 @@ public class GenerateMaze : MonoBehaviour
         return (maze);
     }
 
+    public static void PlaceDefaultAndRandomRooms(ref char[,] maze, ref Room[] roomList) {
+        PlaceRooms(ref maze, MainRooms(), ref roomList);
+        PlaceRooms(ref maze, RandomRooms(), ref roomList);
+    }
+
+    
     private static RoomType[] MainRooms() {
         RoomType[] rooms = new RoomType[5];
         rooms[0].Name = "giant Room";
@@ -63,7 +66,6 @@ public class GenerateMaze : MonoBehaviour
         rooms[4].Width = 6;
         return rooms;
     }
-
     private static RoomType[] RandomRooms() {
         Random r = new Random();
         int numRooms = r.Next(2, 6);
@@ -75,8 +77,7 @@ public class GenerateMaze : MonoBehaviour
         }
         return rooms;
     }
-
-    private static char[,] CreateArray() {
+    public static char[,] CreateArray() {
         char[,] maze = new char[mazeSize, mazeSize];
         for (int row = 0; row < mazeSize; row++) {
             for (int column = 0; column < mazeSize; column++) {
@@ -90,7 +91,6 @@ public class GenerateMaze : MonoBehaviour
         }
         return maze;
     }
-
     private static void PlaceRooms(ref char[,] maze, RoomType[] rooms, ref Room[] roomList) {
         Room[] oldRoomList = roomList;
         Room[] newRoomList = new Room[rooms.Length];
@@ -139,7 +139,6 @@ public class GenerateMaze : MonoBehaviour
         oldRoomList.CopyTo(roomList, 0);
         newRoomList.CopyTo(roomList, oldRoomList.Length);
     }
-
     private static void PlaceRoom(ref char[,] maze, RoomType room, int row, int column, char orientation) {
         if (orientation == 'v') {
             for (int scanColumn = 0; scanColumn < room.Width; scanColumn++) {
@@ -172,7 +171,6 @@ public class GenerateMaze : MonoBehaviour
             }
         }
     }
-
     private static bool ValidateRoomPosition(char[,] maze, RoomType ship, int row, int column, char orientation) {
         if (orientation == 'v' && row + ship.Size > mazeSize - 1 || column + ship.Width > mazeSize - 1) {
             return false;
@@ -203,7 +201,6 @@ public class GenerateMaze : MonoBehaviour
         }
         return true;
     }
-
     //private static void ShowArray(char[,] maze) {
     //    Console.WriteLine();
     //    for (int i = 0; i < mazeSize; i++) {
@@ -220,14 +217,12 @@ public class GenerateMaze : MonoBehaviour
     //        Console.WriteLine($"ID: {room.Tile}, Visited: {room.Visited}, Coordinates: {room.Coordinates}");
     //    }
     //}
-
-    private static int SetStartRoom(ref Room[] roomList) {
+    public static int SetStartRoom(ref Room[] roomList) {
         Random r = new Random();
         int currentRoom = r.Next(0, roomList.Length);
         roomList[currentRoom].Visited = true;
         return currentRoom;
     }
-
     private static void MarkRoom(ref Room[] roomList, ref char tile) {
         for (int i = 0; i < roomList.Length; i++) {
             if (roomList[i].Tile == tile) {
@@ -235,7 +230,6 @@ public class GenerateMaze : MonoBehaviour
             }
         }
     }
-
     private static bool isRoom(Room[] roomList, char tile) {
         for (int i = 0; i < roomList.Length; i++) {
             if (roomList[i].Tile == tile) {
@@ -244,14 +238,12 @@ public class GenerateMaze : MonoBehaviour
         }
         return false;
     }
-
     private static bool validMove(char tile) {
         if (tile == '#') {
             return true;
         }
         return false;
     }
-
     private static (char, int, int, int) PickStartTile(Room[] roomlist, char[,] maze) {
         Random r = new Random();
         Room startRoom;
@@ -307,7 +299,6 @@ public class GenerateMaze : MonoBehaviour
         } while (!valid);
         return (startRoom.Tile, coords.Item1, coords.Item2, direction);
     }
-
     private static bool roomsVisited(Room[] roomList) {
         foreach (var room in roomList) {
             if (!room.Visited) {
@@ -316,7 +307,6 @@ public class GenerateMaze : MonoBehaviour
         }
         return true;
     }
-
     public static int GetRoomIndex(Room[] roomList, char tile) {
         foreach (var room in roomList) {
             if (room.Tile == tile) {
@@ -325,7 +315,6 @@ public class GenerateMaze : MonoBehaviour
         }
         return 0;
     }
-
     private static void GenerateHallways(ref char[,] maze, ref Room[] roomList, (char, int, int, int) startPos, ref int currentRoom) {
         (int, int) currentPos = (startPos.Item2, startPos.Item3);
         (int, int) nextPos;
@@ -415,35 +404,4 @@ public class GenerateMaze : MonoBehaviour
         public bool Visited;
         public ((int, int), (int, int)) Coordinates;
     }
-
-    public void InstantiateMaze(char[,] maze) {
-        for (int y = 0; y < maze.GetLength(0); y ++) {
-            for (int x = 0; x < maze.GetLength(1); x++) {
-                if (maze[y, x] == ' ') {
-                    Instantiate(floor, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
-                }
-                else if (maze[y, x] == '.') {
-                    Instantiate(floor, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
-                }
-                else {
-                    Instantiate(wall, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
-                }
-            }
-        }
-    } //instantiates maze at 0,0 world coords
-    public void InstantiateMaze(char[,] maze, int oX, int oY) {
-        for (int y = oY; y < maze.GetLength(0) + oY; y++) {
-            for (int x = oX; x < maze.GetLength(1) + oX; x++) {
-                if (maze[y, x] == ' ') {
-                    Instantiate(floor, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
-                }
-                else if (maze[y, x] == '.') {
-                    _ = Instantiate(floor, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
-                }
-                else {
-                    Instantiate(wall, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
-                }
-            }
-        }
-    } //instantiates maze at given overload parameters
 }

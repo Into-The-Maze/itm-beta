@@ -417,16 +417,16 @@ public class GenerateMaze : MonoBehaviour
     }
 
     public void InstantiateMaze(char[,] maze) {
-        for (int y = 0; y < maze.GetLength(0); y++) {
+        for (int y = 0; y < maze.GetLength(0); y ++) {
             for (int x = 0; x < maze.GetLength(1); x++) {
                 if (maze[y, x] == ' ') {
-                    Instantiate(floor, new Vector3(x, y, 0), Quaternion.identity);
+                    Instantiate(floor, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
                 }
-                else if (maze[x, y] == '.') {
-                    Instantiate(floor, new Vector3(x, y, 0), Quaternion.identity);
+                else if (maze[y, x] == '.') {
+                    Instantiate(floor, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
                 }
                 else {
-                    Instantiate(wall, new Vector3(x, y, 0), Quaternion.identity);
+                    Instantiate(wall, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
                 }
             }
         }
@@ -435,13 +435,13 @@ public class GenerateMaze : MonoBehaviour
         for (int y = oY; y < maze.GetLength(0) + oY; y++) {
             for (int x = oX; x < maze.GetLength(1) + oX; x++) {
                 if (maze[y, x] == ' ') {
-                    Instantiate(floor, new Vector3(x, y, 0), Quaternion.identity);
+                    Instantiate(floor, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
                 }
-                else if (maze[x, y] == '.') {
-                    Instantiate(floor, new Vector3(x, y, 0), Quaternion.identity);
+                else if (maze[y, x] == '.') {
+                    _ = Instantiate(floor, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
                 }
                 else {
-                    Instantiate(wall, new Vector3(x, y, 0), Quaternion.identity);
+                    Instantiate(wall, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
                 }
             }
         }

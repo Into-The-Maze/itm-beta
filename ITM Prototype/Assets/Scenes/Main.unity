@@ -1646,6 +1646,7 @@ GameObject:
   - component: {fileID: 1958383376}
   - component: {fileID: 1958383379}
   - component: {fileID: 1958383380}
+  - component: {fileID: 1958383381}
   m_Layer: 5
   m_Name: InventoryGrid
   m_TagString: Untagged
@@ -1700,7 +1701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.49803925, g: 0.49803925, b: 0.49803925, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 1, y: 1, z: 1, w: 1}
   m_Maskable: 1
@@ -1749,6 +1750,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28dc58d90b0827d419b80226573c65c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alpha: {fileID: 1958383381}
+  visionLight: {fileID: 596110032}
+--- !u!225 &1958383381
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958383374}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2107296767
 GameObject:
   m_ObjectHideFlags: 0

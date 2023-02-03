@@ -19,7 +19,9 @@ public class PlayerSpriteFaceTowardsMouse : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Quaternion thing = Quaternion.LookRotation(Vector3.forward, transform.position - cam.ScreenToWorldPoint(Input.mousePosition));
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, thing, turnSpeed * Time.deltaTime);
+        if (ToggleInventory.invIsOpen == false) {
+            Quaternion thing = Quaternion.LookRotation(Vector3.forward, transform.position - cam.ScreenToWorldPoint(Input.mousePosition));
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, thing, turnSpeed * Time.deltaTime);
+        }
     }
 }

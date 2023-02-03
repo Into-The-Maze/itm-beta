@@ -1,42 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using DG.Tweening;
+using System.Diagnostics;
+using UnityEngine.Rendering.Universal;
 
 public class ToggleInventory : MonoBehaviour
 {
     RectTransform rectTransform;
-    bool invIsOpen = false;
+    [SerializeField] private CanvasGroup alpha;
+    Stopwatch s = new();
+    public Light2D visionLight;
+    
+    public static bool invIsOpen = false;
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Tab)) {
             ToggleInv(ref invIsOpen);
         }
     }
-    void ToggleInvSmooth(ref bool invIsOpen) {
-        while (true) {
-            rectTransform = GetComponent<RectTransform>();
-            Vector3 currentPos = new Vector3(rectTransform.position.x, rectTransform.position.y, rectTransform.position.z);
-            if (!invIsOpen) {
-                rectTransform.transform.position = Vector3.MoveTowards(currentPos, new Vector3(0, 1080, 0), 50 * Time.deltaTime);
-                invIsOpen = true;
-                break;
-            }
-            else {
-                rectTransform.transform.position = Vector3.MoveTowards(currentPos, new Vector3(-640, 1080, 0), 50 * Time.deltaTime);
-                invIsOpen = false;
-                break;
-            }
-        }
-    } //dont know why this doesnt work, something to do with frames
+    
     void ToggleInv(ref bool invIsOpen) {
+        
+
         rectTransform = GetComponent<RectTransform>();
         if (!invIsOpen) {
             rectTransform.transform.position = new Vector3(0, 1080, 0);
-            invIsOpen = true;
+            alpha.DOFade(1f, 0.2f);
+            shutFOV();
+            invIsOpen = !invIsOpen;
         }
         else {
-            rectTransform.transform.position = new Vector3(-640, 1080, 0);
-            invIsOpen = false;
+            alpha.DOFade(0f, 0.2f);
+            openFOV();
+            s.Start();
+            if (s.ElapsedMilliseconds == 200) { rectTransform.transform.position = new Vector3(-640, 1080, 0); }
+            s.Stop();
+            invIsOpen = !invIsOpen;
         }
-    } //works but kind of ugly
+    }
+
+    void shutFOV() {
+        visionLight.pointLightInnerAngle = 10;
+        visionLight.pointLightOuterAngle = 10;
+    }
+    void openFOV() {
+        visionLight.pointLightInnerAngle = 100;
+        visionLight.pointLightOuterAngle = 100;
+    }
 }

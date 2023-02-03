@@ -87,7 +87,8 @@ public class PlayerMovement : MonoBehaviour {
             && ((Math.Abs(radiansFromNorth - lastRadiansFromNorth) <= (Math.PI/4 + 0.2f))
             || playerBody.velocity.magnitude == 0 
             || (radiansFromNorth == 0f && lastRadiansFromNorth == Convert.ToSingle(1.75 * Math.PI)) 
-            || (lastRadiansFromNorth == 0f && radiansFromNorth == Convert.ToSingle(1.75 * Math.PI))))
+            || (lastRadiansFromNorth == 0f && radiansFromNorth == Convert.ToSingle(1.75 * Math.PI))) 
+            && ToggleInventory.invIsOpen == false)
             {
             currentSpeed = Mathf.Clamp((currentSpeed + acceleration), 0, ((maxSpeed - 1) * speedModifier));
             playerBody.velocity = moveVector * currentSpeed;

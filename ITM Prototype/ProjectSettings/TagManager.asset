@@ -43,3 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Player
+    uniqueID: 2050430089
+    locked: 0
+  - name: ConeOfVision
+    uniqueID: 1605443809
+    locked: 0

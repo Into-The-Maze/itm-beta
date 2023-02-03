@@ -38,7 +38,7 @@ public class InstantiateMaze : MonoBehaviour {
                     Instantiate(floor, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
                 }
                 else if (maze[y, x] == '.') {
-                    _ = Instantiate(floor2, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
+                    Instantiate(floor2, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
                 }
                 else {
                     Instantiate(wall, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);

@@ -1514,7 +1514,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8692838b1f5049848abe103f528b3845, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5770dcd81b828a040b2355cece2570e5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1708,7 +1708,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 636bf3b87d54dba4b9ce9bbb269aefb3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 86a7771cac6bd7449bb20590c1b6a156, type: 3}
   m_Type: 2
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1717,7 +1717,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.2
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1958383378
 CanvasRenderer:
   m_ObjectHideFlags: 0

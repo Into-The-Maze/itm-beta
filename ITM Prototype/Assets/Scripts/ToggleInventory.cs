@@ -26,7 +26,7 @@ public class ToggleInventory : MonoBehaviour
 
         rectTransform = GetComponent<RectTransform>();
         if (!invIsOpen) {
-            rectTransform.transform.position = new Vector3(0, 1080, 0);
+            rectTransform.transform.position = new Vector3(40, 1040, 0);
             alpha.DOFade(1f, 0.2f);
             shutFOV();
             invIsOpen = !invIsOpen;
@@ -35,7 +35,7 @@ public class ToggleInventory : MonoBehaviour
             alpha.DOFade(0f, 0.2f);
             openFOV();
             s.Start();
-            if (s.ElapsedMilliseconds == 200) { rectTransform.transform.position = new Vector3(-640, 1080, 0); }
+            if (s.ElapsedMilliseconds == 200) { rectTransform.transform.position = new Vector3(-680, 1040, 0); }
             s.Stop();
             invIsOpen = !invIsOpen;
         }

@@ -76,6 +76,7 @@ public class InvController : MonoBehaviour
 
     private void InsertRandomItem() {
         if (selectedItemGrid == null) { return; }
+        if (items.Count == 0) { return; }
         CreateRandomItem();
         InventoryItem itemToInsert = selectedItem;
         selectedItem = null;
@@ -92,6 +93,7 @@ public class InvController : MonoBehaviour
     }
 
     private void HandleHighlight() {
+        if (selectedItemGrid == null) { return; }
         Vector2Int positionOnGrid = GetTileGridPosition();
         if (oldPosition == positionOnGrid) { return; }
         oldPosition = positionOnGrid;

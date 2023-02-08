@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2929734762214470195}
   - component: {fileID: 410422779284910668}
   m_Layer: 8
-  m_Name: Maze Floor
-  m_TagString: FLOOR_LAYER0
+  m_Name: L0 Floor
+  m_TagString: FLOOR
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

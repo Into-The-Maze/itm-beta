@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2929734762214470195}
   - component: {fileID: 410422779284910668}
   m_Layer: 8
-  m_Name: Maze Floor 2
-  m_TagString: FLOOR_LAYER0
+  m_Name: L2 Floor
+  m_TagString: FLOOR
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.47853327, g: 0.48749816, b: 0.49056602, a: 1}
+  m_Color: {r: 0.0757387, g: 0.4339623, b: 0.11610998, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

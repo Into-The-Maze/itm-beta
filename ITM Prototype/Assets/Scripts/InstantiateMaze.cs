@@ -106,19 +106,27 @@ public class InstantiateMaze : MonoBehaviour {
                 corner4.transform.parent = mazeParent.transform;
                 if (maze[x, y].TopWall == true) {
                     var topwall = Instantiate(layer4WallHorizontal, new Vector3(3 * x, (3 * y) + 1.375f, 0), Quaternion.identity);
+                    var topblock = Instantiate(layer4HorizontalBlock, new Vector3(3 * x, (3 * y) + 1.5f, 0), Quaternion.identity);
                     topwall.transform.parent = mazeParent.transform;
+                    topblock.transform.parent = blocksParent.transform;
                 }   
                 if (maze[x, y].RightWall == true) {
                     var rightwall = Instantiate(layer4WallVertical, new Vector3((3 * x) + 1.375f, (3 * y), 0), Quaternion.identity);
+                    var rightblock = Instantiate(layer4VerticalBlock, new Vector3((3 * x) + 1.5f, (3 * y), 0), Quaternion.identity);
                     rightwall.transform.parent = mazeParent.transform;
+                    rightblock.transform.parent = blocksParent.transform;
                 }
                 if (maze[x, y].BottomWall == true) {
                     var bottomwall = Instantiate(layer4WallHorizontal, new Vector3((3 * x), (3 * y) - 1.375f, 0), Quaternion.identity);
+                    var bottomblock = Instantiate(layer4HorizontalBlock, new Vector3((3 * x), (3 * y) - 1.5f, 0), Quaternion.identity);
                     bottomwall.transform.parent = mazeParent.transform;
+                    bottomblock.transform.parent = blocksParent.transform;
                 }
                 if (maze[x, y].LeftWall == true) {
                     var leftwall = Instantiate(layer4WallVertical, new Vector3((3 * x) - 1.375f, (3 * y), 0), Quaternion.identity);
+                    var leftblock = Instantiate(layer4VerticalBlock, new Vector3((3 * x) - 1.5f, (3 * y), 0), Quaternion.identity);
                     leftwall.transform.parent = mazeParent.transform;
+                    leftblock.transform.parent = blocksParent.transform;
                 }
             }
         }

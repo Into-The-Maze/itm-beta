@@ -28,9 +28,9 @@ public class InstantiateMaze : MonoBehaviour {
     }
     private void Awake() {
         //InstantiateMazeLayer0(InitialiseLabs());
-        InstantiateMazeLayer1(initialiseMazeLayer1());
+        //InstantiateMazeLayer1(initialiseMazeLayer1());
         //InstantiateMazeLayer2(initialiseMazeLayer2());
-        //InstantiateMazeLayer4(InitialisePyramid());
+        InstantiateMazeLayer4(InitialisePyramid());
     }
 
     public void InstantiateMazeLayer0(char[,] maze) {
@@ -87,12 +87,12 @@ public class InstantiateMaze : MonoBehaviour {
     public void InstantiateMazeLayer4(GenerateMazeLayer4.Tile[,] maze) {
         for (int y = 0; y < maze.GetLength(0); y++) {
             for (int x = 0; x < maze.GetLength(1); x++) {
-                Instantiate(layer4Floor, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
+                Instantiate(layer4Floor, new Vector3(3 * -x, 3 * -y, 0), Quaternion.identity);
                 if (maze[y, x].TopWall == true) {
-                    Instantiate(layer4WallTop, new Vector3(3 * x, (3 * y) + 1.25f, 0), Quaternion.identity);
+                    Instantiate(layer4WallTop, new Vector3(3 * -x, (3 * -y) - 1.25f, 0), Quaternion.identity);
                 }   
                 if (maze[y, x].RightWall == true) {
-                    Instantiate(layer4WallRight, new Vector3((3 * x) + 1.25f, (3 * y) -0.25f, 0), Quaternion.identity);
+                    Instantiate(layer4WallRight, new Vector3((3 * -x) - 1.25f,(3 * -y) +0.25f, 0), Quaternion.identity);
                 }
             }
         }

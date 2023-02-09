@@ -1531,10 +1531,15 @@ MonoBehaviour:
   layer0Wall: {fileID: 3700896281571399095, guid: bd4c819c55b4a124da26d5cf1414f747, type: 3}
   layer0Floor: {fileID: 5567696050990112427, guid: 9c14d063f6a9ab8499bac8fdc45e7483, type: 3}
   layer0Door: {fileID: 5567696050990112427, guid: a1dae746df22f8448b2713bccd53a086, type: 3}
+  layer1Wall: {fileID: 3700896281571399095, guid: f54987624fbe0eb4c81301c30527e579, type: 3}
+  layer1Floor: {fileID: 5567696050990112427, guid: 9cdddc2b86cc5774399a2e645d2fe451, type: 3}
   layer2Wall: {fileID: 3700896281571399095, guid: 3f2ae33fab98cd44193fe87191f82d59, type: 3}
   layer2WaterFloor: {fileID: 5567696050990112427, guid: e7f72262e934eb64ea603f0edb502cbf, type: 3}
   layer2Floor: {fileID: 5567696050990112427, guid: c387829f240416943afac804373ae9ee, type: 3}
   layer2IllusionFloor: {fileID: 5567696050990112427, guid: ee0b1e1cf369afa449a16bc3f03247f3, type: 3}
+  layer4WallTop: {fileID: 3700896281571399095, guid: 9c1f7d09440819c43976741cf2bb2c79, type: 3}
+  layer4WallRight: {fileID: 3700896281571399095, guid: 6439f435c5d9ac14f947801e59d327ae, type: 3}
+  layer4Floor: {fileID: 5567696050990112427, guid: 994019a8b2a7d704eb43a133071ef7d0, type: 3}
   player: {fileID: 622508036}
 --- !u!1 &1464133223
 GameObject:

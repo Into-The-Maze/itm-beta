@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GenerateMazeLayer4 : MonoBehaviour
 {
-    public const int mazeSize = 16;
+    public const int mazeSize = 12;
     public static System.Random r = new();
     public static Tile[,] CreateHuntKillMaze() {
         Tile[,] maze = CreateArray();

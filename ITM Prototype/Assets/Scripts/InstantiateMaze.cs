@@ -11,6 +11,7 @@ public class InstantiateMaze : MonoBehaviour {
 
     public GameObject layer0Wall;
     public GameObject layer0Floor;
+    public GameObject layer0Block;
     public GameObject layer0Door;
 
     public GameObject layer1Wall;
@@ -33,11 +34,11 @@ public class InstantiateMaze : MonoBehaviour {
     private void Start() {
         player.transform.position = SetPlayerSpawnPos();
     }
-    private void Awake() {
-        //InstantiateMazeLayer0(InitialiseLabs());
+    private void Awake() {  
+        InstantiateMazeLayer0(InitialiseLabs());
         //InstantiateMazeLayer1(initialiseMazeLayer1());
         //InstantiateMazeLayer2(initialiseMazeLayer2());
-        InstantiateMazeLayer4(InitialisePyramid());
+        //InstantiateMazeLayer4(InitialisePyramid());
     }
 
     public void InstantiateMazeLayer0(char[,] maze) {
@@ -51,6 +52,7 @@ public class InstantiateMaze : MonoBehaviour {
                 }
                 else {
                     Instantiate(layer0Wall, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
+                    Instantiate(layer0Block, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
                 }
             }
         }

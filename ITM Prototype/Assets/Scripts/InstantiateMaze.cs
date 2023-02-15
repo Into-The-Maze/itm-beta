@@ -35,10 +35,10 @@ public class InstantiateMaze : MonoBehaviour {
         player.transform.position = SetPlayerSpawnPos();
     }
     private void Awake() {  
-        //InstantiateMazeLayer0(InitialiseLabs());
+        InstantiateMazeLayer0(InitialiseLabs());
         //InstantiateMazeLayer1(initialiseMazeLayer1());
         //InstantiateMazeLayer2(initialiseMazeLayer2());
-        InstantiateMazeLayer4(InitialisePyramid());
+        //InstantiateMazeLayer4(InitialisePyramid());
     }
 
     public void InstantiateMazeLayer0(char[,] maze) {

@@ -1704,10 +1704,10 @@ MonoBehaviour:
   layer2WaterFloor: {fileID: 5567696050990112427, guid: e7f72262e934eb64ea603f0edb502cbf, type: 3}
   layer2Floor: {fileID: 5567696050990112427, guid: c387829f240416943afac804373ae9ee, type: 3}
   layer2IllusionFloor: {fileID: 5567696050990112427, guid: ee0b1e1cf369afa449a16bc3f03247f3, type: 3}
-  layer4WallHorizontal: {fileID: 3700896281571399095, guid: 9c1f7d09440819c43976741cf2bb2c79, type: 3}
-  layer4WallVertical: {fileID: 3700896281571399095, guid: 6439f435c5d9ac14f947801e59d327ae, type: 3}
-  layer4Floor: {fileID: 5567696050990112427, guid: 994019a8b2a7d704eb43a133071ef7d0, type: 3}
-  layer4Corner: {fileID: 3700896281571399095, guid: dc85f1e641b8fe44c9a21ccd9d83c372, type: 3}
+  layer4WallHorizontal: {fileID: 5567696050990112427, guid: a3c72640772d2834f969315f0b83fade, type: 3}
+  layer4WallVertical: {fileID: 5567696050990112427, guid: 65264be27c3fb674ca49bf3abd2e0f19, type: 3}
+  layer4Floor: {fileID: 5567696050990112427, guid: e0b3bf35a95d2be4bb829d159ad0375d, type: 3}
+  layer4Corner: {fileID: 5567696050990112427, guid: 4635151b57593ad4887e3a6794dc32ef, type: 3}
   layer4VerticalBlock: {fileID: 3700896281571399095, guid: 818de76b8e67d244ba08432a7c8a9bf0, type: 3}
   layer4HorizontalBlock: {fileID: 3700896281571399095, guid: e11644f2f4df1364884e36120c45d17f, type: 3}
   player: {fileID: 622508036}

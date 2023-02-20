@@ -37,9 +37,9 @@ public class InstantiateMaze : MonoBehaviour {
     }
     private void Awake() {  
         //InstantiateMazeLayer0(InitialiseLabs());
-        //InstantiateMazeLayer1(initialiseMazeLayer1());
+        InstantiateMazeLayer1(initialiseMazeLayer1());
         //InstantiateMazeLayer2(initialiseMazeLayer2());
-        InstantiateMazeLayer4(InitialisePyramid());
+        //InstantiateMazeLayer4(InitialisePyramid());
     }
 
     public void InstantiateMazeLayer0(char[,] maze) {

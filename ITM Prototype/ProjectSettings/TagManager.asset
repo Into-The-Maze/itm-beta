@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - FLOOR
+  - WALL_LAYER0
+  - FLOOR_LAYER0
   layers:
   - Default
   - TransparentFX
@@ -47,4 +49,7 @@ TagManager:
     locked: 0
   - name: ConeOfVision
     uniqueID: 1605443809
+    locked: 0
+  - name: Light
+    uniqueID: 1941486723
     locked: 0

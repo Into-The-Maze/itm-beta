@@ -46,14 +46,18 @@ public class InstantiateMaze : MonoBehaviour {
         for (int y = 0; y < maze.GetLength(0); y ++ ) {
             for (int x = 0; x < maze.GetLength(1); x++ ) {
                 if (maze[y, x] == ' ') {
-                    Instantiate(layer0Floor, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
+                    GameObject floor = Instantiate(layer0Floor, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
+                    floor.transform.parent = mazeParent.transform;
                 }
                 else if (maze[y, x] == '.') {
-                    Instantiate(layer0Door, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
+                    GameObject door = Instantiate(layer0Door, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
+                    door.transform.parent = mazeParent.transform;
                 }
                 else {
-                    Instantiate(layer0Wall, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
-                    Instantiate(blockX4, new Vector3(4 * x, 4 * y,  0), Quaternion.identity);
+                    GameObject wall = Instantiate(layer0Wall, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
+                    wall.transform.parent = mazeParent.transform;
+                    GameObject block = Instantiate(blockX4, new Vector3(4 * x, 4 * y,  0), Quaternion.identity);
+                    block.transform.parent = mazeParent.transform;
                 }
             }
         }
@@ -62,11 +66,14 @@ public class InstantiateMaze : MonoBehaviour {
         for (int y = 0; y < maze.GetLength(0); y++ ) {
             for (int x = 0; x < maze.GetLength(1); x++) {
                 if (maze[y, x] == ' ') {
-                    Instantiate(layer1Floor, new Vector3(8 * x, 8 * y, 0), Quaternion.identity);
+                    GameObject floor = Instantiate(layer1Floor, new Vector3(8 * x, 8 * y, 0), Quaternion.identity);
+                    floor.transform.parent = mazeParent.transform;
                 }
                 else {
-                    Instantiate(layer1Wall, new Vector3(8 * x, 8 * y, 0), Quaternion.identity);
-                    Instantiate(blockX8, new Vector3(8 * x, 8 * y, 0), Quaternion.identity);
+                    GameObject wall = Instantiate(layer1Wall, new Vector3(8 * x, 8 * y, 0), Quaternion.identity);
+                    wall.transform.parent = mazeParent.transform;
+                    GameObject block = Instantiate(blockX8, new Vector3(8 * x, 8 * y, 0), Quaternion.identity);
+                    block.transform.parent = mazeParent.transform;
                 }
             }
         }
@@ -75,16 +82,19 @@ public class InstantiateMaze : MonoBehaviour {
         for (int y = 0; y < maze.GetLength(0); y++) {
             for (int x = 0; x < maze.GetLength(1); x++) {
                 if (maze[y, x] == '#') {
-                    Instantiate(layer2Wall, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
+                    GameObject wall = Instantiate(layer2Wall, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
+                    wall.transform.parent = mazeParent.transform;
                 }
                 else {
                     System.Random r = new();
                     string floorPicker = Convert.ToString(r.Next(0, 10));
                     if ("01234".Contains(floorPicker)) {
-                        Instantiate(layer2Floor, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
+                        GameObject floor = Instantiate(layer2Floor, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
+                        floor.transform.parent = mazeParent.transform;
                     }
                     else if ("56789".Contains(floorPicker)) {
-                        Instantiate(layer2WaterFloor, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
+                        GameObject floor = Instantiate(layer2WaterFloor, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
+                        floor.transform.parent = mazeParent.transform;
                     }
                     //ADD ILLUSION FLOOR FUNCTIONALITY LATER BECAUSE THIS METHOD MAKES TOO MANY ILLUSION FLOORS AND THEYRE ALL UNAVOIDABLE
 

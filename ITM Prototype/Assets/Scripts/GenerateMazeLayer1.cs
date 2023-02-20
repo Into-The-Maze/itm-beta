@@ -6,8 +6,8 @@ using UnityEngine;
 public class GenerateMazeLayer1 : MonoBehaviour
 {
     //must be odd
-    const int mazeHeight = 51;
-    const int mazeWidth = 51;
+    const int mazeHeight = 35;
+    const int mazeWidth = 35;
 
     public static char[,] generatePerfectMaze() {
         char[,] maze = initMaze();

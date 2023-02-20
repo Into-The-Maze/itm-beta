@@ -42,11 +42,11 @@ public class ToggleInventory : MonoBehaviour
     }
 
     void shutFOV() {
-        visionLight.pointLightInnerAngle = 10;
-        visionLight.pointLightOuterAngle = 10;
+        visionLight.pointLightInnerAngle = 0;
+        visionLight.pointLightOuterAngle = 0;
     }
     void openFOV() {
-        visionLight.pointLightInnerAngle = 100;
+        visionLight.pointLightInnerAngle = 80;
         visionLight.pointLightOuterAngle = 100;
     }
 }

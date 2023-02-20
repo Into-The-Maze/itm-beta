@@ -349,7 +349,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &162833703
 GameObject:
@@ -972,7 +972,7 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
+  m_FalloffIntensity: 0.64
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 0.4
   m_LightVolumeIntensity: 1
@@ -1022,7 +1022,7 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 78.74016
+  m_PointLightInnerAngle: 80
   m_PointLightOuterAngle: 100
   m_PointLightInnerRadius: 18.02
   m_PointLightOuterRadius: 20
@@ -1096,6 +1096,7 @@ Transform:
   m_Children:
   - {fileID: 519420032}
   - {fileID: 891252457}
+  - {fileID: 890730386}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1405,7 +1406,7 @@ GameObject:
   - component: {fileID: 890730388}
   - component: {fileID: 890730387}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Player Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1428,7 +1429,7 @@ RectTransform:
   - {fileID: 1958383375}
   - {fileID: 1464133224}
   - {fileID: 1935631481}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 622508038}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1582,8 +1583,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2050430089
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 19b687eeb92b5614290a5a7347038bb8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1679,9 +1680,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mazeParent: {fileID: 1436951011}
   blocksParent: {fileID: 289382615}
+  blockX4: {fileID: 3700896281571399095, guid: 99d0a57fd60c39146829830cdcf29375, type: 3}
+  blockX8: {fileID: 3700896281571399095, guid: e30aacff20fefd143bc328b9d51f7a69, type: 3}
   layer0Wall: {fileID: 3700896281571399095, guid: bd4c819c55b4a124da26d5cf1414f747, type: 3}
   layer0Floor: {fileID: 5567696050990112427, guid: 9c14d063f6a9ab8499bac8fdc45e7483, type: 3}
-  layer0Block: {fileID: 3700896281571399095, guid: 99d0a57fd60c39146829830cdcf29375, type: 3}
   layer0Door: {fileID: 5567696050990112427, guid: a1dae746df22f8448b2713bccd53a086, type: 3}
   layer1Wall: {fileID: 3700896281571399095, guid: f54987624fbe0eb4c81301c30527e579, type: 3}
   layer1Floor: {fileID: 5567696050990112427, guid: 9cdddc2b86cc5774399a2e645d2fe451, type: 3}
@@ -1838,7 +1840,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1726886864
 GameObject:

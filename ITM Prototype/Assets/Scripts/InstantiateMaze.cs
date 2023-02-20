@@ -8,10 +8,11 @@ public class InstantiateMaze : MonoBehaviour {
 
     public GameObject mazeParent;
     public GameObject blocksParent;
+    public GameObject blockX4;
+    public GameObject blockX8;
 
     public GameObject layer0Wall;
     public GameObject layer0Floor;
-    public GameObject layer0Block;
     public GameObject layer0Door;
 
     public GameObject layer1Wall;
@@ -35,15 +36,15 @@ public class InstantiateMaze : MonoBehaviour {
         player.transform.position = SetPlayerSpawnPos();
     }
     private void Awake() {  
-        InstantiateMazeLayer0(InitialiseLabs());
+        //InstantiateMazeLayer0(InitialiseLabs());
         //InstantiateMazeLayer1(initialiseMazeLayer1());
         //InstantiateMazeLayer2(initialiseMazeLayer2());
-        //InstantiateMazeLayer4(InitialisePyramid());
+        InstantiateMazeLayer4(InitialisePyramid());
     }
 
     public void InstantiateMazeLayer0(char[,] maze) {
-        for (int y = 0; y < maze.GetLength(0); y++) {
-            for (int x = 0; x < maze.GetLength(1); x++) {
+        for (int y = 0; y < maze.GetLength(0); y ++ ) {
+            for (int x = 0; x < maze.GetLength(1); x++ ) {
                 if (maze[y, x] == ' ') {
                     Instantiate(layer0Floor, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
                 }
@@ -52,23 +53,24 @@ public class InstantiateMaze : MonoBehaviour {
                 }
                 else {
                     Instantiate(layer0Wall, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
-                    Instantiate(layer0Block, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
+                    Instantiate(blockX4, new Vector3(4 * x, 4 * y,  0), Quaternion.identity);
                 }
             }
         }
     }
     public void InstantiateMazeLayer1(char[,] maze) {
-        for (int y = 0; y < maze.GetLength(0); y++) {
+        for (int y = 0; y < maze.GetLength(0); y++ ) {
             for (int x = 0; x < maze.GetLength(1); x++) {
                 if (maze[y, x] == ' ') {
-                    Instantiate(layer1Floor, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
+                    Instantiate(layer1Floor, new Vector3(8 * x, 8 * y, 0), Quaternion.identity);
                 }
                 else {
-                    Instantiate(layer1Wall, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
+                    Instantiate(layer1Wall, new Vector3(8 * x, 8 * y, 0), Quaternion.identity);
+                    Instantiate(blockX8, new Vector3(8 * x, 8 * y, 0), Quaternion.identity);
                 }
             }
         }
-    }
+    } 
     public void InstantiateMazeLayer2(char[,] maze) {
         for (int y = 0; y < maze.GetLength(0); y++) {
             for (int x = 0; x < maze.GetLength(1); x++) {
@@ -94,9 +96,9 @@ public class InstantiateMaze : MonoBehaviour {
         }
     }
     public void InstantiateMazeLayer4(GenerateMazeLayer4.Tile[,] maze) {
-        for (int y = 0; y < maze.GetLength(0); y++) {
-            for (int x = 0; x < maze.GetLength(1); x++) {
-                var floor = Instantiate(layer4Floor, new Vector3(8 * x, 8 * y, 0), Quaternion.identity);
+        for (int y = 0; y < maze.GetLength(0); y ++) {
+            for (int x = 0; x < maze.GetLength(1); x ++) {
+                var floor = Instantiate(layer4Floor, new Vector3((8 * x), (8 * y), 0), Quaternion.identity);
                 var corner1 = Instantiate(layer4Corner, new Vector3((8 * x) + 3.75f, (8 * y) + 3.75f, 0), Quaternion.identity);
                 var corner2 = Instantiate(layer4Corner, new Vector3((8 * x) - 3.75f, (8 * y) + 3.75f, 0), Quaternion.identity);
                 var corner3 = Instantiate(layer4Corner, new Vector3((8 * x) + 3.75f, (8 * y) - 3.75f, 0), Quaternion.identity);
@@ -107,8 +109,8 @@ public class InstantiateMaze : MonoBehaviour {
                 corner3.transform.parent = mazeParent.transform;
                 corner4.transform.parent = mazeParent.transform;
                 if (maze[x, y].TopWall == true) {
-                    var topwall = Instantiate(layer4WallHorizontal, new Vector3(8 * x, (8 * y) + 3.75f, 0), Quaternion.identity);
-                    var topblock = Instantiate(layer4HorizontalBlock, new Vector3(8 * x, (8 * y) + 4f, 0), Quaternion.identity);
+                    var topwall = Instantiate(layer4WallHorizontal, new Vector3((8 * x), (8 * y) + 3.75f, 0), Quaternion.identity);
+                    var topblock = Instantiate(layer4HorizontalBlock, new Vector3((8 * x), (8 * y) + 4f, 0), Quaternion.identity);
                     topwall.transform.parent = mazeParent.transform;
                     topblock.transform.parent = blocksParent.transform;
                 }   

@@ -222,10 +222,10 @@ public class GenerateMazeLayer3 : MonoBehaviour
         }
     }
     private static bool ValidateRoomPosition(char[,] maze, RoomType ship, int row, int column, char orientation) {
-        if (orientation == 'v' && row + ship.Size > mazeSize - 1 || column + ship.Width > mazeSize - 1) {
+        if (orientation == 'v' && row + ship.Size + 2 > mazeSize - 1 || column + ship.Width + 2 > mazeSize - 1) {
             return false;
         }
-        else if (orientation == 'h' && column + ship.Size > mazeSize - 1 || row + ship.Width > mazeSize - 1) {
+        else if (orientation == 'h' && column + ship.Size + 2 > mazeSize - 1 || row + ship.Width + 2 > mazeSize - 1) {
             return false;
         }
         return true;

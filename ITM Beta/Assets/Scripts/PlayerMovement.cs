@@ -21,11 +21,11 @@ public class PlayerMovement : MonoBehaviour {
     float stamina = maxStamina;
     float speedModifier = 1f;
     (bool, float) movement;
-    float lastRadiansFromNorth = 0f;
+    public static float lastRadiansFromNorth = 0f;
     Vector2 moveVector;
     Vector2 lastVector;
 
-    MovementType movementType = MovementType.Walking;
+    public static MovementType movementType = MovementType.Walking;
 
     public LayerMask wallMask;
     //public LayerMask playerMask;
@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void Update(){
         ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
+        
         movement = GetRotation(ref lastRadiansFromNorth);
         staminaBar.value = stamina;
 
@@ -77,6 +78,33 @@ public class PlayerMovement : MonoBehaviour {
                 return (false, lastRadiansFromNorth);
         }
     }
+    public static float GetRotation(float lastRadiansFromNorth) {
+        //gets rotation of player and if they are moving
+
+        int horizontal = Convert.ToInt16(Input.GetAxisRaw("Horizontal"));
+        int vertical = Convert.ToInt16(Input.GetAxisRaw("Vertical"));
+        (int, int) hv = (horizontal, vertical);
+        switch (hv) {
+            case (0, -1):
+                return 0;
+            case (1, -1):
+                return 45;
+            case (1, 0):
+                return 90;
+            case (1, 1):
+                return 135;
+            case (0, 1):
+                return 180;
+            case (-1, 1):
+                return 225;
+            case (-1, 0):
+                return 270;
+            case (-1, -1):
+                return 315;
+            default:
+                return (float)((lastRadiansFromNorth * 180) / Math.PI);
+        }
+    }
 
     static void Movement(ref Vector2 moveVector, ref Vector2 lastVector, float speedModifier, bool isMoving, ref float lastRadiansFromNorth, float radiansFromNorth, ref float currentSpeed, float maxSpeed, Rigidbody2D playerBody, float acceleration) {
         //moves the player with wasd at the correct speeds
@@ -107,9 +135,11 @@ public class PlayerMovement : MonoBehaviour {
 
         if (Input.GetKeyDown("left shift") && stamina > 10) {
             movementType = MovementType.Running;
+            //ToggleInventory.shutFOVRun();
         }
         else if (Input.GetKeyDown("left ctrl")) {
             movementType = MovementType.Sneaking;
+            //ToggleInventory.openFOVRun();
         }
         else if ((Input.GetKeyUp("left ctrl") && movementType == MovementType.Sneaking) || 
             (Input.GetKeyUp("left shift") && movementType == MovementType.Running) ||

@@ -13,6 +13,8 @@ public class ToggleInventory : MonoBehaviour
     [SerializeField] private CanvasGroup invAlpha;
     Stopwatch s = new();
     public Light2D visionLight;
+    static int innerAngle = 80;
+    static int outerAngle = 100;
     
     public static bool invIsOpen = false;
 
@@ -41,7 +43,7 @@ public class ToggleInventory : MonoBehaviour
 
     private void closeInv() {
         invAlpha.DOFade(0f, 0.2f);
-        openFOV();
+        openFOVInv();
         s.Start();
         if (s.ElapsedMilliseconds == 200) { invRectTransform.transform.position = new Vector3(-680, 1040, 0); }
         s.Stop();
@@ -50,15 +52,23 @@ public class ToggleInventory : MonoBehaviour
     private void openInv() {
         invRectTransform.transform.position = new Vector3(40, 1040, 0);
         invAlpha.DOFade(1f, 0.2f);
-        shutFOV();
+        shutFOVInv();
     }
 
-    void shutFOV() {
+    void shutFOVInv() {
         visionLight.pointLightInnerAngle = 0;
         visionLight.pointLightOuterAngle = 0;
     }
-    void openFOV() {
-        visionLight.pointLightInnerAngle = 80;
-        visionLight.pointLightOuterAngle = 100;
+    void openFOVInv() {
+        visionLight.pointLightInnerAngle = innerAngle;
+        visionLight.pointLightOuterAngle = outerAngle;
     }
+    //public static void shutFOVRun() {
+    //    visionLight.pointLightInnerAngle = DOVirtual.EasedValue(innerAngle, 60, 0.3f, Ease.OutElastic);
+    //    visionLight.pointLightOuterAngle = DOVirtual.EasedValue(outerAngle, 80, 0.3f, Ease.OutElastic);
+    //}
+    //public static void openFOVRun() {
+    //    visionLight.pointLightInnerAngle = DOVirtual.EasedValue(60, innerAngle, 0.3f, Ease.OutElastic);
+    //    visionLight.pointLightOuterAngle = DOVirtual.EasedValue(80, outerAngle, 0.3f, Ease.OutElastic);
+    //}
 }

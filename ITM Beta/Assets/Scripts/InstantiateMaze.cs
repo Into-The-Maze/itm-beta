@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -8,6 +8,7 @@ public class InstantiateMaze : MonoBehaviour {
 
     public GameObject mazeParent;
     public GameObject blocksParent;
+    public GameObject blockX2;
     public GameObject blockX4;
     public GameObject blockX8;
 
@@ -23,6 +24,10 @@ public class InstantiateMaze : MonoBehaviour {
     public GameObject layer2Floor;
     public GameObject layer2IllusionFloor;
 
+    public GameObject layer3Wall;
+    public GameObject layer3Floor;
+    public GameObject layer3RoomFloor;
+
     public GameObject layer4WallHorizontal;
     public GameObject layer4WallVertical;
     public GameObject layer4Floor;
@@ -37,9 +42,10 @@ public class InstantiateMaze : MonoBehaviour {
     }
     private void Awake() {  
         //InstantiateMazeLayer0(InitialiseLabs());
-        InstantiateMazeLayer1(initialiseMazeLayer1());
+        //InstantiateMazeLayer1(initialiseMazeLayer1());
         //InstantiateMazeLayer2(initialiseMazeLayer2());
-        //InstantiateMazeLayer4(InitialisePyramid());
+        InstantiateMazeLayer3(initialiseMazeLayer3());
+        //InstantiatePyramid(InitialisePyramid());
     }
 
     public void InstantiateMazeLayer0(char[,] maze) {
@@ -105,7 +111,27 @@ public class InstantiateMaze : MonoBehaviour {
             }
         }
     }
-    public void InstantiateMazeLayer4(GenerateMazeLayer4.Tile[,] maze) {
+    public void InstantiateMazeLayer3(char[,] maze) {
+        for (int y = 0; y < maze.GetLength(0); y++) {
+            for (int x = 0; x < maze.GetLength(1); x++) {
+                if (maze[y, x] == ' ') {
+                    GameObject floor = Instantiate(layer3Floor, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
+                    floor.transform.parent = mazeParent.transform;
+                }
+                else if (maze[y, x] == 'b') {
+                    GameObject floor = Instantiate(layer3RoomFloor, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
+                    floor.transform.parent = mazeParent.transform;
+                }
+                else {
+                    GameObject wall = Instantiate(layer3Wall, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
+                    wall.transform.parent = mazeParent.transform;
+                    GameObject block = Instantiate(blockX2, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
+                    block.transform.parent = mazeParent.transform;
+                }
+            }
+        }
+    }
+    public void InstantiatePyramid(GenerateMazeLayer4.Tile[,] maze) {
         for (int y = 0; y < maze.GetLength(0); y ++) {
             for (int x = 0; x < maze.GetLength(1); x ++) {
                 var floor = Instantiate(layer4Floor, new Vector3((8 * x), (8 * y), 0), Quaternion.identity);
@@ -151,6 +177,10 @@ public class InstantiateMaze : MonoBehaviour {
     }
     public char[,] initialiseMazeLayer2() {
         char[,] maze = GenerateMazeLayer2.makeBinaryTreeMaze();
+        return maze;
+    }
+    public char[,] initialiseMazeLayer3() {
+        char[,] maze = GenerateMazeLayer3.GenerateMaze();
         return maze;
     }
     public char[,] InitialiseLabs() {

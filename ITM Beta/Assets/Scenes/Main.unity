@@ -1879,6 +1879,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mazeParent: {fileID: 1436951011}
   blocksParent: {fileID: 289382615}
+  blockX2: {fileID: 3700896281571399095, guid: 90a91eb1252dceb4588ae45291c6448f, type: 3}
   blockX4: {fileID: 3700896281571399095, guid: 99d0a57fd60c39146829830cdcf29375, type: 3}
   blockX8: {fileID: 3700896281571399095, guid: e30aacff20fefd143bc328b9d51f7a69, type: 3}
   layer0Wall: {fileID: 3700896281571399095, guid: bd4c819c55b4a124da26d5cf1414f747, type: 3}
@@ -1890,6 +1891,9 @@ MonoBehaviour:
   layer2WaterFloor: {fileID: 5567696050990112427, guid: e7f72262e934eb64ea603f0edb502cbf, type: 3}
   layer2Floor: {fileID: 5567696050990112427, guid: c387829f240416943afac804373ae9ee, type: 3}
   layer2IllusionFloor: {fileID: 5567696050990112427, guid: ee0b1e1cf369afa449a16bc3f03247f3, type: 3}
+  layer3Wall: {fileID: 3700896281571399095, guid: 13aedf2a2aedd024cb9911501e508501, type: 3}
+  layer3Floor: {fileID: 5567696050990112427, guid: 90867670829a76c45997d0bbbbec38d1, type: 3}
+  layer3RoomFloor: {fileID: 5567696050990112427, guid: f47ca544bf8a0824db64ba8e669351b6, type: 3}
   layer4WallHorizontal: {fileID: 5567696050990112427, guid: a3c72640772d2834f969315f0b83fade, type: 3}
   layer4WallVertical: {fileID: 5567696050990112427, guid: 65264be27c3fb674ca49bf3abd2e0f19, type: 3}
   layer4Floor: {fileID: 5567696050990112427, guid: e0b3bf35a95d2be4bb829d159ad0375d, type: 3}

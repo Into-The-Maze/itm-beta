@@ -55,7 +55,7 @@ public class InstantiateMaze : MonoBehaviour {
         //InstantiateMazeLayer0(InitialiseLabs());
         //InstantiateMazeLayer1(initialiseMazeLayer1());
         //InstantiateMazeLayer2(initialiseMazeLayer2());
-        InstantiateMazeLayer3(initialiseMazeLayer3());
+        //InstantiateMazeLayer3(initialiseMazeLayer3());
         //InstantiatePyramid(InitialisePyramid());
     }
 

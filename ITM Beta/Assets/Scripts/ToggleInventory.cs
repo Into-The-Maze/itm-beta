@@ -43,7 +43,7 @@ public class ToggleInventory : MonoBehaviour
 
     private void closeInv() {
         invAlpha.DOFade(0f, 0.2f);
-        openFOVInv();
+        //openFOVInv();
         s.Start();
         if (s.ElapsedMilliseconds == 200) { invRectTransform.transform.position = new Vector3(-680, 1040, 0); }
         s.Stop();
@@ -52,17 +52,18 @@ public class ToggleInventory : MonoBehaviour
     private void openInv() {
         invRectTransform.transform.position = new Vector3(40, 1040, 0);
         invAlpha.DOFade(1f, 0.2f);
-        shutFOVInv();
+        //shutFOVInv();
     }
 
-    void shutFOVInv() {
-        visionLight.pointLightInnerAngle = 0;
-        visionLight.pointLightOuterAngle = 0;
-    }
-    void openFOVInv() {
-        visionLight.pointLightInnerAngle = innerAngle;
-        visionLight.pointLightOuterAngle = outerAngle;
-    }
+    //void shutFOVInv() {
+    //    visionLight.pointLightInnerAngle = 0;
+    //    visionLight.pointLightOuterAngle = 0;
+    //}
+    //void openFOVInv() {
+    //    visionLight.pointLightInnerAngle = innerAngle;
+    //    visionLight.pointLightOuterAngle = outerAngle;
+    //}
+
     //public static void shutFOVRun() {
     //    visionLight.pointLightInnerAngle = DOVirtual.EasedValue(innerAngle, 60, 0.3f, Ease.OutElastic);
     //    visionLight.pointLightOuterAngle = DOVirtual.EasedValue(outerAngle, 80, 0.3f, Ease.OutElastic);

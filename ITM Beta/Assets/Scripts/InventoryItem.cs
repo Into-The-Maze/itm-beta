@@ -28,6 +28,13 @@ public class InventoryItem : MonoBehaviour
         }
     }
 
+    public bool isWeapon { get { return itemData.isWeapon; } }
+    public bool isArmor { get { return itemData.isArmor; } }
+    public bool isHeadgear { get { return itemData.isHeadgear; } }
+    public bool isRing { get { return itemData.isRing; } }
+
+
+
     internal void Rotate() {
         rotated = !rotated;
 

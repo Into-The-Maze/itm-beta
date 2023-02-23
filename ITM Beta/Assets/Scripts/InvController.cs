@@ -136,6 +136,20 @@ public class InvController : MonoBehaviour
             PickUpItem(tileGridPosition);
         }
         else {
+            switch (selectedItemGrid.tag) {
+                case "WEAPONSLOT":
+                    if (!selectedItem.isWeapon) { return; }
+                    break;
+                case "RINGSLOT":
+                    if (!selectedItem.isRing) { return; }
+                    break;
+                case "CHESTSLOT":
+                    if (!selectedItem.isArmor) { return; }
+                    break;
+                case "HEADSLOT":
+                    if (!selectedItem.isHeadgear) { return; }
+                    break;
+            }
             DropItem(tileGridPosition);
         }
     }

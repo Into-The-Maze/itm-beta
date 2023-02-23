@@ -10,6 +10,13 @@ public class ItemData : ScriptableObject
     public int width = 1;
     public int height = 1;
     public Sprite itemIcon;
+
+    public bool isWeapon = false;
+    public bool isArmor = false;
+    public bool isHeadgear = false;
+    public bool isRing = false;
+
     public string flavourText;
+
 
 }

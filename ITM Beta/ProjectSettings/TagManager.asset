@@ -5,8 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - FLOOR
-  - WALL_LAYER0
-  - FLOOR_LAYER0
+  - INVENTORY
+  - WEAPONSLOT
+  - HEADSLOT
+  - RINGSLOT
+  - CHESTSLOT
   layers:
   - Default
   - TransparentFX

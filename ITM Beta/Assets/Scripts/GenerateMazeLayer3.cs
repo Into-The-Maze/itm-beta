@@ -228,6 +228,25 @@ public class GenerateMazeLayer3 : MonoBehaviour
         else if (orientation == 'h' && column + ship.Size + 2 > mazeSize - 1 || row + ship.Width + 2 > mazeSize - 1) {
             return false;
         }
+        if (orientation == 'v') {
+            for (int scanColumn = -2; scanColumn < ship.Width + 2; scanColumn++) {
+                for (int scanRow = -2; scanRow < ship.Size + 2; scanRow++) {
+                    if (maze[row + scanRow, column + scanColumn] == 'b') {
+                        return false;
+                    }
+                }
+
+            }   
+        }
+        else if (orientation == 'h') {
+            for (int scanColumn = -2; scanColumn < ship.Width + 2; scanColumn++) {
+                for (int scanRow = -2; scanRow < ship.Size + 2; scanRow++) {
+                    if (maze[row + scanColumn, column + scanRow] == 'b') {
+                        return false;
+                    }
+                }
+            }
+        }
         return true;
     }
 

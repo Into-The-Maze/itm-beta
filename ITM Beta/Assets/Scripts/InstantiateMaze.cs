@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Tilemaps;
+using Random = System.Random;
 
 public class InstantiateMaze : MonoBehaviour {
+
+    public static Random r = new Random();
 
     public GameObject mazeParent;
     public GameObject blockX2;
@@ -30,6 +33,11 @@ public class InstantiateMaze : MonoBehaviour {
     public GameObject layer3RoomEdgeLeft;
     public GameObject layer3RoomEdgeTop;
     public GameObject layer3RoomEdgeBottom;
+    public GameObject layer3Blood1;
+    public GameObject layer3Blood2;
+    public GameObject layer3Blood3;
+    public GameObject layer3Skull1;
+    public GameObject layer3Skull2;
 
     public GameObject layer4WallHorizontal;
     public GameObject layer4WallVertical;
@@ -120,6 +128,19 @@ public class InstantiateMaze : MonoBehaviour {
                 if (maze[x, y] == ' ') {
                     GameObject floor = Instantiate(layer3Floor, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
                     floor.transform.parent = mazeParent.transform;
+                    //blood
+                    if (r.Next(0, 100) < 15) {
+                        GameObject blood = Instantiate(layer3Blood1, new Vector3((2 * x) + (r.Next(-10, 10) / 5), (2 * y) + (r.Next(-10, 10) / 5)), Quaternion.identity);
+                        blood.transform.parent = mazeParent.transform;
+                    }
+                    if (r.Next(0, 100) < 15) {
+                        GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x) + (r.Next(-10, 10) / 5), (2 * y) + (r.Next(-10, 10) / 5)), Quaternion.identity);
+                        blood.transform.parent = mazeParent.transform;
+                    }
+                    if (r.Next(0, 100) < 15) {
+                        GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x) + (r.Next(-10, 10) / 5), (2 * y) + (r.Next(-10, 10) / 5)), Quaternion.identity);
+                        blood.transform.parent = mazeParent.transform;
+                    }
                 }
                 else if (maze[x, y] == 'b') {
                     GameObject floor = Instantiate(layer3RoomFloor, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
@@ -139,6 +160,28 @@ public class InstantiateMaze : MonoBehaviour {
                     if (maze[x, y - 1] == ' ') {
                         GameObject edge = Instantiate(layer3RoomEdgeBottom, new Vector3(2 * x, (2 * y) - 2, 0), Quaternion.identity);
                         edge.transform.parent = mazeParent.transform;
+                    }
+                    //blood
+                    if (r.Next(0, 100) < 15) {
+                        GameObject blood = Instantiate(layer3Blood1, new Vector3((2 * x) + (r.Next(-10, 10) / 5), (2 * y) + (r.Next(-10, 10) / 5)), Quaternion.identity);
+                        blood.transform.parent = mazeParent.transform;
+                    }
+                    if (r.Next(0, 100) < 15) {
+                        GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x) + (r.Next(-10, 10) / 5), (2 * y) + (r.Next(-10, 10) / 5)), Quaternion.identity);
+                        blood.transform.parent = mazeParent.transform;
+                    }
+                    if (r.Next(0, 100) < 15) {
+                        GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x) + (r.Next(-10, 10) / 5), (2 * y) + (r.Next(-10, 10) / 5)), Quaternion.identity);
+                        blood.transform.parent = mazeParent.transform;
+                    }
+                    //skulls
+                    if (r.Next(0, 100) < 30) {
+                        GameObject skull = Instantiate(layer3Skull1, new Vector3((2 * x) + (r.Next(0, 10) / 10), (2 * y) + (r.Next(0, 10) / 1)), Quaternion.identity);
+                        skull.transform.parent = mazeParent.transform;
+                    }
+                    if (r.Next(0, 100) < 30) {
+                        GameObject skull = Instantiate(layer3Skull2, new Vector3((2 * x) + (r.Next(0, 10) / 10), (2 * y) + (r.Next(0, 10) / 10)), Quaternion.identity);
+                        skull.transform.parent = mazeParent.transform;
                     }
                 }
                 else {

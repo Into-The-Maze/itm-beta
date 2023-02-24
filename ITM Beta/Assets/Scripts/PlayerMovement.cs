@@ -10,6 +10,7 @@ using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class PlayerMovement : MonoBehaviour {
 
+    [SerializeField] private FieldOfView fieldOfView;
     private Rigidbody2D playerBody;
     public Slider staminaBar;
 
@@ -41,10 +42,9 @@ public class PlayerMovement : MonoBehaviour {
 
     void Update(){
         ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
-        
         movement = GetRotation(ref lastRadiansFromNorth);
         staminaBar.value = stamina;
-
+        fieldOfView.SetOrigin(transform.position);
     }
     void FixedUpdate() {
         Movement(ref moveVector, ref lastVector, speedModifier, movement.Item1, ref lastRadiansFromNorth, movement.Item2, ref currentSpeed, maxSpeed, playerBody, acceleration);

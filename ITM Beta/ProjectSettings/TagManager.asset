@@ -10,6 +10,8 @@ TagManager:
   - HEADSLOT
   - RINGSLOT
   - CHESTSLOT
+  - WALL_LAYER0
+  - FLOOR_LAYER0
   layers:
   - Default
   - TransparentFX
@@ -21,9 +23,9 @@ TagManager:
   - Vault
   - Floor
   - Item
-  - 
-  - 
-  - 
+  - Mask
+  - BehindMask
+  - Black
   - 
   - 
   - 

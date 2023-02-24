@@ -1,10 +1,13 @@
+using CodeMonkey.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public class PlayerSpriteFaceTowardsMouse : MonoBehaviour
 {
+    [SerializeField] private FieldOfView fieldOfView;
     private Camera cam;
     public static float turnSpeed = 200f;
     
@@ -22,6 +25,7 @@ public class PlayerSpriteFaceTowardsMouse : MonoBehaviour
             else {
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0f, 0f, PlayerMovement.GetRotation(PlayerMovement.lastRadiansFromNorth)), turnSpeed * Time.deltaTime);
             }
-        }
+            fieldOfView.SetAimDirection(transform.right);
+        }   
     }
 }

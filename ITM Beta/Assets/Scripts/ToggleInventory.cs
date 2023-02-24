@@ -13,8 +13,8 @@ public class ToggleInventory : MonoBehaviour
     [SerializeField] private CanvasGroup invAlpha;
     Stopwatch s = new();
     public Light2D visionLight;
-    static int innerAngle = 50;
-    static int outerAngle = 60;
+    //static int innerAngle = 50;
+    //static int outerAngle = 60;
     
     public static bool invIsOpen = false;
 

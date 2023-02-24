@@ -7,6 +7,9 @@ using Random = System.Random;
 
 public class InstantiateMaze : MonoBehaviour {
 
+
+    public GameObject player;   
+
     public static Random r = new Random();
 
     public GameObject mazeParent;
@@ -46,16 +49,18 @@ public class InstantiateMaze : MonoBehaviour {
     public GameObject layer4VerticalBlock;
     public GameObject layer4HorizontalBlock;
 
-    public GameObject player;
+    public GameObject candle;
+
 
     private void Start() {
-        player.transform.position = SetPlayerSpawnPos();
+        Vector3 spawn = SetPlayerSpawnPos();
+        player.transform.position = spawn;
     }
     private void Awake() {  
         //InstantiateMazeLayer0(InitialiseLabs());
         //InstantiateMazeLayer1(initialiseMazeLayer1());
         //InstantiateMazeLayer2(initialiseMazeLayer2());
-        //InstantiateMazeLayer3(initialiseMazeLayer3());
+        InstantiateMazeLayer3(initialiseMazeLayer3());
         //InstantiatePyramid(InitialisePyramid());
     }
 
@@ -130,16 +135,21 @@ public class InstantiateMaze : MonoBehaviour {
                     floor.transform.parent = mazeParent.transform;
                     //blood
                     if (r.Next(0, 100) < 15) {
-                        GameObject blood = Instantiate(layer3Blood1, new Vector3((2 * x) + (r.Next(-10, 10) / 5), (2 * y) + (r.Next(-10, 10) / 5)), Quaternion.identity);
+                        GameObject blood = Instantiate(layer3Blood1, new Vector3((2 * x) + (r.Next(10, 90) / 100f), (2 * y) + (r.Next(10, 90) / 100f)), Quaternion.identity);
                         blood.transform.parent = mazeParent.transform;
                     }
                     if (r.Next(0, 100) < 15) {
-                        GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x) + (r.Next(-10, 10) / 5), (2 * y) + (r.Next(-10, 10) / 5)), Quaternion.identity);
+                        GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x) + (r.Next(10, 90) / 100f), (2 * y) + (r.Next(10, 90) / 100f)), Quaternion.identity);
                         blood.transform.parent = mazeParent.transform;
                     }
                     if (r.Next(0, 100) < 15) {
-                        GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x) + (r.Next(-10, 10) / 5), (2 * y) + (r.Next(-10, 10) / 5)), Quaternion.identity);
+                        GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x) + (r.Next(-80, 80) / 100f), (2 * y) + (r.Next(-80, 80) / 100f)), Quaternion.identity);
                         blood.transform.parent = mazeParent.transform;
+                    }
+                    //candles
+                    if (r.Next(0, 100) < 25) {
+                        GameObject item = Instantiate(candle, new Vector3((2 * x) + (r.Next(-80, 80) / 100f), (2 * y) + (r.Next(-80, 80) / 100f)), Quaternion.identity);
+                        item.transform.parent = mazeParent.transform;
                     }
                 }
                 else if (maze[x, y] == 'b') {
@@ -162,25 +172,25 @@ public class InstantiateMaze : MonoBehaviour {
                         edge.transform.parent = mazeParent.transform;
                     }
                     //blood
-                    if (r.Next(0, 100) < 15) {
-                        GameObject blood = Instantiate(layer3Blood1, new Vector3((2 * x) + (r.Next(-10, 10) / 5), (2 * y) + (r.Next(-10, 10) / 5)), Quaternion.identity);
+                    if (r.Next(0, 100) < 25) {
+                        GameObject blood = Instantiate(layer3Blood1, new Vector3((2 * x) + (r.Next(-80, 80) / 100f), (2 * y) + (r.Next(-80, 80) / 100f)), Quaternion.identity);
                         blood.transform.parent = mazeParent.transform;
                     }
-                    if (r.Next(0, 100) < 15) {
-                        GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x) + (r.Next(-10, 10) / 5), (2 * y) + (r.Next(-10, 10) / 5)), Quaternion.identity);
+                    if (r.Next(0, 100) < 25) {
+                        GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x) + (r.Next(-80, 80) / 100f), (2 * y) + (r.Next(-80, 80) / 100f)), Quaternion.identity);
                         blood.transform.parent = mazeParent.transform;
                     }
-                    if (r.Next(0, 100) < 15) {
-                        GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x) + (r.Next(-10, 10) / 5), (2 * y) + (r.Next(-10, 10) / 5)), Quaternion.identity);
+                    if (r.Next(0, 100) < 25) {
+                        GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x) + (r.Next(-80, 80) / 100f), (2 * y) + (r.Next(-80, 80) / 100f)), Quaternion.identity);
                         blood.transform.parent = mazeParent.transform;
                     }
                     //skulls
                     if (r.Next(0, 100) < 30) {
-                        GameObject skull = Instantiate(layer3Skull1, new Vector3((2 * x) + (r.Next(0, 10) / 10), (2 * y) + (r.Next(0, 10) / 1)), Quaternion.identity);
+                        GameObject skull = Instantiate(layer3Skull1, new Vector3((2 * x) + (r.Next(-80, 80) / 100f), (2 * y) + (r.Next(-80, 80) / 100f)), Quaternion.identity);
                         skull.transform.parent = mazeParent.transform;
                     }
                     if (r.Next(0, 100) < 30) {
-                        GameObject skull = Instantiate(layer3Skull2, new Vector3((2 * x) + (r.Next(0, 10) / 10), (2 * y) + (r.Next(0, 10) / 10)), Quaternion.identity);
+                        GameObject skull = Instantiate(layer3Skull2, new Vector3((2 * x) + (r.Next(-80, 80) / 100f), (2 * y) + (r.Next(-80, 80) / 100f)), Quaternion.identity);
                         skull.transform.parent = mazeParent.transform;
                     }
                 }
@@ -265,7 +275,7 @@ public class InstantiateMaze : MonoBehaviour {
         while (true) {
             if (attempts == 100) {
                 Debug.Log("No Floor found within 100 attempts!");
-                return new Vector3(0, 0, 0); 
+                return new Vector3(10, 10, 0); 
             }
             GameObject spawnPos = allObjects[(int)Math.Truncate((decimal)UnityEngine.Random.Range(0, allObjects.Length-1))];
             if (spawnPos.CompareTag("FLOOR")) {

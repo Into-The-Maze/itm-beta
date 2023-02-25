@@ -261,7 +261,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0
+  m_Intensity: 0.1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 000000008914377ae120b15f83bcb873
@@ -911,8 +911,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f69d34bfb637644941192c2cd73bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldOfView: {fileID: 0}
   staminaBar: {fileID: 297853794}
+  playerSprite: {fileID: 891252456}
+  dodgeSpeed: 50
   wallMask:
     serializedVersion: 2
     m_Bits: 64
@@ -1598,7 +1599,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ccecb11c080704c9133917999d152e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldOfView: {fileID: 0}
 --- !u!212 &891252459
 SpriteRenderer:
   m_ObjectHideFlags: 0

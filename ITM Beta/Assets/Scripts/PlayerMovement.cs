@@ -9,23 +9,27 @@ using Unity.VisualScripting;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class PlayerMovement : MonoBehaviour {
-
-    [SerializeField] private FieldOfView fieldOfView;
-    private Rigidbody2D playerBody;
+    
     public Slider staminaBar;
+    public GameObject playerSprite;
 
-    float currentSpeed = 0f;
+    //private Rigidbody2D playerBody;
+    //float currentSpeed = 0f;
     //float weight = 10f;
-    float maxSpeed = 5f;
-    float acceleration = 0.6f;
-    static float maxStamina = 50f;
-    float stamina = maxStamina;
-    float speedModifier = 1f;
-    (bool, float) movement;
-    public static float lastRadiansFromNorth = 0f;
-    Vector2 moveVector;
-    Vector2 lastVector;
+    //float acceleration = 1f;
+    //(bool, float) movement;
+    //Vector2 moveVector;
+    //Vector2 lastVector;
 
+    float maxSpeed = 100f;
+    public static float lastRadiansFromNorth = 0f;
+    float speedModifier = 4f;
+    public static float stamina = maxStamina;
+    static float maxStamina = 50f;
+    public static Vector3 movementDirection;
+
+    public float dodgeSpeed;
+    
     public static MovementType movementType = MovementType.Walking;
 
     public LayerMask wallMask;
@@ -34,22 +38,43 @@ public class PlayerMovement : MonoBehaviour {
     //public LayerMask vaultMask;
 
     void Start() {
-        playerBody = GetComponent<Rigidbody2D>();
-        ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
-        movement = GetRotation(ref lastRadiansFromNorth);
+        //playerBody = GetComponent<Rigidbody2D>();
+        ChangeMovementType(ref movementType, ref stamina, ref speedModifier, dodgeSpeed, maxStamina);
+        //movement = GetRotation(ref lastRadiansFromNorth);
         staminaBar.maxValue = maxStamina;
     }
 
     void Update(){
-        ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
-        movement = GetRotation(ref lastRadiansFromNorth);
+        ChangeMovementType(ref movementType, ref stamina, ref speedModifier, dodgeSpeed, maxStamina);
+
+        //much simpler and more efficient, allows features to be added easily,
+        //but you bounce weirdly against walls if you try to walk into them
+
+        if (movementType != MovementType.Dodging) {
+            simpleMovement(maxSpeed, speedModifier);
+        }
+        
+
+        //movement = GetRotation(ref lastRadiansFromNorth);
         staminaBar.value = stamina;
-        fieldOfView.SetOrigin(transform.position);
-    }
-    void FixedUpdate() {
-        Movement(ref moveVector, ref lastVector, speedModifier, movement.Item1, ref lastRadiansFromNorth, movement.Item2, ref currentSpeed, maxSpeed, playerBody, acceleration);
+        //fieldOfView.SetOrigin(transform.position);
     }
 
+    void FixedUpdate() {
+        //Movement(ref moveVector, ref lastVector, speedModifier, movement.Item1, ref lastRadiansFromNorth, movement.Item2, ref currentSpeed, maxSpeed, playerBody, acceleration);
+
+    }
+
+    private void simpleMovement(float maxSpeed, float speedModifier) {
+        float x = Input.GetAxis("Horizontal");
+        float y = Input.GetAxis("Vertical");
+        Vector3 movement = new Vector3(x, y, 0);
+        movement = Vector3.ClampMagnitude(movement, maxSpeed);
+        movementDirection = movement;
+        transform.Translate(speedModifier * Time.deltaTime * movement);
+    }
+
+    //redundant
     static (bool, float) GetRotation(ref float lastRadiansFromNorth) {
         //gets rotation of player and if they are moving
 
@@ -78,6 +103,8 @@ public class PlayerMovement : MonoBehaviour {
                 return (false, lastRadiansFromNorth);
         }
     }
+
+    //NOT redundant
     public static float GetRotation(float lastRadiansFromNorth) {
         //gets rotation of player and if they are moving
 
@@ -106,6 +133,7 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+    //redundant
     static void Movement(ref Vector2 moveVector, ref Vector2 lastVector, float speedModifier, bool isMoving, ref float lastRadiansFromNorth, float radiansFromNorth, ref float currentSpeed, float maxSpeed, Rigidbody2D playerBody, float acceleration) {
         //moves the player with wasd at the correct speeds
 
@@ -130,41 +158,52 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-    static void ChangeMovementType(ref MovementType movementType, ref float stamina, ref float speedModifier, float maxStamina) {
+    void ChangeMovementType(ref MovementType movementType, ref float stamina, ref float speedModifier, float dodgeSpeed, float maxStamina) {
         //changes movement speed and stamina depending on wether play is running, sneaking or walking
 
-        if (Input.GetKeyDown("left shift") && stamina > 10) {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && stamina > 10) {
             movementType = MovementType.Running;
             //ToggleInventory.shutFOVRun();
         }
-        else if (Input.GetKeyDown("left ctrl")) {
+        else if (Input.GetKeyDown(KeyCode.LeftControl)) {
             movementType = MovementType.Sneaking;
             //ToggleInventory.openFOVRun();
         }
-        else if ((Input.GetKeyUp("left ctrl") && movementType == MovementType.Sneaking) || 
-            (Input.GetKeyUp("left shift") && movementType == MovementType.Running) ||
+        else if (Input.GetKeyDown(KeyCode.Space) && stamina >= 25f) {
+            movementType = MovementType.Dodging;
+            Dodge(dodgeSpeed);
+        }
+        else if ((Input.GetKeyUp(KeyCode.LeftControl) && movementType == MovementType.Sneaking) || 
+            (Input.GetKeyUp(KeyCode.LeftShift) && movementType == MovementType.Running) ||
             stamina == 0) {
             movementType = MovementType.Walking;
         }   
 
         if (movementType == MovementType.Running) {
-            speedModifier = 2f;
+            speedModifier = 6f;
             stamina = Mathf.Clamp(stamina - (10 * Time.deltaTime), 0, maxStamina);
         }
         else if (movementType == MovementType.Sneaking) {
-            speedModifier = 0.5f;
+            speedModifier = 1.4f;
             stamina = Mathf.Clamp(stamina + (10 * Time.deltaTime), 0, maxStamina);
         }
         else {
-            speedModifier = 1f;
+            speedModifier = 4f;
             stamina = Mathf.Clamp(stamina + (5 * Time.deltaTime), 0, maxStamina);
         }
+    }
+
+    private void Dodge(float dodgeSpeed) {
+        transform.Translate(dodgeSpeed * Time.deltaTime * movementDirection.normalized);
+        stamina -= 25;
+        movementType = MovementType.Walking;
     }
 
     public enum MovementType {
         //enum for movement type
         Walking,
         Running,
-        Sneaking
+        Sneaking,
+        Dodging
     }
 }

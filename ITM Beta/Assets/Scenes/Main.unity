@@ -261,7 +261,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.1
+  m_Intensity: 0.05
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 000000008914377ae120b15f83bcb873
@@ -330,7 +330,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105969194}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2.543914, y: 7.759238, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -596,7 +596,7 @@ MonoBehaviour:
   m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
-  m_LightOrder: 0
+  m_LightOrder: 1
   m_AlphaBlendOnOverlap: 0
   m_OverlapOperation: 1
   m_NormalMapDistance: 3
@@ -791,10 +791,10 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 2147483647
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -1103,7 +1103,7 @@ MonoBehaviour:
   m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
-  m_LightOrder: 0
+  m_LightOrder: 1
   m_AlphaBlendOnOverlap: 0
   m_OverlapOperation: 1
   m_NormalMapDistance: 3
@@ -1838,9 +1838,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 622508036}
   mazeParent: {fileID: 1436951011}
-  blockX2: {fileID: 3700896281571399095, guid: 90a91eb1252dceb4588ae45291c6448f, type: 3}
-  blockX4: {fileID: 3700896281571399095, guid: 99d0a57fd60c39146829830cdcf29375, type: 3}
-  blockX8: {fileID: 3700896281571399095, guid: e30aacff20fefd143bc328b9d51f7a69, type: 3}
   layer0Wall: {fileID: 3700896281571399095, guid: bd4c819c55b4a124da26d5cf1414f747, type: 3}
   layer0Floor: {fileID: 5567696050990112427, guid: 9c14d063f6a9ab8499bac8fdc45e7483, type: 3}
   layer0Door: {fileID: 5567696050990112427, guid: a1dae746df22f8448b2713bccd53a086, type: 3}
@@ -1850,7 +1847,7 @@ MonoBehaviour:
   layer2WaterFloor: {fileID: 5567696050990112427, guid: e7f72262e934eb64ea603f0edb502cbf, type: 3}
   layer2Floor: {fileID: 5567696050990112427, guid: c387829f240416943afac804373ae9ee, type: 3}
   layer2IllusionFloor: {fileID: 5567696050990112427, guid: ee0b1e1cf369afa449a16bc3f03247f3, type: 3}
-  layer3Wall: {fileID: 3700896281571399095, guid: 13aedf2a2aedd024cb9911501e508501, type: 3}
+  layer3Wall: {fileID: 5567696050990112427, guid: 323080cc19b15a648b498956332ec767, type: 3}
   layer3Floor: {fileID: 5567696050990112427, guid: 90867670829a76c45997d0bbbbec38d1, type: 3}
   layer3RoomFloor: {fileID: 5567696050990112427, guid: f47ca544bf8a0824db64ba8e669351b6, type: 3}
   layer3RoomEdgeRight: {fileID: 5567696050990112427, guid: c8fb9d1c6b3080d42b76864509d8cb65, type: 3}

@@ -13,9 +13,6 @@ public class InstantiateMaze : MonoBehaviour {
     public static Random r = new Random();
 
     public GameObject mazeParent;
-    public GameObject blockX2;
-    public GameObject blockX4;
-    public GameObject blockX8;
 
     public GameObject layer0Wall;
     public GameObject layer0Floor;
@@ -78,8 +75,6 @@ public class InstantiateMaze : MonoBehaviour {
                 else {
                     GameObject wall = Instantiate(layer0Wall, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
                     wall.transform.parent = mazeParent.transform;
-                    GameObject block = Instantiate(blockX4, new Vector3(4 * x, 4 * y,  0), Quaternion.identity);
-                    block.transform.parent = mazeParent.transform;
                 }
             }
         }
@@ -94,8 +89,6 @@ public class InstantiateMaze : MonoBehaviour {
                 else {
                     GameObject wall = Instantiate(layer1Wall, new Vector3(8 * x, 8 * y, 0), Quaternion.identity);
                     wall.transform.parent = mazeParent.transform;
-                    GameObject block = Instantiate(blockX8, new Vector3(8 * x, 8 * y, 0), Quaternion.identity);
-                    block.transform.parent = mazeParent.transform;
                 }
             }
         }
@@ -135,15 +128,15 @@ public class InstantiateMaze : MonoBehaviour {
                     floor.transform.parent = mazeParent.transform;
                     //blood
                     if (r.Next(0, 100) < 15) {
-                        GameObject blood = Instantiate(layer3Blood1, new Vector3((2 * x) + (r.Next(10, 90) / 100f), (2 * y) + (r.Next(10, 90) / 100f)), Quaternion.identity);
+                        GameObject blood = Instantiate(layer3Blood1, new Vector3((2 * x), (2 * y)), Quaternion.identity);
                         blood.transform.parent = mazeParent.transform;
                     }
                     if (r.Next(0, 100) < 15) {
-                        GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x) + (r.Next(10, 90) / 100f), (2 * y) + (r.Next(10, 90) / 100f)), Quaternion.identity);
+                        GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x), (2 * y)), Quaternion.identity);
                         blood.transform.parent = mazeParent.transform;
                     }
                     if (r.Next(0, 100) < 15) {
-                        GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x) + (r.Next(-80, 80) / 100f), (2 * y) + (r.Next(-80, 80) / 100f)), Quaternion.identity);
+                        GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x), (2 * y)), Quaternion.identity);
                         blood.transform.parent = mazeParent.transform;
                     }
                     //candles
@@ -182,7 +175,7 @@ public class InstantiateMaze : MonoBehaviour {
                     }
                     if (r.Next(0, 100) < 25) {
                         GameObject blood = Instantiate(layer3Blood2, new Vector3((2 * x) + (r.Next(-80, 80) / 100f), (2 * y) + (r.Next(-80, 80) / 100f)), Quaternion.identity);
-                        blood.transform.parent = mazeParent.transform;
+                        blood.transform.parent = mazeParent.transform;  
                     }
                     //skulls
                     if (r.Next(0, 100) < 30) {
@@ -197,8 +190,6 @@ public class InstantiateMaze : MonoBehaviour {
                 else {
                     GameObject wall = Instantiate(layer3Wall, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
                     wall.transform.parent = mazeParent.transform;
-                    GameObject block = Instantiate(blockX2, new Vector3(2 * x, 2 * y, 0), Quaternion.identity);
-                    block.transform.parent = mazeParent.transform;
                 }
             }
         }

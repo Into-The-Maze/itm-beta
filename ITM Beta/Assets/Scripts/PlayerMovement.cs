@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour {
 
     #region dodge
     private float activeMoveSpeed;
-    private float dodgeSpeed, dodgeLength = 0.5f;//, dodgeCooldown = 1f;
+    private float dodgeSpeed = 10f, dodgeLength = 0.15f, dodgeCooldown = 1f;
     private float dodgeCounter, dodgeCooldownCounter;
     #endregion
 
@@ -53,7 +53,8 @@ public class PlayerMovement : MonoBehaviour {
 
     void Update(){
         ChangeMovementType(ref movementType, ref stamina, ref speedModifier, dodgeSpeed, maxStamina);
-
+        handleDodge();
+        handleDodgeCooldown();
 
         if (movementType != MovementType.Dodging) {
             simpleMovement(speedModifier, activeMoveSpeed);
@@ -75,6 +76,23 @@ public class PlayerMovement : MonoBehaviour {
         if (dodgeCooldownCounter <= 0 && dodgeCounter <= 0) {
             activeMoveSpeed = dodgeSpeed;
             dodgeCounter = dodgeLength;
+        }
+    }
+
+    private void handleDodge() {
+        if (dodgeCounter > 0) {
+            dodgeCounter -= Time.deltaTime;
+
+            if (dodgeCounter <= 0) {
+                activeMoveSpeed = moveSpeed;
+                dodgeCooldownCounter = dodgeCooldown;
+            }
+        }
+    }
+
+    private void handleDodgeCooldown() {
+        if (dodgeCooldownCounter > 0) {
+            dodgeCooldownCounter -= Time.deltaTime;
         }
     }
     
@@ -122,7 +140,8 @@ public class PlayerMovement : MonoBehaviour {
         }
         else if (Input.GetKeyDown(KeyCode.Space) && stamina >= 25f) {
             movementType = MovementType.Dodging;
-            //Dodge();
+            doDodge();
+            movementType = MovementType.Walking;
         }
         else if ((Input.GetKeyUp(KeyCode.LeftControl) && movementType == MovementType.Sneaking) || 
             (Input.GetKeyUp(KeyCode.LeftShift) && movementType == MovementType.Running) ||

@@ -61,7 +61,7 @@ public class InstantiateMaze : MonoBehaviour {
     public GameObject candle;
     //public GameObject lampPost;
     //public GameObject lampPostFlicker;
-    #endregion
+    #endregion  
 
     private void Start() {
         Vector3 spawn = SetPlayerSpawnPos();
@@ -98,7 +98,7 @@ public class InstantiateMaze : MonoBehaviour {
         }
     }
     private void InstantiateMazeLayer1(char[,] maze) {
-        int layer1Upscale = 5;
+        int layer1Upscale = 8;
         string setting = SetLayer1Setting();
         string weather = SetLayer1Weather();
         Debug.Log($"{setting}, {weather}");
@@ -321,7 +321,7 @@ public class InstantiateMaze : MonoBehaviour {
         int i;
         int random = r.Next(1, 101);
         string[] lightColours = { "0xFFFFFF", "0x627FFF", "0x627FFF", "0xFF3E3C" };
-        float[] lightLevels = { 0.1825f, 0.4375f, 0.5f, 0.5f };
+        float[] lightLevels = { 0.125f, 0.25f, 0.375f, 0.4375f };
         string[] settingNames = { "starlight", "moonlight", "full moon", "blood moon" };
         globalLight = globalLightObj.GetComponent<Light2D>();   
         globalWallLight = globalWallLightObj.GetComponent<Light2D>();
@@ -338,7 +338,7 @@ public class InstantiateMaze : MonoBehaviour {
             i = 3; // blood moon
         }
         globalLight.intensity = lightLevels[i];
-        globalWallLight.intensity = lightLevels[i];
+        globalWallLight.intensity = lightLevels[i] + 0.1f ;
         globalLight.color = hexToColor(lightColours[i]);
         globalWallLight.color = hexToColor(lightColours[i]);
         return settingNames[i];

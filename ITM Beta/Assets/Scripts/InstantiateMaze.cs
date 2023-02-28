@@ -8,6 +8,7 @@ public class InstantiateMaze : MonoBehaviour {
     private static Random r = new Random();
     public GameObject player;
     public GameObject mazeParent;
+    public GameObject shadowCasterParent;
 
     public GameObject globalLightObj;
     public GameObject globalWallLightObj;
@@ -68,9 +69,9 @@ public class InstantiateMaze : MonoBehaviour {
     }
     private void Awake() {  
         //InstantiateMazeLayer0(InitialiseLayer0());
-        InstantiateMazeLayer1(initialiseMazeLayer1());
+        //InstantiateMazeLayer1(initialiseMazeLayer1());
         //InstantiateMazeLayer2(initialiseMazeLayer2());
-        //InstantiateMazeLayer3(initialiseMazeLayer3());
+        InstantiateMazeLayer3(initialiseMazeLayer3());
         //InstantiateLayer4Pyramid(InitialiseLayer4Pyramid());
     }
 
@@ -108,7 +109,7 @@ public class InstantiateMaze : MonoBehaviour {
                 }
                 else {
                     GameObject wall = Instantiate(layer1Wall, new Vector3(8 * x, 8 * y, 0), Quaternion.identity);
-                    wall.transform.parent = mazeParent.transform;
+                    wall.transform.parent = shadowCasterParent.transform;
                 }
             }
         }
@@ -319,7 +320,7 @@ public class InstantiateMaze : MonoBehaviour {
         int i;
         int random = r.Next(1, 101);
         string[] lightColours = { "0xFFFFFF", "0x88EDFF", "0x88EDFF", "0xFF3E3C" };
-        float[] lightLevels = { 0.125f, 0.1875f, 0.3125f, 0.3125f };
+        float[] lightLevels = { 0.1875f, 0.25f, 0.3125f, 0.3125f };
         string[] settingNames = { "starlight", "moonlight", "full moon", "blood moon" };
         globalLight = globalLightObj.GetComponent<Light2D>();   
         globalWallLight = globalWallLightObj.GetComponent<Light2D>();

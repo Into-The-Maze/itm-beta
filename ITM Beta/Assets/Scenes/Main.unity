@@ -916,7 +916,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   staminaBar: {fileID: 297853794}
   playerSprite: {fileID: 891252456}
-  dodgeSpeed: 50
+  rb2d: {fileID: 622508040}
   wallMask:
     serializedVersion: 2
     m_Bits: 64

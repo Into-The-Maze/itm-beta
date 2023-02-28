@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour {
     #region movement
     public static float lastRadiansFromNorth = 0f;
     float speedModifier = 1f;
-    float moveSpeed = 4f;
+    float moveSpeed = 1f;
     public static float stamina = maxStamina;
     static float maxStamina = 50f;
     private Vector2 moveInput;
@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour {
 
     #region dodge
     private float activeMoveSpeed;
-    private float dodgeSpeed, dodgeLength = 0.5f, dodgeCooldown = 1f;
+    private float dodgeSpeed, dodgeLength = 0.5f;//, dodgeCooldown = 1f;
     private float dodgeCounter, dodgeCooldownCounter;
     #endregion
 
@@ -122,7 +122,7 @@ public class PlayerMovement : MonoBehaviour {
         }
         else if (Input.GetKeyDown(KeyCode.Space) && stamina >= 25f) {
             movementType = MovementType.Dodging;
-            Dodge();
+            //Dodge();
         }
         else if ((Input.GetKeyUp(KeyCode.LeftControl) && movementType == MovementType.Sneaking) || 
             (Input.GetKeyUp(KeyCode.LeftShift) && movementType == MovementType.Running) ||

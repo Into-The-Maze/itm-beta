@@ -69,9 +69,9 @@ public class InstantiateMaze : MonoBehaviour {
     }
     private void Awake() {  
         //InstantiateMazeLayer0(InitialiseLayer0());
-        //InstantiateMazeLayer1(initialiseMazeLayer1());
+        InstantiateMazeLayer1(initialiseMazeLayer1());
         //InstantiateMazeLayer2(initialiseMazeLayer2());
-        InstantiateMazeLayer3(initialiseMazeLayer3());
+        //InstantiateMazeLayer3(initialiseMazeLayer3());
         //InstantiateLayer4Pyramid(InitialiseLayer4Pyramid());
     }
 
@@ -98,17 +98,18 @@ public class InstantiateMaze : MonoBehaviour {
         }
     }
     private void InstantiateMazeLayer1(char[,] maze) {
+        int layer1Upscale = 5;
         string setting = SetLayer1Setting();
         string weather = SetLayer1Weather();
         Debug.Log($"{setting}, {weather}");
         for (int y = 0; y < maze.GetLength(0); y++ ) {
             for (int x = 0; x < maze.GetLength(1); x++) {
                 if (maze[y, x] == ' ') {
-                    GameObject floor = Instantiate(layer1Floor, new Vector3(8 * x, 8 * y, 0), Quaternion.identity);
+                    GameObject floor = Instantiate(layer1Floor, new Vector3(layer1Upscale * x, layer1Upscale * y, 0), Quaternion.identity);
                     floor.transform.parent = mazeParent.transform;
                 }
                 else {
-                    GameObject wall = Instantiate(layer1Wall, new Vector3(8 * x, 8 * y, 0), Quaternion.identity);
+                    GameObject wall = Instantiate(layer1Wall, new Vector3(layer1Upscale * x, layer1Upscale * y, 0), Quaternion.identity);
                     wall.transform.parent = shadowCasterParent.transform;
                 }
             }
@@ -319,8 +320,8 @@ public class InstantiateMaze : MonoBehaviour {
     private string SetLayer1Setting() {
         int i;
         int random = r.Next(1, 101);
-        string[] lightColours = { "0xFFFFFF", "0x88EDFF", "0x88EDFF", "0xFF3E3C" };
-        float[] lightLevels = { 0.1875f, 0.25f, 0.3125f, 0.3125f };
+        string[] lightColours = { "0xFFFFFF", "0x627FFF", "0x627FFF", "0xFF3E3C" };
+        float[] lightLevels = { 0.1825f, 0.4375f, 0.5f, 0.5f };
         string[] settingNames = { "starlight", "moonlight", "full moon", "blood moon" };
         globalLight = globalLightObj.GetComponent<Light2D>();   
         globalWallLight = globalWallLightObj.GetComponent<Light2D>();

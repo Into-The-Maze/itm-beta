@@ -1,31 +1,38 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using System;
-using UnityEngine.Tilemaps;
+using UnityEngine.Rendering.Universal;
 using Random = System.Random;
 
 public class InstantiateMaze : MonoBehaviour {
 
-
-    public GameObject player;   
-
-    public static Random r = new Random();
-
+    private static Random r = new Random();
+    public GameObject player;
     public GameObject mazeParent;
 
+    public GameObject globalLightObj;
+    public GameObject globalWallLightObj;
+    private Light2D globalLight;
+    private Light2D globalWallLight;
+
+    #region layer0
     public GameObject layer0Wall;
     public GameObject layer0Floor;
     public GameObject layer0Door;
+    #endregion
 
+    #region layer1
     public GameObject layer1Wall;
     public GameObject layer1Floor;
-    
+    #endregion
+
+    #region layer2
     public GameObject layer2Wall;
     public GameObject layer2WaterFloor;
     public GameObject layer2Floor;
     public GameObject layer2IllusionFloor;
+    #endregion
 
+    #region layer3
     public GameObject layer3Wall;
     public GameObject layer3Floor;
     public GameObject layer3RoomFloor;
@@ -38,30 +45,40 @@ public class InstantiateMaze : MonoBehaviour {
     public GameObject layer3Blood3;
     public GameObject layer3Skull1;
     public GameObject layer3Skull2;
+    #endregion
 
+    #region layer4
     public GameObject layer4WallHorizontal;
     public GameObject layer4WallVertical;
     public GameObject layer4Floor;
     public GameObject layer4Corner;
     public GameObject layer4VerticalBlock;
     public GameObject layer4HorizontalBlock;
+    #endregion
 
+    #region lights
     public GameObject candle;
-
+    //public GameObject lampPost;
+    //public GameObject lampPostFlicker;
+    #endregion
 
     private void Start() {
         Vector3 spawn = SetPlayerSpawnPos();
         player.transform.position = spawn;
     }
     private void Awake() {  
-        //InstantiateMazeLayer0(InitialiseLabs());
-        //InstantiateMazeLayer1(initialiseMazeLayer1());
+        //InstantiateMazeLayer0(InitialiseLayer0());
+        InstantiateMazeLayer1(initialiseMazeLayer1());
         //InstantiateMazeLayer2(initialiseMazeLayer2());
-        InstantiateMazeLayer3(initialiseMazeLayer3());
-        //InstantiatePyramid(InitialisePyramid());
+        //InstantiateMazeLayer3(initialiseMazeLayer3());
+        //InstantiateLayer4Pyramid(InitialiseLayer4Pyramid());
     }
 
-    public void InstantiateMazeLayer0(char[,] maze) {
+    private void InstantiateMazeLayer0(char[,] maze) {
+        globalLight = globalLightObj.GetComponent<Light2D>();
+        globalWallLight = globalWallLightObj.GetComponent<Light2D>();
+        globalLight.intensity = 1f;
+        globalWallLight.intensity= 0.375f;
         for (int y = 0; y < maze.GetLength(0); y ++ ) {
             for (int x = 0; x < maze.GetLength(1); x++ ) {
                 if (maze[y, x] == ' ') {
@@ -79,7 +96,10 @@ public class InstantiateMaze : MonoBehaviour {
             }
         }
     }
-    public void InstantiateMazeLayer1(char[,] maze) {
+    private void InstantiateMazeLayer1(char[,] maze) {
+        string setting = SetLayer1Setting();
+        string weather = SetLayer1Weather();
+        Debug.Log($"{setting}, {weather}");
         for (int y = 0; y < maze.GetLength(0); y++ ) {
             for (int x = 0; x < maze.GetLength(1); x++) {
                 if (maze[y, x] == ' ') {
@@ -92,8 +112,13 @@ public class InstantiateMaze : MonoBehaviour {
                 }
             }
         }
-    }                                   
-    public void InstantiateMazeLayer2(char[,] maze) {
+    }
+    private void InstantiateMazeLayer2(char[,] maze) {
+
+        globalLight = globalLightObj.GetComponent<Light2D>();
+        globalWallLight = globalWallLightObj.GetComponent<Light2D>();
+        globalLight.intensity = 0f;
+        globalWallLight.intensity = 0.125f;
         for (int y = 0; y < maze.GetLength(0); y++) {
             for (int x = 0; x < maze.GetLength(1); x++) {
                 if (maze[y, x] == '#') {
@@ -120,7 +145,11 @@ public class InstantiateMaze : MonoBehaviour {
             }
         }
     }
-    public void InstantiateMazeLayer3(char[,] maze) {
+    private void InstantiateMazeLayer3(char[,] maze) {
+        globalLight = globalLightObj.GetComponent<Light2D>();
+        globalWallLight = globalWallLightObj.GetComponent<Light2D>();
+        globalLight.intensity = 0f;
+        globalWallLight.intensity = 0.125f;
         for (int y = 0; y < maze.GetLength(0); y++) {
             for (int x = 0; x < maze.GetLength(1); x++) {
                 if (maze[x, y] == ' ') {
@@ -194,7 +223,12 @@ public class InstantiateMaze : MonoBehaviour {
             }
         }
     }
-    public void InstantiatePyramid(GenerateMazeLayer4.Tile[,] maze) {
+    // actual layer4 (desert)
+    private void InstantiateLayer4Pyramid(GenerateMazeLayer4.Tile[,] maze) {
+        globalLight = globalLightObj.GetComponent<Light2D>();
+        globalWallLight = globalWallLightObj.GetComponent<Light2D>();
+        globalLight.intensity = 0f;
+        globalWallLight.intensity = 0;
         for (int y = 0; y < maze.GetLength(0); y ++) {
             for (int x = 0; x < maze.GetLength(1); x ++) {
                 var floor = Instantiate(layer4Floor, new Vector3((8 * x), (8 * y), 0), Quaternion.identity);
@@ -203,6 +237,10 @@ public class InstantiateMaze : MonoBehaviour {
                 var corner3 = Instantiate(layer4Corner, new Vector3((8 * x) + 3.75f, (8 * y) - 3.75f, 0), Quaternion.identity);
                 var corner4 = Instantiate(layer4Corner, new Vector3((8 * x) - 3.75f, (8 * y) - 3.75f, 0), Quaternion.identity);
                 floor.transform.parent = mazeParent.transform;
+                if (r.Next(0, 100) < 25) {
+                    GameObject item = Instantiate(candle, new Vector3((8 * x) + (r.Next(-80, 80) / 25f), (8 * y) + (r.Next(-80, 80) / 25f)), Quaternion.identity);
+                    item.transform.parent = mazeParent.transform;
+                }
                 corner1.transform.parent = mazeParent.transform;
                 corner2.transform.parent = mazeParent.transform;
                 corner3.transform.parent = mazeParent.transform;
@@ -235,27 +273,27 @@ public class InstantiateMaze : MonoBehaviour {
         }
     }
 
-    public char[,] initialiseMazeLayer1() {
-        return GenerateMazeLayer1.generatePerfectMaze();
-    }
-    public char[,] initialiseMazeLayer2() {
-        char[,] maze = GenerateMazeLayer2.makeBinaryTreeMaze();
-        return maze;
-    }
-    public char[,] initialiseMazeLayer3() {
-        char[,] maze = GenerateMazeLayer3.GenerateMaze();
-        return maze;
-    }
-    public char[,] InitialiseLabs() {
+    private char[,] InitialiseLayer0() {
         char[,] maze = GenerateMazeLayer0.CreateArray();
         GenerateMazeLayer0.Room[] roomList = new GenerateMazeLayer0.Room[0];
         GenerateMazeLayer0.PlaceDefaultAndRandomRooms(ref maze, ref roomList);
-        
+
         int currentRoom = GenerateMazeLayer0.SetStartRoom(ref roomList);
         (char, int, int, int) start;
         return GenerateMazeLayer0.Mazeify(ref maze, ref roomList, ref currentRoom, out start);
     }
-    public GenerateMazeLayer4.Tile[,] InitialisePyramid() {
+    private char[,] initialiseMazeLayer1() {
+        return GenerateMazeLayer1.generatePerfectMaze();
+    }
+    private char[,] initialiseMazeLayer2() {
+        char[,] maze = GenerateMazeLayer2.makeBinaryTreeMaze();
+        return maze;
+    }
+    private char[,] initialiseMazeLayer3() {
+        char[,] maze = GenerateMazeLayer3.GenerateMaze();
+        return maze;
+    }
+    private GenerateMazeLayer4.Tile[,] InitialiseLayer4Pyramid() {
         GenerateMazeLayer4.Tile[,] maze = GenerateMazeLayer4.CreateHuntKillMaze();
         return maze;
     }
@@ -274,5 +312,65 @@ public class InstantiateMaze : MonoBehaviour {
             }
             attempts++;
         }
-    }   
+    }
+
+    // layer 0 setting
+    private string SetLayer1Setting() {
+        int i;
+        int random = r.Next(1, 101);
+        string[] lightColours = { "0xFFFFFF", "0x88EDFF", "0x88EDFF", "0xFF3E3C" };
+        float[] lightLevels = { 0.125f, 0.1875f, 0.3125f, 0.3125f };
+        string[] settingNames = { "starlight", "moonlight", "full moon", "blood moon" };
+        globalLight = globalLightObj.GetComponent<Light2D>();   
+        globalWallLight = globalWallLightObj.GetComponent<Light2D>();
+        if (random <= 26) {
+            i = 0; // starlight
+        }
+        else if (random <= 91) {
+            i = 1; // moonlight
+        }
+        else if (random <= 99){
+            i = 2; // full moon
+        }
+        else {
+            i = 3; // blood moon
+        }
+        globalLight.intensity = lightLevels[i];
+        globalWallLight.intensity = lightLevels[i];
+        globalLight.color = hexToColor(lightColours[i]);
+        globalWallLight.color = hexToColor(lightColours[i]);
+        return settingNames[i];
+    }
+    private string SetLayer1Weather() {
+        int random = r.Next(1, 5);
+        string[] weathers = { "clear", "storm" };
+        if (random <= 3) {
+            return weathers[0]; 
+        }
+        else {
+            return weathers[1];
+        }
+    }
+    // layer 2 setting
+    // layer 3 setting
+    // layer 4 setting
+
+    /// <summary>
+    /// Method to convert hex RGB string of format "0xFFFFFF" into a UnityEngine.Color value.
+    /// </summary>
+    /// <param name="hex"></param>
+    /// <returns></returns>
+    private UnityEngine.Color hexToColor(string hex) {
+        hex = hex.Replace("0x", "");//in case the string is formatted 0xFFFFFF
+        hex = hex.Replace("#", "");//in case the string is formatted #FFFFFF
+        byte a = 255;//assume fully visible unless specified in hex
+        byte r = byte.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+        byte g = byte.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+        byte b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+        //Only use alpha if the string has enough characters
+        if (hex.Length == 8) {
+            a = byte.Parse(hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
+        }
+        return new Color32(r, g, b, a);
+    }
 }

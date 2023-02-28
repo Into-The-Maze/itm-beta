@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -6887012963889213104}
   - component: {fileID: 5807215144369230498}
   m_Layer: 0
-  m_Name: Candle
+  m_Name: Lamp Post
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,9 +100,9 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 2
-  m_FalloffIntensity: 0.5
-  m_Color: {r: 0.8584906, g: 0.43373302, b: 0.13498275, a: 1}
-  m_Intensity: 0.3
+  m_FalloffIntensity: 0.25
+  m_Color: {r: 0.9056604, g: 0.7960818, b: 0.27910283, a: 1}
+  m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 5
+  m_PointLightOuterRadius: 10
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1

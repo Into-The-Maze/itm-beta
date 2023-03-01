@@ -10,8 +10,7 @@ TagManager:
   - HEADSLOT
   - RINGSLOT
   - CHESTSLOT
-  - WALL_LAYER0
-  - FLOOR_LAYER0
+  - FLOORITEM
   layers:
   - Default
   - TransparentFX

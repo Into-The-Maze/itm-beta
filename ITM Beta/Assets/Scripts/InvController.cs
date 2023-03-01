@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 //Calculation of item size for highlighting can be optimised
 
@@ -49,17 +50,18 @@ public class InvController : MonoBehaviour
             }
         }//test script
 
-        if (Input.GetKeyDown(KeyCode.E)) {
-            InsertRandomItem();
-        }//test script
+        
 
         if (Input.GetKeyDown(KeyCode.R)) {
             RotateItem();
             //inventoryHighlight.SetSize(selectedItem); this needs bugfixing for best looks
         }
 
-        if (Input.GetMouseButtonDown(0) && selectedItemGrid == null && selectedItem != null) {
+        if (Input.GetMouseButtonDown(2) && selectedItemGrid == null && selectedItem != null) {
             throwItem();
+        }
+        else if (Input.GetMouseButtonDown(2) && selectedItemGrid == null && selectedItem == null) {
+            PickUpItemFromFloor();
         }
 
         if (selectedItemGrid == null) {
@@ -75,16 +77,46 @@ public class InvController : MonoBehaviour
         }
     }
 
+    private void PickUpItemFromFloor() {
+
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+        if(hit.collider != null) {
+            if (hit.collider.gameObject != null) {
+                if (hit.collider.gameObject.CompareTag("FLOORITEM")) {
+                    int index = hit.collider.gameObject.GetComponent<ItemDataDump>().itemDataElementReference;
+                    Destroy(hit.collider.gameObject);
+                    CreatePickedUpItem(index);
+                }
+            }
+        }
+    }
+
+    //int index = target.GetComponent<ItemDataDump>().itemDataElementReference;
+        //&& Vector3.Distance(playerSprite.transform.position, hit.transform.gameObject.transform.position) < 100f
+
+
+    
+
+    private void CreatePickedUpItem(int index) {
+        InventoryItem inventoryItem = Instantiate(itemPrefab).GetComponent<InventoryItem>();
+        inventoryItem.name = $"inv{itemAutoNum}";
+        selectedItem = inventoryItem;
+
+        rectTransform = inventoryItem.GetComponent<RectTransform>();
+        rectTransform.SetParent(canvasTransform);
+        rectTransform.SetAsLastSibling();
+
+        inventoryItem.Set(items[index]);
+        inventoryItem.itemDataElementReference = index;
+        itemAutoNum++;
+    }
+
     private void throwItem() {
-
-        
-
         ThrownItem.GetComponent<SpriteRenderer>().sprite = selectedItem.itemData.itemIcon;
+        ThrownItem.GetComponent<ItemDataDump>().itemDataElementReference = selectedItem.itemDataElementReference;
         Destroy(GameObject.Find(selectedItem.name));
         selectedItem = null;
-        
         Instantiate(ThrownItem, playerSprite.transform.position, playerSprite.transform.rotation);
-
     }
 
     private void RotateItem() {
@@ -93,14 +125,6 @@ public class InvController : MonoBehaviour
         selectedItem.Rotate();
     }
 
-    private void InsertRandomItem() {
-        if (selectedItemGrid == null) { return; }
-        if (items.Count == 0) { return; }
-        CreateRandomItem();
-        InventoryItem itemToInsert = selectedItem;
-        selectedItem = null;
-        InsertItem(itemToInsert);
-    }//test script
 
     private void InsertItem(InventoryItem itemToInsert) {
 
@@ -147,6 +171,7 @@ public class InvController : MonoBehaviour
 
         int selectedItemID = UnityEngine.Random.Range(0, items.Count);
         inventoryItem.Set(items[selectedItemID]);
+        inventoryItem.itemDataElementReference = selectedItemID;
         itemAutoNum++;
     }//for testing: generates item on mouse
 

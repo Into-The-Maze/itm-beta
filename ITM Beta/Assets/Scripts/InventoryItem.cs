@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class InventoryItem : MonoBehaviour
 {
     public ItemData itemData;
+    public int itemDataElementReference;
     public int onGridPosX;
     public int onGridPosY;
 

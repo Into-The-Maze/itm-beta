@@ -59,7 +59,7 @@ MonoBehaviour:
     dimension: 1
   dirtIntensity:
     m_OverrideState: 1
-    m_Value: 20
+    m_Value: 10
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,10 +98,10 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.36
+    m_Value: 0.2
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.18
+    m_Value: 0.2
   rounded:
     m_OverrideState: 1
     m_Value: 1
@@ -120,4 +120,4 @@ MonoBehaviour:
   active: 1
   mode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 2

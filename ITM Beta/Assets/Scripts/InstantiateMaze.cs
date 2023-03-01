@@ -6,61 +6,61 @@ using Random = System.Random;
 public class InstantiateMaze : MonoBehaviour {
 
     private static Random r = new Random();
-    public GameObject player;
-    public GameObject mazeParent;
-    public GameObject shadowCasterParent;
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject mazeParent;
+    [SerializeField] private GameObject shadowCasterParent;
 
-    public GameObject globalLightObj;
-    public GameObject globalWallLightObj;
+    [SerializeField] private GameObject globalLightObj;
+    [SerializeField] private GameObject globalWallLightObj;
     private Light2D globalLight;
     private Light2D globalWallLight;
 
     #region layer0
-    public GameObject layer0Wall;
-    public GameObject layer0Floor;
-    public GameObject layer0Door;
+    [SerializeField] private GameObject layer0Wall;
+    [SerializeField] private GameObject layer0Floor;
+    [SerializeField] private GameObject layer0Door;
     #endregion
 
     #region layer1
-    public GameObject layer1Wall;
-    public GameObject layer1Floor;
+    [SerializeField] private GameObject layer1Wall;
+    [SerializeField] private GameObject layer1Floor;
     #endregion
 
     #region layer2
-    public GameObject layer2Wall;
-    public GameObject layer2WaterFloor;
-    public GameObject layer2Floor;
-    public GameObject layer2IllusionFloor;
+    [SerializeField] private GameObject layer2Wall;
+    [SerializeField] private GameObject layer2WaterFloor;
+    [SerializeField] private GameObject layer2Floor;
+    [SerializeField] private GameObject layer2IllusionFloor;
     #endregion
 
     #region layer3
-    public GameObject layer3Wall;
-    public GameObject layer3Floor;
-    public GameObject layer3RoomFloor;
-    public GameObject layer3RoomEdgeRight;
-    public GameObject layer3RoomEdgeLeft;
-    public GameObject layer3RoomEdgeTop;
-    public GameObject layer3RoomEdgeBottom;
-    public GameObject layer3Blood1;
-    public GameObject layer3Blood2;
-    public GameObject layer3Blood3;
-    public GameObject layer3Skull1;
-    public GameObject layer3Skull2;
+    [SerializeField] private GameObject layer3Wall;
+    [SerializeField] private GameObject layer3Floor;
+    [SerializeField] private GameObject layer3RoomFloor;
+    [SerializeField] private GameObject layer3RoomEdgeRight;
+    [SerializeField] private GameObject layer3RoomEdgeLeft;
+    [SerializeField] private GameObject layer3RoomEdgeTop;
+    [SerializeField] private GameObject layer3RoomEdgeBottom;
+    [SerializeField] private GameObject layer3Blood1;
+    [SerializeField] private GameObject layer3Blood2;
+    [SerializeField] private GameObject layer3Blood3;
+    [SerializeField] private GameObject layer3Skull1;
+    [SerializeField] private GameObject layer3Skull2;
     #endregion
 
     #region layer4
-    public GameObject layer4WallHorizontal;
-    public GameObject layer4WallVertical;
-    public GameObject layer4Floor;
-    public GameObject layer4Corner;
-    public GameObject layer4VerticalBlock;
-    public GameObject layer4HorizontalBlock;
+    [SerializeField] private GameObject layer4WallHorizontal;
+    [SerializeField] private GameObject layer4WallVertical;
+    [SerializeField] private GameObject layer4Floor;
+    [SerializeField] private GameObject layer4Corner;
+    [SerializeField] private GameObject layer4VerticalBlock;
+    [SerializeField] private GameObject layer4HorizontalBlock;
     #endregion
 
     #region lights
-    public GameObject candle;
-    //public GameObject lampPost;
-    //public GameObject lampPostFlicker;
+    [SerializeField] private GameObject candle;
+    [SerializeField] private GameObject lampPost;
+    //[SerializeField] private GameObject lampPostFlicker;
     #endregion  
 
     private void Start() {
@@ -105,12 +105,25 @@ public class InstantiateMaze : MonoBehaviour {
         for (int y = 0; y < maze.GetLength(0); y++ ) {
             for (int x = 0; x < maze.GetLength(1); x++) {
                 if (maze[y, x] == ' ') {
-                    GameObject floor = Instantiate(layer1Floor, new Vector3(layer1Upscale * x, layer1Upscale * y, 0), Quaternion.identity);
-                    floor.transform.parent = mazeParent.transform;
+                    Instantiate(layer1Floor, new Vector3(layer1Upscale * x, layer1Upscale * y, 0), Quaternion.identity, mazeParent.transform);
+                    if (r.Next(1, 3) == 1) {
+                        int side = r.Next(1, 5); // 1:top 2:right 3:bottom 4:left
+                        if (side == 1 && maze[y + 1, x] != ' ') {
+                            Instantiate(lampPost, new Vector3(layer1Upscale * x, layer1Upscale * y + 2.5f, 0), Quaternion.Euler(0f, 0, 180f), mazeParent.transform);
+                        }
+                        else if (side == 2 && maze[y, x + 1] != ' ') {
+                            Instantiate(lampPost, new Vector3(layer1Upscale * x + 2.5f, layer1Upscale * y, 0), Quaternion.Euler(0f, 0, 90f), mazeParent.transform);
+                        }
+                        else if (side == 3 && maze[y - 1, x] != ' ') {
+                            Instantiate(lampPost, new Vector3(layer1Upscale * x, layer1Upscale * y - 2.5f, 0), Quaternion.Euler(0f, 0f, 0f), mazeParent.transform);
+                        }
+                        else if (side == 4 && maze[y, x - 1] != ' ') {
+                            Instantiate(lampPost, new Vector3(layer1Upscale * x - 2.5f, layer1Upscale * y, 0), Quaternion.Euler(0f, 0, 270f), mazeParent.transform);
+                        }
+                    }
                 }
                 else {
-                    GameObject wall = Instantiate(layer1Wall, new Vector3(layer1Upscale * x, layer1Upscale * y, 0), Quaternion.identity);
-                    wall.transform.parent = shadowCasterParent.transform;
+                    Instantiate(layer1Wall, new Vector3(layer1Upscale * x, layer1Upscale * y, 0), Quaternion.identity, shadowCasterParent.transform);
                 }
             }
         }
@@ -124,18 +137,18 @@ public class InstantiateMaze : MonoBehaviour {
         for (int y = 0; y < maze.GetLength(0); y++) {
             for (int x = 0; x < maze.GetLength(1); x++) {
                 if (maze[y, x] == '#') {
-                    GameObject wall = Instantiate(layer2Wall, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
+                    GameObject wall = Instantiate(layer2Wall, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
                     wall.transform.parent = mazeParent.transform;
                 }
                 else {
                     System.Random r = new();
                     string floorPicker = Convert.ToString(r.Next(0, 10));
                     if ("01234".Contains(floorPicker)) {
-                        GameObject floor = Instantiate(layer2Floor, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
+                        GameObject floor = Instantiate(layer2Floor, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
                         floor.transform.parent = mazeParent.transform;
                     }
                     else if ("56789".Contains(floorPicker)) {
-                        GameObject floor = Instantiate(layer2WaterFloor, new Vector3(3 * x, 3 * y, 0), Quaternion.identity);
+                        GameObject floor = Instantiate(layer2WaterFloor, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
                         floor.transform.parent = mazeParent.transform;
                     }
                     //ADD ILLUSION FLOOR FUNCTIONALITY LATER BECAUSE THIS METHOD MAKES TOO MANY ILLUSION FLOORS AND THEYRE ALL UNAVOIDABLE
@@ -320,8 +333,8 @@ public class InstantiateMaze : MonoBehaviour {
     private string SetLayer1Setting() {
         int i;
         int random = r.Next(1, 101);
-        string[] lightColours = { "0xFFFFFF", "0x627FFF", "0x627FFF", "0xFF3E3C" };
-        float[] lightLevels = { 0.125f, 0.25f, 0.375f, 0.4375f };
+        string[] lightColours = { "0xFFFFFF", "0x2222FF", "0x5555FF", "0xFF3333" };
+        float[] lightLevels = { 0.25f, 0.875f, 1.125f, 1.125f };
         string[] settingNames = { "starlight", "moonlight", "full moon", "blood moon" };
         globalLight = globalLightObj.GetComponent<Light2D>();   
         globalWallLight = globalWallLightObj.GetComponent<Light2D>();
@@ -347,7 +360,7 @@ public class InstantiateMaze : MonoBehaviour {
         int random = r.Next(1, 5);
         string[] weathers = { "clear", "storm" };
         if (random <= 3) {
-            return weathers[0]; 
+            return weathers[0];     
         }
         else {
             return weathers[1];

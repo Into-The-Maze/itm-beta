@@ -179,11 +179,11 @@ public class InvController : MonoBehaviour
         Vector2Int tileGridPosition = GetTileGridPosition();
 
         if (selectedItem == null) {
-            Debug.Log("picking up item");
+            //Debug.Log("picking up item");
             PickUpItem(tileGridPosition);
         }
         else {
-            Debug.Log("Placing item");
+            //Debug.Log("Placing item");
             switch (selectedItemGrid.tag) {
                 case "WEAPONSLOT":
                     if (!selectedItem.isWeapon) { return; }

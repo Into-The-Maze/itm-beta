@@ -328,7 +328,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 50
   m_WholeNumbers: 0
-  m_Value: 50
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -561,7 +561,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 100
   m_PointLightOuterAngle: 120
   m_PointLightInnerRadius: 12
-  m_PointLightOuterRadius: 21
+  m_PointLightOuterRadius: 27
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -732,7 +732,7 @@ Camera:
   far clip plane: 1000
   field of view: 90
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 13
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

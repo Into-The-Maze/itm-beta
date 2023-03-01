@@ -26,9 +26,9 @@ public class PlayerMovement : MonoBehaviour {
     #region movement
     public static float lastRadiansFromNorth = 0f;
     float speedModifier = 1f;
-    float moveSpeed = 1f;
+    float moveSpeed = 1.125f;
     public static float stamina = maxStamina;
-    static float maxStamina = 50f;
+    static float maxStamina = 80f;
     private Vector2 moveInput;
     #endregion
 
@@ -151,7 +151,7 @@ public class PlayerMovement : MonoBehaviour {
         }   
 
         if (movementType == MovementType.Running) {
-            speedModifier = 6f;
+            speedModifier = 8f;
             stamina = Mathf.Clamp(stamina - (10 * Time.deltaTime), 0, maxStamina);
         }
         else if (movementType == MovementType.Sneaking) {

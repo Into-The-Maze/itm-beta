@@ -49,7 +49,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 2
   m_FalloffIntensity: 0.75
   m_Color: {r: 1, g: 0.48929596, b: 0, a: 1}
-  m_Intensity: 3
+  m_Intensity: 2.75
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000cf5c79878914377a83bcb873
@@ -185,7 +185,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2022089521
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: 5365041663ca6b44aad63bb47a1685b5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -240,4 +240,4 @@ MonoBehaviour:
   - {x: 1.3333321, y: -1.3333321, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 44234
+  m_InstanceId: 40186

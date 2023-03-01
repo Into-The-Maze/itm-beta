@@ -338,19 +338,18 @@ public class InstantiateMaze : MonoBehaviour {
         string[] settingNames = { "starlight", "moonlight", "full moon", "blood moon" };
         globalLight = globalLightObj.GetComponent<Light2D>();   
         globalWallLight = globalWallLightObj.GetComponent<Light2D>();
-        //if (random <= 26) {
-        //    i = 0; // starlight
-        //}
-        //else if (random <= 91) {
-        //    i = 1; // moonlight
-        //}
-        //else if (random <= 99){
-        //    i = 2; // full moon
-        //} 
-        //else {
-        //    i = 3; // blood moon
-        //}
-        i = 3;
+        if (random <= 26) {
+            i = 0; // starlight
+        }
+        else if (random <= 91) {
+            i = 1; // moonlight
+        }
+        else if (random <= 99) {
+            i = 2; // full moon
+        }
+        else {
+            i = 3; // blood moon
+        }
         globalLight.intensity = lightLevels[i];
         globalWallLight.intensity = lightLevels[i];
         globalLight.color = hexToColor(lightColours[i]);

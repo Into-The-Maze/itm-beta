@@ -775,6 +775,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e66a2d356620f954082ed352c5c4c8ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ThrownItem: {fileID: 1619860758556365238, guid: 2a37d6958ca3b3c41af482990b9e78c1, type: 3}
+  playerSprite: {fileID: 891252456}
   items:
   - {fileID: 11400000, guid: 0383b78782d82004a9a0eab77e2f06b2, type: 2}
   - {fileID: 11400000, guid: b8c688c31ffe06946b98335412613d19, type: 2}

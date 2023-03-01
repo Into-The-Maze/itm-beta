@@ -730,7 +730,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 90
   orthographic: 1
   orthographic size: 10
   m_Depth: -1
@@ -938,6 +938,9 @@ MonoBehaviour:
   staminaBar: {fileID: 297853794}
   playerSprite: {fileID: 891252456}
   rb2d: {fileID: 622508040}
+  dodgeSpeed: 6
+  dodgeLength: 0.125
+  dodgeCooldown: 1
   wallMask:
     serializedVersion: 2
     m_Bits: 64
@@ -1775,7 +1778,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2050430089
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 47eb2b84d09087a43a762410006578aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2389,7 +2392,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1726886864}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2.0890703, y: 1.4644865, z: -1.4464545}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2446,15 +2449,15 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 2
-  m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 0.93612033, b: 0.18553454, a: 1}
-  m_Intensity: 0.5
+  m_FalloffIntensity: 0.25
+  m_Color: {r: 1, g: 0.9137255, b: 0.13836467, a: 1}
+  m_Intensity: 0.75
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
-  m_LightOrder: 0
+  m_LightOrder: -1
   m_AlphaBlendOnOverlap: 0
   m_OverlapOperation: 1
   m_NormalMapDistance: 3
@@ -2497,9 +2500,9 @@ MonoBehaviour:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 45
-  m_PointLightOuterAngle: 65
-  m_PointLightInnerRadius: 6
-  m_PointLightOuterRadius: 10
+  m_PointLightOuterAngle: 60
+  m_PointLightInnerRadius: 7
+  m_PointLightOuterRadius: 14
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1

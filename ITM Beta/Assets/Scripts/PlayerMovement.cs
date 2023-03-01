@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour {
 
     #region dodge
     private float activeMoveSpeed;
-    private float dodgeSpeed = 10f, dodgeLength = 0.15f, dodgeCooldown = 1f;
+    public float dodgeSpeed = 8f, dodgeLength = 0.15f, dodgeCooldown = 1f;
     private float dodgeCounter, dodgeCooldownCounter;
     #endregion
 
@@ -141,6 +141,7 @@ public class PlayerMovement : MonoBehaviour {
         else if (Input.GetKeyDown(KeyCode.Space) && stamina >= 25f) {
             movementType = MovementType.Dodging;
             doDodge();
+            stamina -= 25;
             movementType = MovementType.Walking;
         }
         else if ((Input.GetKeyUp(KeyCode.LeftControl) && movementType == MovementType.Sneaking) || 

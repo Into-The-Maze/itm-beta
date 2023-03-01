@@ -333,25 +333,26 @@ public class InstantiateMaze : MonoBehaviour {
     private string SetLayer1Setting() {
         int i;
         int random = r.Next(1, 101);
-        string[] lightColours = { "0xFFFFFF", "0x2222FF", "0x5555FF", "0xFF3333" };
-        float[] lightLevels = { 0.25f, 0.875f, 1.125f, 1.125f };
+        string[] lightColours = { "0xFFFFFF", "4444FF", "0x3333FF", "0xFF0000" };
+        float[] lightLevels = { 0.25f, 1.25f, 2.75f, 0.8125f };
         string[] settingNames = { "starlight", "moonlight", "full moon", "blood moon" };
         globalLight = globalLightObj.GetComponent<Light2D>();   
         globalWallLight = globalWallLightObj.GetComponent<Light2D>();
-        if (random <= 26) {
-            i = 0; // starlight
-        }
-        else if (random <= 91) {
-            i = 1; // moonlight
-        }
-        else if (random <= 99){
-            i = 2; // full moon
-        }
-        else {
-            i = 3; // blood moon
-        }
+        //if (random <= 26) {
+        //    i = 0; // starlight
+        //}
+        //else if (random <= 91) {
+        //    i = 1; // moonlight
+        //}
+        //else if (random <= 99){
+        //    i = 2; // full moon
+        //} 
+        //else {
+        //    i = 3; // blood moon
+        //}
+        i = 3;
         globalLight.intensity = lightLevels[i];
-        globalWallLight.intensity = lightLevels[i] + 0.1f ;
+        globalWallLight.intensity = lightLevels[i];
         globalLight.color = hexToColor(lightColours[i]);
         globalWallLight.color = hexToColor(lightColours[i]);
         return settingNames[i];

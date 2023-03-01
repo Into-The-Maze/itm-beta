@@ -18,6 +18,7 @@ public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         inventoryController.SelectedItemGrid = null;
     }
 
+
     //can be optimised out according to russian youtube man
     private void Awake() {
         inventoryController = FindObjectOfType(typeof(InvController)) as InvController;

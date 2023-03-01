@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 //Calculation of item size for highlighting can be optimised
@@ -9,12 +10,15 @@ public class InvController : MonoBehaviour
 {
     [HideInInspector] //avoids confusion with assigning script
     private ItemGrid selectedItemGrid;
+    private long itemAutoNum = 0;
 
     //holds item currently being dragged
     InventoryItem selectedItem;
     InventoryItem overlapItem;
     RectTransform rectTransform;
 
+    [SerializeField] GameObject ThrownItem;
+    [SerializeField] GameObject playerSprite;
     [SerializeField] List<ItemData> items;
     [SerializeField] GameObject itemPrefab;
     [SerializeField] Transform canvasTransform;
@@ -36,9 +40,7 @@ public class InvController : MonoBehaviour
     }
 
     private void Update() {
-        //stops grid interaction if not hovering over it
         ItemIconDrag();
-        
 
         if(Input.GetKeyDown(KeyCode.Q)) {
             
@@ -56,16 +58,33 @@ public class InvController : MonoBehaviour
             //inventoryHighlight.SetSize(selectedItem); this needs bugfixing for best looks
         }
 
+        if (Input.GetMouseButtonDown(0) && selectedItemGrid == null && selectedItem != null) {
+            throwItem();
+        }
+
         if (selectedItemGrid == null) {
             inventoryHighlight.Show(false);
             return;
         }
+        
 
         HandleHighlight();
 
         if (Input.GetMouseButtonDown(0)) {
             MoveItem();
         }
+    }
+
+    private void throwItem() {
+
+        
+
+        ThrownItem.GetComponent<SpriteRenderer>().sprite = selectedItem.itemData.itemIcon;
+        Destroy(GameObject.Find(selectedItem.name));
+        selectedItem = null;
+        
+        Instantiate(ThrownItem, playerSprite.transform.position, playerSprite.transform.rotation);
+
     }
 
     private void RotateItem() {
@@ -119,6 +138,7 @@ public class InvController : MonoBehaviour
 
     private void CreateRandomItem() {
         InventoryItem inventoryItem = Instantiate(itemPrefab).GetComponent<InventoryItem>();
+        inventoryItem.name = $"inv{itemAutoNum}";
         selectedItem = inventoryItem;
 
         rectTransform = inventoryItem.GetComponent<RectTransform>();
@@ -127,15 +147,18 @@ public class InvController : MonoBehaviour
 
         int selectedItemID = UnityEngine.Random.Range(0, items.Count);
         inventoryItem.Set(items[selectedItemID]);
+        itemAutoNum++;
     }//for testing: generates item on mouse
 
     private void MoveItem() {
         Vector2Int tileGridPosition = GetTileGridPosition();
 
         if (selectedItem == null) {
+            Debug.Log("picking up item");
             PickUpItem(tileGridPosition);
         }
         else {
+            Debug.Log("Placing item");
             switch (selectedItemGrid.tag) {
                 case "WEAPONSLOT":
                     if (!selectedItem.isWeapon) { return; }

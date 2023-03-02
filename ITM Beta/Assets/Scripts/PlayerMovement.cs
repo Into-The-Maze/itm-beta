@@ -76,6 +76,7 @@ public class PlayerMovement : MonoBehaviour {
         if (dodgeCooldownCounter <= 0 && dodgeCounter <= 0) {
             activeMoveSpeed = dodgeSpeed;
             dodgeCounter = dodgeLength;
+            stamina -= 25;
         }
     }
 
@@ -141,7 +142,7 @@ public class PlayerMovement : MonoBehaviour {
         else if (Input.GetKeyDown(KeyCode.Space) && stamina >= 25f) {
             movementType = MovementType.Dodging;
             doDodge();
-            stamina -= 25;
+            
             movementType = MovementType.Walking;
         }
         else if ((Input.GetKeyUp(KeyCode.LeftControl) && movementType == MovementType.Sneaking) || 

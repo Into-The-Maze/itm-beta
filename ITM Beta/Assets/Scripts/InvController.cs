@@ -20,6 +20,7 @@ public class InvController : MonoBehaviour
 
     [SerializeField] GameObject ThrownItem;
     [SerializeField] GameObject playerSprite;
+    [SerializeField] GameObject playerLocation;
     [SerializeField] List<ItemData> items;
     [SerializeField] GameObject itemPrefab;
     [SerializeField] Transform canvasTransform;
@@ -57,10 +58,10 @@ public class InvController : MonoBehaviour
             //inventoryHighlight.SetSize(selectedItem); this needs bugfixing for best looks
         }
 
-        if (Input.GetMouseButtonDown(2) && selectedItemGrid == null && selectedItem != null) {
+        if (Input.GetMouseButtonDown(1) && selectedItemGrid == null && selectedItem != null) {
             throwItem();
         }
-        else if (Input.GetMouseButtonDown(2) && selectedItemGrid == null && selectedItem == null) {
+        else if (Input.GetMouseButtonDown(1) && selectedItemGrid == null && selectedItem == null) {
             PickUpItemFromFloor();
         }
 
@@ -83,17 +84,15 @@ public class InvController : MonoBehaviour
         if(hit.collider != null) {
             if (hit.collider.gameObject != null) {
                 if (hit.collider.gameObject.CompareTag("FLOORITEM")) {
-                    int index = hit.collider.gameObject.GetComponent<ItemDataDump>().itemDataElementReference;
-                    Destroy(hit.collider.gameObject);
-                    CreatePickedUpItem(index);
+                    if (Vector3.Distance(playerSprite.transform.position, hit.transform.gameObject.transform.position) < 4f) {
+                        int index = hit.collider.gameObject.GetComponent<ItemDataDump>().itemDataElementReference;
+                        Destroy(hit.collider.gameObject);
+                        CreatePickedUpItem(index);
+                    }
                 }
             }
         }
     }
-
-    //int index = target.GetComponent<ItemDataDump>().itemDataElementReference;
-        //&& Vector3.Distance(playerSprite.transform.position, hit.transform.gameObject.transform.position) < 100f
-
 
     
 
@@ -116,7 +115,7 @@ public class InvController : MonoBehaviour
         ThrownItem.GetComponent<ItemDataDump>().itemDataElementReference = selectedItem.itemDataElementReference;
         Destroy(GameObject.Find(selectedItem.name));
         selectedItem = null;
-        Instantiate(ThrownItem, playerSprite.transform.position, playerSprite.transform.rotation);
+        Instantiate(ThrownItem, playerLocation.transform.TransformPoint(playerSprite.transform.up * -1.5f), playerSprite.transform.rotation);
     }
 
     private void RotateItem() {

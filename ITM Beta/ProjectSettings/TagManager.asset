@@ -11,6 +11,8 @@ TagManager:
   - RINGSLOT
   - CHESTSLOT
   - FLOORITEM
+  - WALL_LAYER0
+  - FLOOR_LAYER0
   layers:
   - Default
   - TransparentFX
@@ -59,4 +61,7 @@ TagManager:
     locked: 0
   - name: Light
     uniqueID: 1941486723
+    locked: 0
+  - name: FX
+    uniqueID: 1372002119
     locked: 0

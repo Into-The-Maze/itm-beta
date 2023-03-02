@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using Random = System.Random;
@@ -8,6 +9,7 @@ public class InstantiateMaze : MonoBehaviour {
     private static Random r = new Random();
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject mazeParent;
+    [SerializeField] private GameObject cameraParent;
     [SerializeField] private GameObject shadowCasterParent;
 
     [SerializeField] private GameObject globalLightObj;
@@ -22,6 +24,7 @@ public class InstantiateMaze : MonoBehaviour {
     #endregion
 
     #region layer1
+    [SerializeField] private GameObject rainDrops;
     [SerializeField] private GameObject layer1Wall;
     [SerializeField] private GameObject layer1Floor;
     #endregion
@@ -102,6 +105,11 @@ public class InstantiateMaze : MonoBehaviour {
         string setting = SetLayer1Setting();
         string weather = SetLayer1Weather();
         Debug.Log($"{setting}, {weather}");
+        if (weather == "storm") {
+            GameObject rain = Instantiate(rainDrops, new Vector3(layer1Upscale * player.transform.position.x, layer1Upscale * player.transform.position.y, 1), Quaternion.Euler(0f, 0f, 20f), cameraParent.transform);
+            Transform rainRipples = rain.transform.GetChild(0);
+            rainRipples.parent = mazeParent.transform;
+        }
         for (int y = 0; y < maze.GetLength(0); y++ ) {
             for (int x = 0; x < maze.GetLength(1); x++) {
                 if (maze[y, x] == ' ') {

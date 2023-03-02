@@ -130,7 +130,7 @@ MonoBehaviour:
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
   m_SelfShadows: 1
-  m_ApplyToSortingLayers: 00000000cf5c79878914377ae120b15f
+  m_ApplyToSortingLayers: 00000000cf5c79878914377ae120b15f4717c751
   m_ShapePath:
   - {x: -4, y: -4, z: 0}
   - {x: -4, y: 4, z: 0}

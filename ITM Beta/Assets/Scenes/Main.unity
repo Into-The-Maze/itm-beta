@@ -732,7 +732,7 @@ Camera:
   far clip plane: 1000
   field of view: 90
   orthographic: 1
-  orthographic size: 13
+  orthographic size: 12
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -777,6 +777,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ThrownItem: {fileID: 1619860758556365238, guid: 2a37d6958ca3b3c41af482990b9e78c1, type: 3}
   playerSprite: {fileID: 891252456}
+  playerLocation: {fileID: 622508036}
   items:
   - {fileID: 11400000, guid: 0383b78782d82004a9a0eab77e2f06b2, type: 2}
   - {fileID: 11400000, guid: b8c688c31ffe06946b98335412613d19, type: 2}
@@ -2452,7 +2453,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 2
   m_FalloffIntensity: 0.25
-  m_Color: {r: 1, g: 0.9137255, b: 0.13836467, a: 1}
+  m_Color: {r: 1, g: 0.8039216, b: 0, a: 1}
   m_Intensity: 0.625
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0

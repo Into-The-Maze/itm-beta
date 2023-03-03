@@ -1,22 +1,25 @@
 ﻿using DG.Tweening;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.UIElements;
 using Random = System.Random;
 
 public class InstantiateMaze : MonoBehaviour {
 
     private Random r = new Random();
     [SerializeField] private GameObject player;
+    [SerializeField] private Volume volume;
     [SerializeField] private GameObject mazeParent;
     [SerializeField] private GameObject cameraParent;
     [SerializeField] private GameObject shadowCasterParent;
 
     [SerializeField] private GameObject globalLightObj;
     [SerializeField] private GameObject globalWallLightObj;
+    [SerializeField] private ParticleSystem fogL;
+    [SerializeField] private ParticleSystem fogR;
     private Light2D globalLight;
     private Light2D globalWallLight;
 
@@ -32,6 +35,7 @@ public class InstantiateMaze : MonoBehaviour {
     [SerializeField] private GameObject rainDrops;
     [SerializeField] private GameObject layer1Wall;
     [SerializeField] private GameObject layer1Floor;
+    [HideInInspector] public static string weather;
     #endregion
 
     #region layer2
@@ -75,7 +79,8 @@ public class InstantiateMaze : MonoBehaviour {
         Vector3 spawn = SetPlayerSpawnPos();
         player.transform.position = spawn;
     }
-    private void Awake() {  
+    private void Awake() {
+        Volume volume = GetComponent<Volume>();
         //InstantiateMazeLayer0(InitialiseLayer0());
         InstantiateMazeLayer1(initialiseMazeLayer1());
         //InstantiateMazeLayer2(initialiseMazeLayer2());
@@ -109,16 +114,14 @@ public class InstantiateMaze : MonoBehaviour {
         int layer1Upscale = 8;
         int lampPostChance = 50;
         string setting = SetLayer1Setting();
-        string weather = SetLayer1Weather();
+        weather = SetLayer1Weather();
         Debug.Log($"{setting}, {weather}");
         if (weather == "storm") {
-            GameObject rain = Instantiate(rainDrops, new Vector3(layer1Upscale * player.transform.position.x, layer1Upscale * player.transform.position.y, 1), Quaternion.Euler(0f, 0f, -20f), cameraParent.transform);
-            Transform rainRipples = rain.transform.GetChild(0);
-            rainRipples.parent = mazeParent.transform;
+            GameObject rain = Instantiate(rainDrops, new Vector3(layer1Upscale * player.transform.position.x, layer1Upscale * player.transform.position.y, 1), Quaternion.Euler(0f, 0f, 0f), cameraParent.transform);
             if (setting == "blood moon") {
                 ParticleSystem rainEmitter = rain.GetComponent<ParticleSystem>();
 #pragma warning disable CS0618 // Type or member is obsolete
-                rainEmitter.startColor = hexToColor("0xFF000080");
+                rainEmitter.startColor = hexToColor("0xFF000065");
 #pragma warning restore CS0618 // Type or member is obsolete
                 lampPostChance = 30;
             }
@@ -384,11 +387,32 @@ public class InstantiateMaze : MonoBehaviour {
     }
     private string SetLayer1Weather() {
         int random = r.Next(1, 5);
+        Vignette vignette;
         string[] weathers = { "clear", "storm" };
         if (random <= 3) {
+            volume.profile.TryGet(out vignette);
+            {
+                vignette.intensity.value = 0.3f;
+            }
+#pragma warning disable CS0618 // Type or member is obsolete
+            fogL.emissionRate = 0.5f;
+            fogR.emissionRate = 0.5f;
+            fogL.startColor = hexToColor("0xFFFFFF10");
+            fogR.startColor = hexToColor("0xFFFFFF10");
+#pragma warning restore CS0618 // Type or member is obsolete
             return weathers[0];     
         }
         else {
+            volume.profile.TryGet(out vignette);
+            {
+                vignette.intensity.value = 0.6f;
+            }
+#pragma warning disable CS0618 // Type or member is obsolete
+            fogL.emissionRate = 2.25f;
+            fogR.emissionRate = 2.25f;
+            fogL.startColor = hexToColor("0xFFFFFF20");
+            fogR.startColor = hexToColor("0xFFFFFF20");
+#pragma warning restore CS0618 // Type or member is obsolete
             return weathers[1];
         }
     }

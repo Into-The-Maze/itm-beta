@@ -88,26 +88,62 @@ public class HealthController : MonoBehaviour
     }
 
     private void handleThoraxDamageColour() {
-        Thorax.color = new Color32(255, (byte)Mathf.RoundToInt(255 * (thoraxHP / maxThoraxHP)), (byte)Mathf.RoundToInt(255 * (thoraxHP / maxThoraxHP)), 255);
+        if (thoraxHP > 0) {
+            Thorax.color = new Color32(255, (byte)Mathf.RoundToInt(255 * (thoraxHP / maxThoraxHP)), (byte)Mathf.RoundToInt(255 * (thoraxHP / maxThoraxHP)), 255);
+        }
+        else {
+            thoraxHP = 0;
+            Thorax.color = Color.black;
+        }
     }
 
     private void handleHeadDamageColour() {
-        Head.color = new Color32(255, (byte)Mathf.RoundToInt(255 * (headHP / maxHeadHP)), (byte)Mathf.RoundToInt(255 * (headHP / maxHeadHP)), 255);
+        if (headHP > 0) {
+            Head.color = new Color32(255, (byte)Mathf.RoundToInt(255 * (headHP / maxHeadHP)), (byte)Mathf.RoundToInt(255 * (headHP / maxHeadHP)), 255);
+        }
+        else {
+            headHP = 0;
+            Head.color = Color.black;
+        }
     }
 
     private void handleRArmDamageColour() {
-        RArm.color = new Color32(255, (byte)Mathf.RoundToInt(255 * (rArmHP / maxRArmHP)), (byte)Mathf.RoundToInt(255 * (rArmHP / maxRArmHP)), 255);
+        if (rArmHP > 0) {
+            RArm.color = new Color32(255, (byte)Mathf.RoundToInt(255 * (rArmHP / maxRArmHP)), (byte)Mathf.RoundToInt(255 * (rArmHP / maxRArmHP)), 255);
+        }
+        else {
+            rArmHP = 0;
+            RArm.color = Color.black;
+        }
     }
 
     private void handleLArmDamageColour() {
-        LArm.color = new Color32(255, (byte)Mathf.RoundToInt(255 * (lArmHP / maxLArmHP)), (byte)Mathf.RoundToInt(255 * (lArmHP / maxLArmHP)), 255);
+        if (lArmHP > 0) {
+            LArm.color = new Color32(255, (byte)Mathf.RoundToInt(255 * (lArmHP / maxLArmHP)), (byte)Mathf.RoundToInt(255 * (lArmHP / maxLArmHP)), 255);
+        }
+        else {
+            lArmHP = 0;
+            LArm.color = Color.black;
+        }
     }
 
     private void handleRLegDamageColour() {
-        RLeg.color = new Color32(255, (byte)Mathf.RoundToInt(255 * (rLegHP / maxRLegHP)), (byte)Mathf.RoundToInt(255 * (rLegHP / maxRLegHP)), 255);
+        if (rLegHP > 0) {
+            RLeg.color = new Color32(255, (byte)Mathf.RoundToInt(255 * (rLegHP / maxRLegHP)), (byte)Mathf.RoundToInt(255 * (rLegHP / maxRLegHP)), 255);
+        }
+        else {
+            rLegHP = 0;
+            RLeg.color = Color.black;
+        }
     }
 
     private void handleLLegDamageColour() {
-        LLeg.color = new Color32(255, (byte)Mathf.RoundToInt(255 * (lLegHP / maxLLegHP)), (byte)Mathf.RoundToInt(255 * (lLegHP / maxLLegHP)), 255);
+        if (lLegHP > 0) {
+            LLeg.color = new Color32(255, (byte)Mathf.RoundToInt(255 * (lLegHP / maxLLegHP)), (byte)Mathf.RoundToInt(255 * (lLegHP / maxLLegHP)), 255);
+        }
+        else {
+            lLegHP = 0;
+            LLeg.color = Color.black;
+        }
     }
 }

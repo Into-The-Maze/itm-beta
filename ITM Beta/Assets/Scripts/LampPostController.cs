@@ -10,9 +10,14 @@ public class LampPostController : MonoBehaviour
     private Random r = new Random();
     private bool isFlickering = false;
     Light2D light2D;
-    int frequency = 10;
+    int frequency;
 
+
+    private void Awake() {
+        frequency = (InstantiateMaze.weather == "storm") ? 10 : 5;
+    }
     private void Update() {
+        
         if (!isFlickering) {
             StartCoroutine(Flicker());
         }
@@ -21,16 +26,26 @@ public class LampPostController : MonoBehaviour
     IEnumerator Flicker() {
         light2D = gameObject.transform.GetChild(0).GetComponent<Light2D>();
         isFlickering = true;
-        float originalIntensity = light2D.intensity;
-        for (int i = 0; i < 10; i++) {
-            int random = r.Next(1, 5);
-            if (random == 1) { light2D.intensity = originalIntensity; }
-            else if (random == 2) { light2D.intensity = originalIntensity / 2; }
-            else { light2D.intensity = 0f; }
-            yield return new WaitForSeconds(r.Next(2, 10) / 10);
-        }
-        light2D.intensity = originalIntensity;
         yield return new WaitForSeconds(r.Next(2, 100 / frequency));
+        float originalIntensity = light2D.intensity;
+        for (int i = 0; i < r.Next(frequency, frequency * 2); i++) {
+            int random = r.Next(1, 6);
+            if (random == 1 || random == 2) { 
+                light2D.intensity = originalIntensity;
+                yield return new WaitForSeconds(r.Next(1, 3) / 100f);
+            }
+            else if (random == 3 || random == 4) { 
+                light2D.intensity = originalIntensity / 2.5f;
+                yield return new WaitForSeconds(r.Next(1, 3) / 100f);
+            }
+            else {
+                light2D.intensity = 0f;
+                yield return new WaitForSeconds(r.Next(1, 3) / 100f);
+            }
+        }
+        light2D.intensity = 0f;
+        yield return new WaitForSeconds(0.375f);
+        light2D.intensity = originalIntensity;
         isFlickering = false;
     }
 }

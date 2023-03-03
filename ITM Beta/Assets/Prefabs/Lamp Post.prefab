@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: -6887012963889213104}
   - component: {fileID: 7977427134001270822}
   - component: {fileID: -524380895265241926}
+  - component: {fileID: -8716810409317916796}
   m_Layer: 6
   m_Name: Lamp Post
   m_TagString: WALL_LAYER0
@@ -241,3 +242,15 @@ MonoBehaviour:
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
   m_InstanceId: 40186
+--- !u!114 &-8716810409317916796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2966696981907231166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ddb163da180114281f9a62e1c376d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,12 +1,15 @@
 ﻿using DG.Tweening;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UIElements;
 using Random = System.Random;
 
 public class InstantiateMaze : MonoBehaviour {
 
-    private static Random r = new Random();
+    private Random r = new Random();
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject mazeParent;
     [SerializeField] private GameObject cameraParent;
@@ -24,6 +27,8 @@ public class InstantiateMaze : MonoBehaviour {
     #endregion
 
     #region layer1
+
+    public List<GameObject> lampPosts = new List<GameObject>();
     [SerializeField] private GameObject rainDrops;
     [SerializeField] private GameObject layer1Wall;
     [SerializeField] private GameObject layer1Floor;
@@ -102,31 +107,44 @@ public class InstantiateMaze : MonoBehaviour {
     }
     private void InstantiateMazeLayer1(char[,] maze) {
         int layer1Upscale = 8;
+        int lampPostChance = 50;
         string setting = SetLayer1Setting();
         string weather = SetLayer1Weather();
         Debug.Log($"{setting}, {weather}");
         if (weather == "storm") {
-            GameObject rain = Instantiate(rainDrops, new Vector3(layer1Upscale * player.transform.position.x, layer1Upscale * player.transform.position.y, 1), Quaternion.Euler(0f, 0f, 20f), cameraParent.transform);
+            GameObject rain = Instantiate(rainDrops, new Vector3(layer1Upscale * player.transform.position.x, layer1Upscale * player.transform.position.y, 1), Quaternion.Euler(0f, 0f, -20f), cameraParent.transform);
             Transform rainRipples = rain.transform.GetChild(0);
             rainRipples.parent = mazeParent.transform;
+            if (setting == "blood moon") {
+                ParticleSystem rainEmitter = rain.GetComponent<ParticleSystem>();
+#pragma warning disable CS0618 // Type or member is obsolete
+                rainEmitter.startColor = hexToColor("0xFF000080");
+#pragma warning restore CS0618 // Type or member is obsolete
+                lampPostChance = 30;
+            }
         }
         for (int y = 0; y < maze.GetLength(0); y++ ) {
             for (int x = 0; x < maze.GetLength(1); x++) {
+                GameObject lamp;
                 if (maze[y, x] == ' ') {
                     Instantiate(layer1Floor, new Vector3(layer1Upscale * x, layer1Upscale * y, 0), Quaternion.identity, mazeParent.transform);
-                    if (r.Next(1, 3) == 1) {
+                    if (r.Next(1, 101) <= lampPostChance) {
                         int side = r.Next(1, 5); // 1:top 2:right 3:bottom 4:left
                         if (side == 1 && maze[y + 1, x] != ' ') {
-                            Instantiate(lampPost, new Vector3(layer1Upscale * x, layer1Upscale * y + 2.5f, 0), Quaternion.Euler(0f, 0, 180f), mazeParent.transform);
+                            lamp = Instantiate(lampPost, new Vector3(layer1Upscale * x, layer1Upscale * y + 2.5f, 0), Quaternion.Euler(0f, 0, 180f), mazeParent.transform);
+                            lampPosts.Add(lamp);
                         }
                         else if (side == 2 && maze[y, x + 1] != ' ') {
-                            Instantiate(lampPost, new Vector3(layer1Upscale * x + 2.5f, layer1Upscale * y, 0), Quaternion.Euler(0f, 0, 90f), mazeParent.transform);
+                            lamp = Instantiate(lampPost, new Vector3(layer1Upscale * x + 2.5f, layer1Upscale * y, 0), Quaternion.Euler(0f, 0, 90f), mazeParent.transform);
+                            lampPosts.Add(lamp);
                         }
                         else if (side == 3 && maze[y - 1, x] != ' ') {
-                            Instantiate(lampPost, new Vector3(layer1Upscale * x, layer1Upscale * y - 2.5f, 0), Quaternion.Euler(0f, 0f, 0f), mazeParent.transform);
+                            lamp = Instantiate(lampPost, new Vector3(layer1Upscale * x, layer1Upscale * y - 2.5f, 0), Quaternion.Euler(0f, 0f, 0f), mazeParent.transform);
+                            lampPosts.Add(lamp);
                         }
                         else if (side == 4 && maze[y, x - 1] != ' ') {
-                            Instantiate(lampPost, new Vector3(layer1Upscale * x - 2.5f, layer1Upscale * y, 0), Quaternion.Euler(0f, 0, 270f), mazeParent.transform);
+                            lamp = Instantiate(lampPost, new Vector3(layer1Upscale * x - 2.5f, layer1Upscale * y, 0), Quaternion.Euler(0f, 0, 270f), mazeParent.transform);
+                            lampPosts.Add(lamp);
                         }
                     }
                 }
@@ -341,8 +359,8 @@ public class InstantiateMaze : MonoBehaviour {
     private string SetLayer1Setting() {
         int i;
         int random = r.Next(1, 101);
-        string[] lightColours = { "0xFFFFFF", "4444FF", "0x3333FF", "0xFF0000" };
-        float[] lightLevels = { 0.25f, 1.25f, 2.75f, 0.8125f };
+        string[] lightColours = { "0xFFFFFF", "4444FF", "4444FF", "0xFF0000" };
+        float[] lightLevels = { 0.25f, 1.25f, 2f, 0.8125f };
         string[] settingNames = { "starlight", "moonlight", "full moon", "blood moon" };
         globalLight = globalLightObj.GetComponent<Light2D>();   
         globalWallLight = globalWallLightObj.GetComponent<Light2D>();

@@ -34,6 +34,12 @@ public class InventoryItem : MonoBehaviour
     public bool isHeadgear { get { return itemData.isHeadgear; } }
     public bool isRing { get { return itemData.isRing; } }
 
+    public float Damage {
+        get {
+            return itemData.damage;
+        }
+    }
+
 
 
 

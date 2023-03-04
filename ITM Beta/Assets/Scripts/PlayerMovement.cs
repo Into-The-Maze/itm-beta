@@ -155,6 +155,12 @@ public class PlayerMovement : MonoBehaviour {
             speedModifier = 8f;
             stamina = Mathf.Clamp(stamina - (10 * Time.deltaTime), 0, maxStamina);
         }
+        else if (movementType == MovementType.ChargingAttack) {
+            speedModifier = 1.7f;
+        }
+        else if (movementType == MovementType.Attacking){
+            speedModifier = 0f;
+        }
         else if (movementType == MovementType.Sneaking) {
             speedModifier = 1.4f;
             stamina = Mathf.Clamp(stamina + (10 * Time.deltaTime), 0, maxStamina);
@@ -167,10 +173,11 @@ public class PlayerMovement : MonoBehaviour {
 
 
     public enum MovementType {
-        //enum for movement type
         Walking,
         Running,
         Sneaking,
-        Dodging
+        Dodging,
+        ChargingAttack,
+        Attacking
     }
 }

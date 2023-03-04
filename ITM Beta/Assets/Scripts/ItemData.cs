@@ -18,5 +18,6 @@ public class ItemData : ScriptableObject
 
     public string flavourText;
 
+    public float damage;
 
 }

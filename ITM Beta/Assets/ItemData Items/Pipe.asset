@@ -15,8 +15,9 @@ MonoBehaviour:
   width: 1
   height: 1
   itemIcon: {fileID: 21300000, guid: d3b7ec04b80417b44a350ad33805a7dd, type: 3}
-  isWeapon: 1
+  isWeapon: 0
   isArmor: 0
   isHeadgear: 0
   isRing: 0
   flavourText: 
+  damage: 0

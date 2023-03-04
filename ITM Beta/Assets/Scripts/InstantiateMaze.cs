@@ -31,7 +31,7 @@ public class InstantiateMaze : MonoBehaviour {
 
     #region layer1
 
-    public List<GameObject> lampPosts = new List<GameObject>();
+    [HideInInspector] public List<GameObject> lampPosts = new List<GameObject>();
     [SerializeField] private GameObject rainDrops;
     [SerializeField] private GameObject layer1Wall;
     [SerializeField] private GameObject layer1Floor;

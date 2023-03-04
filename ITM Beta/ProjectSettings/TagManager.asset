@@ -11,8 +11,7 @@ TagManager:
   - RINGSLOT
   - CHESTSLOT
   - FLOORITEM
-  - WALL_LAYER0
-  - FLOOR_LAYER0
+  - ATTACKITEM
   layers:
   - Default
   - TransparentFX

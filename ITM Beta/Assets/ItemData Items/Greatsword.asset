@@ -20,3 +20,4 @@ MonoBehaviour:
   isHeadgear: 0
   isRing: 0
   flavourText: 
+  damage: 10

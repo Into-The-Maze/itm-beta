@@ -59,6 +59,7 @@ public class ItemGrid : MonoBehaviour
         }
 
         PlaceItem(inventoryItem, posX, posY);
+        
 
         return true;
     }
@@ -75,6 +76,7 @@ public class ItemGrid : MonoBehaviour
         }
 
         PlaceItemEquip(inventoryItem, posX, posY);
+        Attack.attackItem = inventoryItem;
 
         return true;
     }
@@ -163,6 +165,7 @@ public class ItemGrid : MonoBehaviour
         if (toReturn == null) { return null; }
 
         CleanGridReferenceEquip(toReturn);
+        Attack.attackItem = null;
         return toReturn;
     }
 

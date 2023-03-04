@@ -40,7 +40,6 @@ public class InvController : MonoBehaviour
     private void Awake() {
         inventoryHighlight = GetComponent<InventoryHighlight>();
     }
-
     private void Update() {
         ItemIconDrag();
 
@@ -73,7 +72,7 @@ public class InvController : MonoBehaviour
 
         HandleHighlight();
 
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && selectedItemGrid != null) {
             MoveItem();
         }
     }
@@ -93,9 +92,6 @@ public class InvController : MonoBehaviour
             }
         }
     }
-
-    
-
     private void CreatePickedUpItem(int index) {
         InventoryItem inventoryItem = Instantiate(itemPrefab).GetComponent<InventoryItem>();
         inventoryItem.name = $"inv{itemAutoNum}";
@@ -109,7 +105,6 @@ public class InvController : MonoBehaviour
         inventoryItem.itemDataElementReference = index;
         itemAutoNum++;
     }
-
     private void throwItem() {
         ThrownItem.GetComponent<SpriteRenderer>().sprite = selectedItem.itemData.itemIcon;
         ThrownItem.GetComponent<ItemDataDump>().itemDataElementReference = selectedItem.itemDataElementReference;
@@ -117,14 +112,11 @@ public class InvController : MonoBehaviour
         selectedItem = null;
         Instantiate(ThrownItem, playerLocation.transform.TransformPoint(playerSprite.transform.up * -1.5f), playerSprite.transform.rotation);
     }
-
     private void RotateItem() {
         if (selectedItem == null) { return; }
 
         selectedItem.Rotate();
     }
-
-
     private void InsertItem(InventoryItem itemToInsert) {
 
         
@@ -133,7 +125,6 @@ public class InvController : MonoBehaviour
 
         selectedItemGrid.PlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
     }
-
     private void HandleHighlight() {
         if (selectedItemGrid == null) { return; }
         Vector2Int positionOnGrid = GetTileGridPosition();
@@ -158,7 +149,6 @@ public class InvController : MonoBehaviour
             inventoryHighlight.SetPosition(selectedItemGrid, selectedItem, positionOnGrid.x, positionOnGrid.y);
         }
     }
-
     private void CreateRandomItem() {
         InventoryItem inventoryItem = Instantiate(itemPrefab).GetComponent<InventoryItem>();
         inventoryItem.name = $"inv{itemAutoNum}";
@@ -173,7 +163,6 @@ public class InvController : MonoBehaviour
         inventoryItem.itemDataElementReference = selectedItemID;
         itemAutoNum++;
     }//for testing: generates item on mouse
-
     private void MoveItem() {
         Vector2Int tileGridPosition = GetTileGridPosition();
 
@@ -200,7 +189,6 @@ public class InvController : MonoBehaviour
             DropItem(tileGridPosition);
         }
     }
-
     private Vector2Int GetTileGridPosition() {
         Vector2 position = Input.mousePosition;
 
@@ -212,7 +200,6 @@ public class InvController : MonoBehaviour
         Vector2Int tileGridPosition = selectedItemGrid.GetTileGridPos(position);
         return tileGridPosition;
     }
-
     private void DropItem(Vector2Int tileGridPosition) {
         if (selectedItemGrid.tag == "INVENTORY") {
             bool complete = selectedItemGrid.PlaceItem(selectedItem, tileGridPosition.x, tileGridPosition.y, ref overlapItem);
@@ -240,7 +227,6 @@ public class InvController : MonoBehaviour
         }
         
     }
-
     private void PickUpItem(Vector2Int tileGridPosition) {
         if (selectedItemGrid.tag == "INVENTORY") {
             selectedItem = selectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
@@ -256,7 +242,6 @@ public class InvController : MonoBehaviour
         }
         
     }
-
     private void ItemIconDrag() {
         if (selectedItem != null) {
             rectTransform.position = Input.mousePosition;

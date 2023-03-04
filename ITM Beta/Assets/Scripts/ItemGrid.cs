@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 public class ItemGrid : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class ItemGrid : MonoBehaviour
     InventoryItem[,] inventoryItemSlot;
     [SerializeField] int gridSizeWidth;
     [SerializeField] int gridSizeHeight;
+    [SerializeField] public ItemGrid itemGrid;
 
     //getting mouse position
     RectTransform rectTransform;
@@ -20,7 +22,13 @@ public class ItemGrid : MonoBehaviour
     
     private void Start() {
         rectTransform = GetComponent<RectTransform>();
-        Init(gridSizeWidth, gridSizeHeight);
+        if (itemGrid.tag == "INVENTORY") {
+            Init(gridSizeWidth, gridSizeHeight);
+        }
+        else {
+            Init(1, 1);
+        }
+        
         
     }
 
@@ -50,10 +58,29 @@ public class ItemGrid : MonoBehaviour
             CleanGridReference(overlapItem);
         }
 
-        PlaceItem(inventoryItem, posX, posY);//calls procedure below; bad name ik
+        PlaceItem(inventoryItem, posX, posY);
 
         return true;
     }
+    public bool PlaceItemEquip(InventoryItem inventoryItem, int posX, int posY, ref InventoryItem overlapItem) {
+        if (!BoundaryCheck(posX, posY, 1, 1)) {
+            return false;
+        }
+        if (!OverlapCheck(posX, posY, 1, 1, ref overlapItem)) {
+            overlapItem = null;
+            return false;
+        }
+        if (overlapItem != null) {
+            CleanGridReferenceEquip(overlapItem);
+        }
+
+        PlaceItemEquip(inventoryItem, posX, posY);
+
+        return true;
+    }
+
+
+
 
     public void PlaceItem(InventoryItem inventoryItem, int posX, int posY) {
         RectTransform rectTransform = inventoryItem.GetComponent<RectTransform>();
@@ -71,6 +98,24 @@ public class ItemGrid : MonoBehaviour
 
         rectTransform.localPosition = position;
     }
+    public void PlaceItemEquip(InventoryItem inventoryItem, int posX, int posY) {
+        RectTransform rectTransform = inventoryItem.GetComponent<RectTransform>();
+        rectTransform.SetParent(this.rectTransform);
+
+        for (int i = 0; i < 1; i++) {
+            for (int j = 0; j < 1; j++) {
+                inventoryItemSlot[posX + i, posY + j] = inventoryItem;
+            }
+        }
+
+        inventoryItem.onGridPosX = posX;
+        inventoryItem.onGridPosY = posY;
+        Vector2 position = CalculatePositionOnGridEquip(inventoryItem, posX, posY);
+
+        rectTransform.localPosition = position;
+    }
+
+
 
     public Vector2 CalculatePositionOnGrid(InventoryItem inventoryItem, int posX, int posY) {
         Vector2 position = new Vector2();
@@ -78,6 +123,13 @@ public class ItemGrid : MonoBehaviour
         position.y = -(posY * tileHeight + tileHeight * inventoryItem.rotateHeight / 2);
         return position;
     }
+    public Vector2 CalculatePositionOnGridEquip(InventoryItem inventoryItem, int posX, int posY) {
+        Vector2 position = new Vector2();
+        position.x = posX * tileWidth + tileWidth / 2;
+        position.y = -(posY * tileHeight + tileHeight / 2);
+        return position;
+    }
+
 
     private bool OverlapCheck(int posX, int posY, int width, int height, ref InventoryItem overlapItem) {
         for (int i = 0; i < width; i++) {
@@ -95,6 +147,8 @@ public class ItemGrid : MonoBehaviour
         return true;
     }
 
+    
+
     public InventoryItem PickUpItem(int x, int y) {
         InventoryItem toReturn = inventoryItemSlot[x, y];
 
@@ -103,10 +157,25 @@ public class ItemGrid : MonoBehaviour
         CleanGridReference(toReturn);
         return toReturn;
     }
+    public InventoryItem PickUpItemEquip(int x, int y) {
+        InventoryItem toReturn = inventoryItemSlot[x, y];
+
+        if (toReturn == null) { return null; }
+
+        CleanGridReferenceEquip(toReturn);
+        return toReturn;
+    }
 
     private void CleanGridReference(InventoryItem item) {
         for (int i = 0; i < item.rotateWidth; i++) {
             for (int j = 0; j < item.rotateHeight; j++) {
+                inventoryItemSlot[item.onGridPosX + i, item.onGridPosY + j] = null;
+            }
+        }
+    }
+    private void CleanGridReferenceEquip(InventoryItem item) {
+        for (int i = 0; i < 1; i++) {
+            for (int j = 0; j < 1; j++) {
                 inventoryItemSlot[item.onGridPosX + i, item.onGridPosY + j] = null;
             }
         }

@@ -187,8 +187,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0917dbcf7918f46a2568a7ed5a855f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSizeWidth: 1
-  gridSizeHeight: 1
+  gridSizeWidth: 10
+  gridSizeHeight: 10
+  itemGrid: {fileID: 12445641}
 --- !u!114 &12445642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2229,8 +2230,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0917dbcf7918f46a2568a7ed5a855f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSizeWidth: 1
-  gridSizeHeight: 1
+  gridSizeWidth: 10
+  gridSizeHeight: 10
+  itemGrid: {fileID: 1192760633}
 --- !u!114 &1192760634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2427,11 +2429,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 622508036}
+  volume: {fileID: 1966302301}
   mazeParent: {fileID: 1436951011}
   cameraParent: {fileID: 519420028}
   shadowCasterParent: {fileID: 344977960}
   globalLightObj: {fileID: 694315820}
   globalWallLightObj: {fileID: 937299983}
+  fogL: {fileID: 0}
+  fogR: {fileID: 0}
   layer0Wall: {fileID: 3700896281571399095, guid: bd4c819c55b4a124da26d5cf1414f747, type: 3}
   layer0Floor: {fileID: 5567696050990112427, guid: 9c14d063f6a9ab8499bac8fdc45e7483, type: 3}
   layer0Door: {fileID: 5567696050990112427, guid: a1dae746df22f8448b2713bccd53a086, type: 3}
@@ -2790,8 +2795,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0917dbcf7918f46a2568a7ed5a855f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSizeWidth: 1
-  gridSizeHeight: 1
+  gridSizeWidth: 10
+  gridSizeHeight: 10
+  itemGrid: {fileID: 1468136457}
 --- !u!114 &1468136458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3099,6 +3105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSizeWidth: 4
   gridSizeHeight: 5
+  itemGrid: {fileID: 1958383376}
 --- !u!114 &1958383377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3440,8 +3447,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0917dbcf7918f46a2568a7ed5a855f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSizeWidth: 1
-  gridSizeHeight: 1
+  gridSizeWidth: 10
+  gridSizeHeight: 10
+  itemGrid: {fileID: 2128899538}
 --- !u!114 &2128899539
 MonoBehaviour:
   m_ObjectHideFlags: 0

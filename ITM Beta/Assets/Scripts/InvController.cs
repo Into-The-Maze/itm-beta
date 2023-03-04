@@ -214,23 +214,47 @@ public class InvController : MonoBehaviour
     }
 
     private void DropItem(Vector2Int tileGridPosition) {
-        bool complete = selectedItemGrid.PlaceItem(selectedItem, tileGridPosition.x, tileGridPosition.y, ref overlapItem);
-        if (complete) {
-            selectedItem = null;
-            if (overlapItem != null) {
-                selectedItem = overlapItem;
-                overlapItem = null;
-                rectTransform = selectedItem.GetComponent<RectTransform>();
-                rectTransform.SetAsLastSibling();
+        if (selectedItemGrid.tag == "INVENTORY") {
+            bool complete = selectedItemGrid.PlaceItem(selectedItem, tileGridPosition.x, tileGridPosition.y, ref overlapItem);
+            if (complete) {
+                selectedItem = null;
+                if (overlapItem != null) {
+                    selectedItem = overlapItem;
+                    overlapItem = null;
+                    rectTransform = selectedItem.GetComponent<RectTransform>();
+                    rectTransform.SetAsLastSibling();
+                }
             }
         }
+        else {
+            bool complete = selectedItemGrid.PlaceItemEquip(selectedItem, tileGridPosition.x, tileGridPosition.y, ref overlapItem);
+            if (complete) {
+                selectedItem = null;
+                if (overlapItem != null) {
+                    selectedItem = overlapItem;
+                    overlapItem = null;
+                    rectTransform = selectedItem.GetComponent<RectTransform>();
+                    rectTransform.SetAsLastSibling();
+                }
+            }
+        }
+        
     }
 
     private void PickUpItem(Vector2Int tileGridPosition) {
-        selectedItem = selectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
-        if (selectedItem != null) {
-            rectTransform = selectedItem.GetComponent<RectTransform>();
+        if (selectedItemGrid.tag == "INVENTORY") {
+            selectedItem = selectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
+            if (selectedItem != null) {
+                rectTransform = selectedItem.GetComponent<RectTransform>();
+            }
         }
+        else {
+            selectedItem = selectedItemGrid.PickUpItemEquip(tileGridPosition.x, tileGridPosition.y);
+            if (selectedItem != null) {
+                rectTransform = selectedItem.GetComponent<RectTransform>();
+            }
+        }
+        
     }
 
     private void ItemIconDrag() {

@@ -379,6 +379,7 @@ public class InstantiateMaze : MonoBehaviour {
         else {
             i = 3; // blood moon
         }
+
         globalLight.intensity = lightLevels[i];
         globalWallLight.intensity = lightLevels[i];
         globalLight.color = hexToColor(lightColours[i]);
@@ -395,10 +396,10 @@ public class InstantiateMaze : MonoBehaviour {
                 vignette.intensity.value = 0.3f;
             }
 #pragma warning disable CS0618 // Type or member is obsolete
-            fogL.emissionRate = 0.5f;
-            fogR.emissionRate = 0.5f;
-            fogL.startColor = hexToColor("0xFFFFFF10");
-            fogR.startColor = hexToColor("0xFFFFFF10");
+            //fogL.emissionRate = 0.5f;
+            //fogR.emissionRate = 0.5f;
+            //fogL.startColor = hexToColor("0xFFFFFF10");
+            //fogR.startColor = hexToColor("0xFFFFFF10");
 #pragma warning restore CS0618 // Type or member is obsolete
             return weathers[0];     
         }
@@ -408,10 +409,10 @@ public class InstantiateMaze : MonoBehaviour {
                 vignette.intensity.value = 0.6f;
             }
 #pragma warning disable CS0618 // Type or member is obsolete
-            fogL.emissionRate = 2.25f;
-            fogR.emissionRate = 2.25f;
-            fogL.startColor = hexToColor("0xFFFFFF20");
-            fogR.startColor = hexToColor("0xFFFFFF20");
+            //fogL.emissionRate = 2.25f;
+            //fogR.emissionRate = 2.25f;
+            //fogL.startColor = hexToColor("0xFFFFFF20");
+            //fogR.startColor = hexToColor("0xFFFFFF20");
 #pragma warning restore CS0618 // Type or member is obsolete
             return weathers[1];
         }

@@ -18,8 +18,7 @@ public class InstantiateMaze : MonoBehaviour {
 
     [SerializeField] private GameObject globalLightObj;
     [SerializeField] private GameObject globalWallLightObj;
-    [SerializeField] private ParticleSystem fogL;
-    [SerializeField] private ParticleSystem fogR;
+    [SerializeField] private GameObject fogs;
     private Light2D globalLight;
     private Light2D globalWallLight;
 
@@ -114,10 +113,10 @@ public class InstantiateMaze : MonoBehaviour {
         int layer1Upscale = 8;
         int lampPostChance = 50;
         string setting = SetLayer1Setting();
-        weather = SetLayer1Weather();
+        weather = SetLayer1Weather(layer1Upscale);
         Debug.Log($"{setting}, {weather}");
         if (weather == "storm") {
-            GameObject rain = Instantiate(rainDrops, new Vector3(layer1Upscale * player.transform.position.x, layer1Upscale * player.transform.position.y, 1), Quaternion.Euler(0f, 0f, 0f), cameraParent.transform);
+            GameObject rain = Instantiate(rainDrops, new Vector3(0, 0, -5), Quaternion.Euler(0f, 0f, 0f), cameraParent.transform);
             if (setting == "blood moon") {
                 ParticleSystem rainEmitter = rain.GetComponent<ParticleSystem>();
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -386,20 +385,21 @@ public class InstantiateMaze : MonoBehaviour {
         globalWallLight.color = hexToColor(lightColours[i]);
         return settingNames[i];
     }
-    private string SetLayer1Weather() {
+    private string SetLayer1Weather(int layer1Upscale) {
         int random = r.Next(1, 5);
         Vignette vignette;
         string[] weathers = { "clear", "storm" };
+        GameObject fog = Instantiate(fogs, new Vector3(0, 0, 1), Quaternion.Euler(0f, 0f, 0f), cameraParent.transform);
+        ParticleSystem fogR = fog.transform.GetChild(0).GetComponent<ParticleSystem>();
+        ParticleSystem fogL = fog.transform.GetChild(1).GetComponent<ParticleSystem>();
         if (random <= 3) {
             volume.profile.TryGet(out vignette);
             {
                 vignette.intensity.value = 0.3f;
             }
 #pragma warning disable CS0618 // Type or member is obsolete
-            //fogL.emissionRate = 0.5f;
-            //fogR.emissionRate = 0.5f;
-            //fogL.startColor = hexToColor("0xFFFFFF10");
-            //fogR.startColor = hexToColor("0xFFFFFF10");
+            fogR.emissionRate = 1f;
+            fogL.emissionRate = 1f;
 #pragma warning restore CS0618 // Type or member is obsolete
             return weathers[0];     
         }
@@ -409,10 +409,8 @@ public class InstantiateMaze : MonoBehaviour {
                 vignette.intensity.value = 0.6f;
             }
 #pragma warning disable CS0618 // Type or member is obsolete
-            //fogL.emissionRate = 2.25f;
-            //fogR.emissionRate = 2.25f;
-            //fogL.startColor = hexToColor("0xFFFFFF20");
-            //fogR.startColor = hexToColor("0xFFFFFF20");
+            fogR.emissionRate = 2f;
+            fogL.emissionRate = 2f;
 #pragma warning restore CS0618 // Type or member is obsolete
             return weathers[1];
         }

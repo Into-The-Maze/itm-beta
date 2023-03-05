@@ -12,6 +12,9 @@ TagManager:
   - CHESTSLOT
   - FLOORITEM
   - ATTACKITEM
+  - WALL_LAYER0
+  - FLOOR_LAYER0
+  - entity
   layers:
   - Default
   - TransparentFX

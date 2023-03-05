@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5416804267247811140}
   - component: {fileID: 4130807388750166959}
   - component: {fileID: -7959005462578816809}
-  - component: {fileID: -4498063686259546115}
+  - component: {fileID: -7539026012956293674}
   m_Layer: 0
   m_Name: FloorItem
   m_TagString: FLOORITEM
@@ -121,19 +121,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDataElementReference: 0
---- !u!58 &-4498063686259546115
-CircleCollider2D:
+--- !u!114 &-7539026012956293674
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1619860758556365238}
   m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 35ca0613184cc7f4796c3f063298f955, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.8
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ec3a6fc935916140b5183c491cdd59e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 6200000, guid: 35ca0613184cc7f4796c3f063298f955, type: 2}
+  isTrigger: 0

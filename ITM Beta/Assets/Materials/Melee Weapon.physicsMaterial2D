@@ -6,6 +6,6 @@ PhysicsMaterial2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Dropped Items
-  friction: 4
+  m_Name: Melee Weapon
+  friction: 0.5
   bounciness: 0

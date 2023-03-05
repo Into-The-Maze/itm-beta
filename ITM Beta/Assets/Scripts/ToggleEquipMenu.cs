@@ -12,6 +12,7 @@ public class ToggleEquipMenu : MonoBehaviour
     Stopwatch s = new();
     public static bool invIsOpen = false;
     public static ToggleEquipMenu e;
+    private WaitForSeconds delay = new(0.2f);
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.I)) {
@@ -52,8 +53,12 @@ public class ToggleEquipMenu : MonoBehaviour
 
     public void close() {
         equipAlpha.DOFade(0f, 0.2f);
-        s.Start();
-        if (s.ElapsedMilliseconds == 200) { equipRectTransform.transform.position = new Vector3(2280f, 640f, 0f); }
-        s.Stop();
+        StartCoroutine(moveInv());
+    }
+
+    IEnumerator moveInv() {
+        yield return delay;
+        equipRectTransform.transform.position = new Vector3(2280f, 640f, 0f);
+        StopCoroutine(moveInv());
     }
 }

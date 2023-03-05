@@ -9,8 +9,8 @@ public class Attack : MonoBehaviour
     public static InventoryItem attackItem;
     private float? damage = (attackItem == null) ? null : attackItem.Damage;
     private GameObject weapon;
-    private bool CurrentlySwinging = false;
-    private bool CurrentlySwingingManager;
+    private bool CurrentlyAttacking = false;
+    public static bool CurrentlySwinging;
     WaitForSeconds swingTime = new WaitForSeconds(0.5f);
 
     [SerializeField] GameObject attackPrefab;
@@ -19,9 +19,9 @@ public class Attack : MonoBehaviour
 
     private void Update() {
 
-        if (Input.GetMouseButtonDown(0) && PlayerMovement.stamina > 25 && attackItem != null && !ToggleEquipMenu.invIsOpen && !ToggleHealthScreen.invIsOpen && !ToggleInventory.invIsOpen && !CurrentlySwinging){
+        if (Input.GetMouseButtonDown(0) && PlayerMovement.stamina > 25 && attackItem != null && !ToggleEquipMenu.invIsOpen && !ToggleHealthScreen.invIsOpen && !ToggleInventory.invIsOpen && !CurrentlyAttacking){
             PlayerMovement.movementType = PlayerMovement.MovementType.ChargingAttack;
-            CurrentlySwinging = true;
+            CurrentlyAttacking = true;
             showWeapon();
             StartCoroutine(chargeAttack());
         }
@@ -32,7 +32,7 @@ public class Attack : MonoBehaviour
             damage += Time.deltaTime;
             yield return null;
         }
-        CurrentlySwingingManager = true;
+        CurrentlySwinging = true;
         StartCoroutine(attack());
         StopCoroutine(chargeAttack());
     }
@@ -41,25 +41,37 @@ public class Attack : MonoBehaviour
         PlayerMovement.movementType = PlayerMovement.MovementType.Attacking;
         PlayerMovement.stamina -= 25;
         StartCoroutine(manageSwingTime());
-        while (CurrentlySwingingManager) {
+        StartCoroutine(lunge());
+        while (CurrentlySwinging) {
             weapon.transform.RotateAround(playerLocation.transform.position, Vector3.forward, 360 * Time.deltaTime);
             yield return null;
         }
         
         Destroy(weapon);
-        CurrentlySwinging = false;
+        CurrentlyAttacking = false;
+        playerLocation.GetComponent<Rigidbody2D>().mass = 1f;
         PlayerMovement.movementType = PlayerMovement.MovementType.Walking;
+        
         StopAllCoroutines();
+    }
+
+    IEnumerator lunge() {
+        playerLocation.GetComponent<Rigidbody2D>().mass = 0.01f;
+        while (true) {
+            playerLocation.GetComponent<Rigidbody2D>().AddForce(playerSprite.transform.up * -1f, ForceMode2D.Impulse);
+            playerLocation.GetComponent<Rigidbody2D>().mass += Time.deltaTime;
+            yield return null;
+        }
     }
 
     IEnumerator manageSwingTime() {
         yield return swingTime;
-        CurrentlySwingingManager = false;
+        CurrentlySwinging = false;
     }
 
     private void showWeapon() {
         attackPrefab.GetComponent<SpriteRenderer>().sprite = attackItem.itemData.itemIcon;
-        weapon = Instantiate(attackPrefab, playerLocation.transform.TransformPoint(playerSprite.transform.right * -1.5f), playerSprite.transform.rotation * new Quaternion(Mathf.Cos(-90 / 2), Mathf.Sin(-90 / 2), 0, 0));
+        weapon = Instantiate(attackPrefab, playerLocation.transform.TransformPoint(playerSprite.transform.right * -2f), playerSprite.transform.rotation * new Quaternion(Mathf.Cos(-90 / 2), Mathf.Sin(-90 / 2), 0, 0));
         weapon.transform.SetParent(playerSprite.transform, true);
         weapon.transform.SetAsLastSibling();
     }

@@ -17,6 +17,7 @@ public class PlayerSpriteFaceTowardsMouse : MonoBehaviour
     }
     void Update()
     {
+        if (Attack.CurrentlySwinging) { return; }
         if (ToggleInventory.invIsOpen == false) {
             if (PlayerMovement.movementType != PlayerMovement.MovementType.Running) {
                 Quaternion thing = Quaternion.LookRotation(Vector3.forward, transform.position - cam.ScreenToWorldPoint(Input.mousePosition));

@@ -13,7 +13,7 @@ public class ToggleInventory : MonoBehaviour
     [SerializeField] private CanvasGroup invAlpha;
     Stopwatch s = new();
     public Light2D visionLight;
-    
+    private WaitForSeconds delay = new(0.2f);
     public static bool invIsOpen = false;
 
     private void Awake() {
@@ -41,9 +41,13 @@ public class ToggleInventory : MonoBehaviour
 
     private void closeInv() {
         invAlpha.DOFade(0f, 0.2f);
-        s.Start();
-        if (s.ElapsedMilliseconds == 200) { invRectTransform.transform.position = new Vector3(-680, 1040, 0); }
-        s.Stop();
+        StartCoroutine(moveInv()); 
+    }
+
+    IEnumerator moveInv() {
+        yield return delay;
+        invRectTransform.transform.position = new Vector3(2280f, 640f, 0f);
+        StopCoroutine(moveInv());
     }
 
     private void openInv() {

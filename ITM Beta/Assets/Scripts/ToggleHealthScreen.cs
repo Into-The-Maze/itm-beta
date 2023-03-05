@@ -12,6 +12,7 @@ public class ToggleHealthScreen : MonoBehaviour
     Stopwatch s = new();
     public static bool invIsOpen = false;
     public static ToggleHealthScreen h;
+    private WaitForSeconds delay = new(0.2f);
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.H)) {
@@ -48,8 +49,12 @@ public class ToggleHealthScreen : MonoBehaviour
 
     public void close() {
         healthAlpha.DOFade(0f, 0.2f);
-        s.Start();
-        if (s.ElapsedMilliseconds == 200) { healthRectTransform.transform.position = new Vector3(2280f, 640f, 0f); }
-        s.Stop();
+        StartCoroutine(moveInv());
+    }
+
+    IEnumerator moveInv() {
+        yield return delay;
+        healthRectTransform.transform.position = new Vector3(2280f, 640f, 0f);
+        StopCoroutine(moveInv());
     }
 }

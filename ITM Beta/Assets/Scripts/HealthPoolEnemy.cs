@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class HealthPoolEnemy : MonoBehaviour
 {
-    [SerializeField] private int maxHealth;
-    [SerializeField] private int currentHealth;
+    [SerializeField] private float maxHealth;
+    [SerializeField] private float currentHealth;
 
     void Awake()
     {
         currentHealth = maxHealth;
     }
 
-    public void TakeDamage(int amount) {
+    public void TakeDamage(float amount) {
         currentHealth -= amount;
         if (currentHealth < maxHealth / 2) { GetWounded(); }
         if (currentHealth <= 0) { Die(); }

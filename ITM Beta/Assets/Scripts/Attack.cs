@@ -7,7 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 public class Attack : MonoBehaviour
 {
     public static InventoryItem attackItem;
-    private float? damage = (attackItem == null) ? null : attackItem.Damage;
+    public static float damage;
     private GameObject weapon;
     private bool CurrentlyAttacking = false;
     public static bool CurrentlySwinging;
@@ -20,6 +20,7 @@ public class Attack : MonoBehaviour
     private void Update() {
 
         if (Input.GetMouseButtonDown(0) && PlayerMovement.stamina > 25 && attackItem != null && !ToggleEquipMenu.invIsOpen && !ToggleHealthScreen.invIsOpen && !ToggleInventory.invIsOpen && !CurrentlyAttacking){
+            damage = (attackItem == null) ? 0 : attackItem.Damage;
             PlayerMovement.movementType = PlayerMovement.MovementType.ChargingAttack;
             CurrentlyAttacking = true;
             showWeapon();
@@ -50,6 +51,7 @@ public class Attack : MonoBehaviour
         Destroy(weapon);
         CurrentlyAttacking = false;
         playerLocation.GetComponent<Rigidbody2D>().mass = 1f;
+        damage = attackItem.Damage;
         PlayerMovement.movementType = PlayerMovement.MovementType.Walking;
         
         StopAllCoroutines();

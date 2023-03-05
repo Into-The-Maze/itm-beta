@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class MeleeDamage : MonoBehaviour
 {
-    [SerializeField] private int damage;
     private void OnTriggerEnter2D(Collider2D collider) {
-        if (collider.gameObject.tag == "entity") {
-            collider.gameObject.GetComponent<HealthPoolEnemy>().TakeDamage(damage);
+        if (collider.gameObject.tag == "entity" && Attack.CurrentlySwinging) {
+            collider.gameObject.GetComponent<HealthPoolEnemy>().TakeDamage(Attack.damage);
         } 
     }
 }

@@ -59,10 +59,11 @@ public class PlayerMovement : MonoBehaviour {
         if (movementType != MovementType.Dodging) {
             simpleMovement(speedModifier, activeMoveSpeed);
         }
-        
+
         staminaBar.value = stamina;
     }
 
+    
 
     private void simpleMovement(float speedModifier, float activeMoveSpeed) {
         moveInput.x = Input.GetAxis("Horizontal");

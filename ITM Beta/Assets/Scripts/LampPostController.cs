@@ -23,7 +23,7 @@ public class LampPostController : MonoBehaviour
         }
     }
 
-    IEnumerator Flicker() {
+    private IEnumerator Flicker() {
         light2D = gameObject.transform.GetChild(0).GetComponent<Light2D>();
         isFlickering = true;
         yield return new WaitForSeconds(r.Next(2, 100 / frequency));

@@ -3,9 +3,12 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UIElements;
 using Random = System.Random;
+using Pathfinding;
 
 public class InstantiateMaze : MonoBehaviour {
 
@@ -34,6 +37,7 @@ public class InstantiateMaze : MonoBehaviour {
     [SerializeField] private GameObject rainDrops;
     [SerializeField] private GameObject layer1Wall;
     [SerializeField] private GameObject layer1Floor;
+    [SerializeField] private GameObject layer1NavMesh;
     [HideInInspector] public static string weather;
     #endregion
 
@@ -155,6 +159,8 @@ public class InstantiateMaze : MonoBehaviour {
                 }
             }
         }
+        Instantiate(layer1NavMesh, new Vector3(0, 0, 0), Quaternion.identity);
+        AstarPath.active.Scan();
     }
     private void InstantiateMazeLayer2(char[,] maze) {
 

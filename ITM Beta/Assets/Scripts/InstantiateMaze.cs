@@ -22,6 +22,7 @@ public class InstantiateMaze : MonoBehaviour {
     [SerializeField] private GameObject globalLightObj;
     [SerializeField] private GameObject globalWallLightObj;
     [SerializeField] private GameObject fogs;
+    [SerializeField] private GameObject enemyTest;
     private Light2D globalLight;
     private Light2D globalWallLight;
 
@@ -79,7 +80,7 @@ public class InstantiateMaze : MonoBehaviour {
     #endregion  
 
     private void Start() {
-        Vector3 spawn = SetPlayerSpawnPos();
+        Vector3 spawn = RandomFloorPoint();
         player.transform.position = spawn;
     }
     private void Awake() {
@@ -161,6 +162,15 @@ public class InstantiateMaze : MonoBehaviour {
         }
         Instantiate(layer1NavMesh, new Vector3(0, 0, 0), Quaternion.identity);
         AstarPath.active.Scan();
+
+        for (int i = 0; i < 10; i++) {
+            Vector3 enemySpawn = RandomFloorPoint();
+            Debug.Log($"{enemySpawn}");
+            GameObject enemy = Instantiate(enemyTest, new Vector3(0, 0, 0), Quaternion.identity);
+            enemy.transform.GetChild(1).gameObject.GetComponent<EnemyTestAI>().target = enemySpawn;
+            enemy.transform.GetChild(0).position = enemySpawn;
+            enemy.transform.GetChild(1).position = enemySpawn;
+        }
     }
     private void InstantiateMazeLayer2(char[,] maze) {
 
@@ -347,7 +357,7 @@ public class InstantiateMaze : MonoBehaviour {
         return maze;
     }
 
-    public static Vector3 SetPlayerSpawnPos() {
+    public static Vector3 RandomFloorPoint() {
         GameObject[] allObjects = FindObjectsOfType<GameObject>();
         int attempts = 0;
         while (true) {

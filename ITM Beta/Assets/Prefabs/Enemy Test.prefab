@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7356638291329406486}
+  - component: {fileID: 4497595721897751418}
   m_Layer: 0
   m_Name: Tracking Target
   m_TagString: Untagged
@@ -31,6 +32,19 @@ Transform:
   m_Father: {fileID: 470748736236987126}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4497595721897751418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3238893791134049722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef1f6273ac0f76c4986676cd6b25a6df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {x: 8, y: 8, z: 0}
 --- !u!1 &6439026066289599239
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,7 +94,9 @@ GameObject:
   - component: {fileID: 3051797083043481329}
   - component: {fileID: 3945526724891806544}
   - component: {fileID: 1375734345828797764}
-  m_Layer: 6
+  - component: {fileID: 3899713133624039013}
+  - component: {fileID: 567802940297768182}
+  m_Layer: 0
   m_Name: Body
   m_TagString: entity
   m_Icon: {fileID: 0}
@@ -233,7 +249,7 @@ MonoBehaviour:
   radius: 2
   height: 2
   canMove: 1
-  maxSpeed: 1
+  maxSpeed: 5
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -254,7 +270,7 @@ MonoBehaviour:
   rotationSpeed: 100
   slowdownDistance: 1
   pickNextWaypointDist: 1.5
-  endReachedDistance: 0
+  endReachedDistance: 1
   alwaysDrawGizmos: 1
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -307,3 +323,31 @@ PolygonCollider2D:
       - {x: 1.4316418, y: -0.24272648}
       - {x: 1.571189, y: 0.7397651}
       - {x: 0.9883493, y: 1.5639155}
+--- !u!58 &3899713133624039013
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8690656894908025449}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 10
+--- !u!114 &567802940297768182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8690656894908025449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d863ec6a550e34c87df76686fced34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

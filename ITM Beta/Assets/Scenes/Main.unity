@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 12445642}
   - component: {fileID: 12445641}
   - component: {fileID: 12445640}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Weapon
   m_TagString: WEAPONSLOT
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 162833704}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 297853795}
   - component: {fileID: 297853794}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: StaminaBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 322549087}
   - component: {fileID: 322549089}
   - component: {fileID: 322549088}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -472,7 +472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 410677097}
   - component: {fileID: 410677098}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cone Vision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -584,7 +584,7 @@ GameObject:
   - component: {fileID: 449264269}
   - component: {fileID: 449264271}
   - component: {fileID: 449264270}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Thorax
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -663,7 +663,7 @@ GameObject:
   - component: {fileID: 516001323}
   - component: {fileID: 516001322}
   - component: {fileID: 516001326}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: HealthMenu&Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -799,7 +799,7 @@ GameObject:
   - component: {fileID: 519420033}
   - component: {fileID: 519420034}
   - component: {fileID: 519420035}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -951,7 +951,7 @@ GameObject:
   - component: {fileID: 526755044}
   - component: {fileID: 526755046}
   - component: {fileID: 526755045}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1029,7 +1029,7 @@ GameObject:
   - component: {fileID: 622508040}
   - component: {fileID: 622508041}
   - component: {fileID: 622508042}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1138,7 +1138,7 @@ GameObject:
   - component: {fileID: 641902926}
   - component: {fileID: 641902928}
   - component: {fileID: 641902927}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1213,7 +1213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 655713022}
   - component: {fileID: 655713023}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Surround Vision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1438,7 +1438,7 @@ GameObject:
   - component: {fileID: 750607621}
   - component: {fileID: 750607624}
   - component: {fileID: 750607625}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: EquipmentGrid&Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1544,7 +1544,7 @@ GameObject:
   - component: {fileID: 796154380}
   - component: {fileID: 796154382}
   - component: {fileID: 796154381}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1620,7 +1620,7 @@ GameObject:
   - component: {fileID: 840205031}
   - component: {fileID: 840205033}
   - component: {fileID: 840205032}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1696,7 +1696,7 @@ GameObject:
   - component: {fileID: 852933498}
   - component: {fileID: 852933499}
   - component: {fileID: 852933500}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: OxygenBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1801,7 +1801,7 @@ GameObject:
   - component: {fileID: 890730389}
   - component: {fileID: 890730388}
   - component: {fileID: 890730387}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Player Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1906,7 +1906,7 @@ GameObject:
   - component: {fileID: 891252457}
   - component: {fileID: 891252459}
   - component: {fileID: 891252458}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player Sprite
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2117,7 +2117,7 @@ GameObject:
   - component: {fileID: 1075749659}
   - component: {fileID: 1075749661}
   - component: {fileID: 1075749660}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: R.Leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2195,7 +2195,7 @@ GameObject:
   - component: {fileID: 1192760634}
   - component: {fileID: 1192760633}
   - component: {fileID: 1192760632}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Headgear
   m_TagString: HEADSLOT
   m_Icon: {fileID: 0}
@@ -2298,7 +2298,7 @@ GameObject:
   - component: {fileID: 1375852009}
   - component: {fileID: 1375852011}
   - component: {fileID: 1375852010}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: R.Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2372,7 +2372,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1413314559}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2452,6 +2452,7 @@ MonoBehaviour:
   globalLightObj: {fileID: 694315820}
   globalWallLightObj: {fileID: 937299983}
   fogs: {fileID: 6375808110013173114, guid: 663c650c9f1760c439d35b8ea4d12d8a, type: 3}
+  enemyTest: {fileID: 6439026066289599239, guid: dc27ba876ed31594499549658cb3dc32, type: 3}
   layer0Wall: {fileID: 3700896281571399095, guid: bd4c819c55b4a124da26d5cf1414f747, type: 3}
   layer0Floor: {fileID: 5567696050990112427, guid: 9c14d063f6a9ab8499bac8fdc45e7483, type: 3}
   layer0Door: {fileID: 5567696050990112427, guid: a1dae746df22f8448b2713bccd53a086, type: 3}
@@ -2495,7 +2496,7 @@ GameObject:
   - component: {fileID: 1443556764}
   - component: {fileID: 1443556766}
   - component: {fileID: 1443556765}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: L.Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2682,7 +2683,7 @@ GameObject:
   - component: {fileID: 1464133224}
   - component: {fileID: 1464133226}
   - component: {fileID: 1464133225}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Highlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2760,7 +2761,7 @@ GameObject:
   - component: {fileID: 1468136458}
   - component: {fileID: 1468136457}
   - component: {fileID: 1468136456}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Chest gear
   m_TagString: CHESTSLOT
   m_Icon: {fileID: 0}
@@ -2944,7 +2945,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1726886864}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.0890703, y: 1.4644865, z: -1.4464545}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2963,7 +2964,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1926225457}
   - component: {fileID: 1926225458}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Torch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3079,7 +3080,7 @@ GameObject:
   - component: {fileID: 1958383379}
   - component: {fileID: 1958383380}
   - component: {fileID: 1958383381}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: InventoryGrid
   m_TagString: INVENTORY
   m_Icon: {fileID: 0}
@@ -3258,7 +3259,7 @@ GameObject:
   - component: {fileID: 1986096447}
   - component: {fileID: 1986096449}
   - component: {fileID: 1986096448}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: L.Leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3334,7 +3335,7 @@ GameObject:
   - component: {fileID: 2107296768}
   - component: {fileID: 2107296770}
   - component: {fileID: 2107296769}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3412,7 +3413,7 @@ GameObject:
   - component: {fileID: 2128899539}
   - component: {fileID: 2128899538}
   - component: {fileID: 2128899537}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Ring
   m_TagString: RINGSLOT
   m_Icon: {fileID: 0}

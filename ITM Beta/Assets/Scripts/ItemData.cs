@@ -16,6 +16,8 @@ public class ItemData : ScriptableObject
     public bool isHeadgear = false;
     public bool isRing = false;
 
+    public bool isHeavy = false;
+
     public string flavourText;
 
     public float damage;

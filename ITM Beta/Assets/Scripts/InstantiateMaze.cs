@@ -160,17 +160,17 @@ public class InstantiateMaze : MonoBehaviour {
                 }
             }
         }
-        Instantiate(layer1NavMesh, new Vector3(0, 0, 0), Quaternion.identity);
-        AstarPath.active.Scan();
+        //Instantiate(layer1NavMesh, new Vector3(0, 0, 0), Quaternion.identity);
+        //AstarPath.active.Scan();
 
-        for (int i = 0; i < 10; i++) {
-            Vector3 enemySpawn = RandomFloorPoint();
-            Debug.Log($"{enemySpawn}");
-            GameObject enemy = Instantiate(enemyTest, new Vector3(0, 0, 0), Quaternion.identity);
-            enemy.transform.GetChild(1).gameObject.GetComponent<EnemyTestAI>().target = enemySpawn;
-            enemy.transform.GetChild(0).position = enemySpawn;
-            enemy.transform.GetChild(1).position = enemySpawn;
-        }
+        //for (int i = 0; i < 10; i++) {
+        //    Vector3 enemySpawn = RandomFloorPoint();
+        //    Debug.Log($"{enemySpawn}");
+        //    GameObject enemy = Instantiate(enemyTest, new Vector3(0, 0, 0), Quaternion.identity);
+        //    enemy.transform.GetChild(1).gameObject.GetComponent<EnemyTestAI>().target = enemySpawn;
+        //    enemy.transform.GetChild(0).position = enemySpawn;
+        //    enemy.transform.GetChild(1).position = enemySpawn;
+        //}
     }
     private void InstantiateMazeLayer2(char[,] maze) {
 

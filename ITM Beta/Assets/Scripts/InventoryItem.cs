@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryItem : MonoBehaviour
-{
+public class InventoryItem : MonoBehaviour {
     public ItemData itemData;
     public int itemDataElementReference;
     public int onGridPosX;
@@ -33,6 +32,7 @@ public class InventoryItem : MonoBehaviour
     public bool isArmor { get { return itemData.isArmor; } }
     public bool isHeadgear { get { return itemData.isHeadgear; } }
     public bool isRing { get { return itemData.isRing; } }
+    public bool isHeavy { get { return itemData.isHeavy; } }
 
     public float Damage {
         get {

@@ -9,8 +9,8 @@ public class Attack : MonoBehaviour
     public static InventoryItem attackItem;
     public static float damage;
     private GameObject weapon;
-    private bool CurrentlyAttacking = false;
-    public static bool CurrentlySwinging;
+    [HideInInspector] public static bool CurrentlyAttacking = false;
+    public static bool CurrentlySwinging = false;
     WaitForSeconds swingTime = new WaitForSeconds(0.5f);
 
     [SerializeField] GameObject attackPrefab;
@@ -18,7 +18,6 @@ public class Attack : MonoBehaviour
     [SerializeField] GameObject playerLocation;
 
     private void Update() {
-
         if (Input.GetMouseButtonDown(0) && PlayerMovement.stamina > 25 && attackItem != null && !ToggleEquipMenu.invIsOpen && !ToggleHealthScreen.invIsOpen && !ToggleInventory.invIsOpen && !CurrentlyAttacking){
             damage = (attackItem == null) ? 0 : attackItem.Damage;
             PlayerMovement.movementType = PlayerMovement.MovementType.ChargingAttack;

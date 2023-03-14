@@ -11,7 +11,6 @@ public class EnemyTestAI : MonoBehaviour
     private CircleCollider2D aggro;
     public Vector3 target = new Vector3(8, 8, 0);
 
-
     void Awake()
     {
         aggro = gameObject.transform.parent.GetChild(0).GetComponent<CircleCollider2D>();

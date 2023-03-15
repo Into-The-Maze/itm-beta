@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UIElements;
@@ -7,6 +8,7 @@ using UnityEngine.UIElements;
 public class NewAI : MonoBehaviour
 {
     private (Vector2 direction, float weight, bool blocked)[] moveDirections = new (Vector2, float, bool)[32];
+    private Rigidbody2D rb;
     private Vector2 target = new Vector2(0f, 0f);
     private bool favourRight = false;
     private bool lineOfSight = false;
@@ -17,18 +19,23 @@ public class NewAI : MonoBehaviour
     [SerializeField] private float range = 4f;
     [SerializeField] private float bodyWidth = 1.5f;
 
+    #region IMPORTANT
+#if false
     /// <summary>
     /// fully necessary for code to function. SYSTEM32 WILL BE DELETED IF THE CODE RUNS WITHOUT THIS
     /// </summary>
-#region saved for later
+    #region saved for later
 #if false
-[SerializeField][HideInInspector] private unsafe async required virtual sealed abstract static const (UnityEngine.UnityAPICompatibilityVersionAttribute[,][,,][], CustomRenderTextureInitializationSource, UnityEngine.RuntimeInitializeOnLoadMethodAttribute[][], (int, double, float, long, short), UnityEngine.CustomRenderTextureInitializationSource)[,,][,] balls = new (UnityEngine.UnityAPICompatibilityVersionAttribute[,][,,][], CustomRenderTextureInitializationSource, UnityEngine.RuntimeInitializeOnLoadMethodAttribute[][], (int, double, float, long, short), UnityEngine.CustomRenderTextureInitializationSource)[16, 420][69];
+///[SerializeField][HideInInspector] private unsafe async required virtual sealed abstract static const (UnityEngine.UnityAPICompatibilityVersionAttribute[,][,,][], CustomRenderTextureInitializationSource, UnityEngine.RuntimeInitializeOnLoadMethodAttribute[][], (private unsafe async required virtual sealed abstract static const int, private unsafe async required virtual sealed abstract static const double, private unsafe async required virtual sealed abstract static const float, private unsafe async required virtual sealed abstract static const long, private unsafe async required virtual sealed abstract static const short, private unsafe async required virtual sealed abstract static const uint, private unsafe async required virtual sealed abstract static const ushort, private unsafe async required virtual sealed abstract static const ulong, private unsafe async required virtual sealed abstract static const sbyte, private unsafe async required virtual sealed abstract static const byte), UnityEngine.CustomRenderTextureInitializationSource)[,,][,] balls = new (UnityEngine.UnityAPICompatibilityVersionAttribute[,][,,][], CustomRenderTextureInitializationSource, UnityEngine.RuntimeInitializeOnLoadMethodAttribute[][], (private unsafe async required virtual sealed abstract static const int, private unsafe async required virtual sealed abstract static const double, private unsafe async required virtual sealed abstract static const float, private unsafe async required virtual sealed abstract static const long, private unsafe async required virtual sealed abstract static const short, private unsafe async required virtual sealed abstract static const uint, private unsafe async required virtual sealed abstract static const ushort, private unsafe async required virtual sealed abstract static const ulong, private unsafe async required virtual sealed abstract static const sbyte, private unsafe async required virtual sealed abstract static const byte), UnityEngine.CustomRenderTextureInitializationSource)[16, 420][69];
 #endif
-#endregion
+    #endregion
+#endif
+    #endregion
 
     void Awake()
     {
         gameObject.GetComponent<CircleCollider2D>().radius = aggroRadius;
+        rb = gameObject.GetComponent<Rigidbody2D>();
         InitialiseMoveDirections();
     }
     void Update() 
@@ -68,12 +75,16 @@ public class NewAI : MonoBehaviour
         }
     }
     private void DrawRays() {
+        int highestIndex = HighestWeightIndex();
         for (int i = 0; i < moveDirections.Length; i++) {
-            if (moveDirections[i].blocked) {
-                Debug.DrawRay((transform.position + (new Vector3(moveDirections[i].direction.x, moveDirections[i].direction.y, 0) * bodyWidth)), (moveDirections[i].direction * moveDirections[i].weight), Color.red, 0.1f);
+            if (i == highestIndex) {
+                Debug.DrawRay((transform.position + (new Vector3(moveDirections[i].direction.x, moveDirections[i].direction.y, 0) * bodyWidth)), (moveDirections[i].direction * moveDirections[i].weight), Color.blue, Time.deltaTime);
+            }
+            else if (moveDirections[i].blocked) {
+                Debug.DrawRay((transform.position + (new Vector3(moveDirections[i].direction.x, moveDirections[i].direction.y, 0) * bodyWidth)), (moveDirections[i].direction * moveDirections[i].weight), Color.red, Time.deltaTime);
             }
             else {
-                Debug.DrawRay((transform.position + (new Vector3(moveDirections[i].direction.x, moveDirections[i].direction.y, 0) * bodyWidth)), (moveDirections[i].direction * moveDirections[i].weight), Color.green, 0.1f);
+                Debug.DrawRay((transform.position + (new Vector3(moveDirections[i].direction.x, moveDirections[i].direction.y, 0) * bodyWidth)), (moveDirections[i].direction * moveDirections[i].weight), Color.green, Time.deltaTime);
             }
         }
         //Debug.Log($"chasing: {chasing}, lineOfSight: {lineOfSight}");
@@ -86,7 +97,7 @@ public class NewAI : MonoBehaviour
     }
     private void CalculateWeights() {
         for (int i = 0; i < moveDirections.Length; i++) {
-            RaycastHit2D hit = Physics2D.Raycast((transform.position + (new Vector3(moveDirections[i].direction.x, moveDirections[i].direction.y, 0) * bodyWidth)), moveDirections[i].direction, 10f, LayerMask.GetMask("Wall"));
+            RaycastHit2D hit = Physics2D.Raycast((transform.position + (new Vector3(moveDirections[i].direction.x, moveDirections[i].direction.y, 0) * bodyWidth)), moveDirections[i].direction, 6f, LayerMask.GetMask("Wall"));
             if (hit.collider != null && hit.collider.gameObject != null) {
                 moveDirections[i].weight += hit.distance / 10f;
                 if (hit.distance < 2f) {
@@ -153,5 +164,19 @@ public class NewAI : MonoBehaviour
             }
         }
         moveDirections = normalisedMoveDirections;
+    }
+    private int HighestWeightIndex() {
+        float highestValue = 0f;
+        for (int i = 0; i < moveDirections.Length; i++) {
+            if (moveDirections[i].weight > highestValue) {
+                highestValue = moveDirections[i].weight;
+            }
+        }
+        for (int i = 0; i < moveDirections.Length; i++) {
+            if (moveDirections[i].weight == highestValue) {
+                return i;
+            }
+        }
+        return 0;
     }
 }

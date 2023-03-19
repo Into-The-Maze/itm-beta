@@ -48,6 +48,21 @@ public class NewAI : MonoBehaviour
         NormaliseWeights();
         DrawRays();
     }
+    private void FixedUpdate() {
+        if (Vector3.Distance(gameObject.transform.position, new Vector3(target.x, target.y, 0)) < 1.5f) {
+            chasing = false;
+        }
+        else {
+            chasing = true;
+        }
+
+        if (chasing) {
+            StartCoroutine(moveToPlayer());
+        }
+        else {
+            StopAllCoroutines();
+        }
+    }
     private void OnTriggerStay2D(Collider2D collision) {
         if (collision.gameObject.tag == "Player") {
             RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, collision.transform.position - gameObject.transform.position, aggroRadius + 1, LayerMask.GetMask(new string[2] { "Player", "Wall" }));
@@ -60,9 +75,15 @@ public class NewAI : MonoBehaviour
                 }
                 else {
                     lineOfSight = false;
+                   
                 }
             }
         }
+    }
+
+    IEnumerator moveToPlayer() {
+        rb.AddForce(GetHighestWeightedVector());
+        yield return null;
     }
 
     private void InitialiseMoveDirections() {
@@ -178,5 +199,20 @@ public class NewAI : MonoBehaviour
             }
         }
         return 0;
+    }
+
+    private Vector2 GetHighestWeightedVector() {
+        float highestValue = 0f;
+        for (int i = 0; i < moveDirections.Length; i++) {
+            if (moveDirections[i].weight > highestValue) {
+                highestValue = moveDirections[i].weight;
+            }
+        }
+        for (int i = 0; i < moveDirections.Length; i++) {
+            if (moveDirections[i].weight == highestValue) {
+                return moveDirections[i].direction;
+            }
+        }
+        return Vector2.zero;
     }
 }

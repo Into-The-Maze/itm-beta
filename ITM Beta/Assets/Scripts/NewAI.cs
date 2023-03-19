@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public class NewAI : MonoBehaviour
 {
@@ -18,6 +21,7 @@ public class NewAI : MonoBehaviour
     [SerializeField] private float aggroRadius = 10f;
     [SerializeField] private float range = 4f;
     [SerializeField] private float bodyWidth = 1.5f;
+    [SerializeField] private float RotationSpeed = 2f;
 
     #region IMPORTANT
 #if false
@@ -37,6 +41,7 @@ public class NewAI : MonoBehaviour
         gameObject.GetComponent<CircleCollider2D>().radius = aggroRadius;
         rb = gameObject.GetComponent<Rigidbody2D>();
         InitialiseMoveDirections();
+
     }
     void Update() 
     {
@@ -57,11 +62,17 @@ public class NewAI : MonoBehaviour
         }
 
         if (chasing) {
-            StartCoroutine(moveToPlayer());
+            float angle = Mathf.Atan2(target.y - transform.position.y, target.x - transform.position.x) * Mathf.Rad2Deg;
+            Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, RotationSpeed * Time.deltaTime * 25f);
+            if (Quaternion.Dot(transform.rotation, targetRotation) > 0.9f || Quaternion.Dot(transform.rotation, targetRotation) < -0.9f) {
+                StartCoroutine(moveToPlayer());
+            }
         }
         else {
             StopAllCoroutines();
         }
+        
     }
     private void OnTriggerStay2D(Collider2D collision) {
         if (collision.gameObject.tag == "Player") {

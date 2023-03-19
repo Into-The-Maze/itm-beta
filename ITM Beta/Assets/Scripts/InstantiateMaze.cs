@@ -39,7 +39,6 @@ public class InstantiateMaze : MonoBehaviour {
     [SerializeField] private GameObject layer1Wall;
     [SerializeField] private GameObject layer1Floor;
     [SerializeField] private GameObject layer1NavMesh;
-    [HideInInspector] public static string weather;
     #endregion
 
     #region layer2
@@ -77,7 +76,11 @@ public class InstantiateMaze : MonoBehaviour {
     [SerializeField] private GameObject candle;
     [SerializeField] private GameObject lampPost;
     //[SerializeField] private GameObject lampPostFlicker;
-    #endregion  
+    #endregion
+
+    [HideInInspector] public static string weather;
+    [HideInInspector] public static string power;
+    [HideInInspector] public static string setting;
 
     private void Start() {
         Vector3 spawn = RandomFloorPoint();
@@ -85,39 +88,51 @@ public class InstantiateMaze : MonoBehaviour {
     }
     private void Awake() {
         Volume volume = GetComponent<Volume>();
-        //InstantiateMazeLayer0(InitialiseLayer0());
-        InstantiateMazeLayer1(initialiseMazeLayer1());
+        InstantiateMazeLayer0(InitialiseLayer0());
+        //InstantiateMazeLayer1(initialiseMazeLayer1());
         //InstantiateMazeLayer2(initialiseMazeLayer2());
         //InstantiateMazeLayer3(initialiseMazeLayer3());
         //InstantiateLayer4Pyramid(InitialiseLayer4Pyramid());
     }
 
     private void InstantiateMazeLayer0(char[,] maze) {
-        globalLight = globalLightObj.GetComponent<Light2D>();
-        globalWallLight = globalWallLightObj.GetComponent<Light2D>();
-        globalLight.intensity = 1f;
-        globalWallLight.intensity= 0.375f;
+        Bloom bloom;
+        volume.profile.TryGet(out bloom);
+        {
+            bloom.dirtIntensity.value = 0f;
+            bloom.intensity.value = 1f;
+        }
+        int layer0Upscale = 4;
+        setting = SetLayer0Setting();
+        power = SetLayer0Power();
+        Debug.Log($"{setting}, {power}");
         for (int y = 0; y < maze.GetLength(0); y ++ ) {
             for (int x = 0; x < maze.GetLength(1); x++ ) {
                 if (maze[y, x] == ' ') {
-                    GameObject floor = Instantiate(layer0Floor, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
+                    GameObject floor = Instantiate(layer0Floor, new Vector3(layer0Upscale * x, layer0Upscale * y, 0), Quaternion.identity);
                     floor.transform.parent = mazeParent.transform;
                 }
                 else if (maze[y, x] == '.') {
-                    GameObject door = Instantiate(layer0Door, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
+                    GameObject door = Instantiate(layer0Door, new Vector3(layer0Upscale * x, layer0Upscale * y, 0), Quaternion.identity);
                     door.transform.parent = mazeParent.transform;
                 }
                 else {
-                    GameObject wall = Instantiate(layer0Wall, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
+                    GameObject wall = Instantiate(layer0Wall, new Vector3(layer0Upscale * x, layer0Upscale * y, 0), Quaternion.identity);
                     wall.transform.parent = mazeParent.transform;
                 }
             }
         }
     }
     private void InstantiateMazeLayer1(char[,] maze) {
+        Bloom bloom;
+        volume.profile.TryGet(out bloom);
+        {
+            bloom.dirtIntensity.value = 15f;
+            bloom.intensity.value = 2.5f;
+        }
         int layer1Upscale = 8;
         int lampPostChance = 50;
-        string setting = SetLayer1Setting();
+        setting = SetLayer1Setting();
         weather = SetLayer1Weather(layer1Upscale);
         Debug.Log($"{setting}, {weather}");
         if (weather == "storm") {
@@ -160,17 +175,6 @@ public class InstantiateMaze : MonoBehaviour {
                 }
             }
         }
-        //Instantiate(layer1NavMesh, new Vector3(0, 0, 0), Quaternion.identity);
-        //AstarPath.active.Scan();
-
-        //for (int i = 0; i < 10; i++) {
-        //    Vector3 enemySpawn = RandomFloorPoint();
-        //    Debug.Log($"{enemySpawn}");
-        //    GameObject enemy = Instantiate(enemyTest, new Vector3(0, 0, 0), Quaternion.identity);
-        //    enemy.transform.GetChild(1).gameObject.GetComponent<EnemyTestAI>().target = enemySpawn;
-        //    enemy.transform.GetChild(0).position = enemySpawn;
-        //    enemy.transform.GetChild(1).position = enemySpawn;
-        //}
     }
     private void InstantiateMazeLayer2(char[,] maze) {
 
@@ -372,12 +376,45 @@ public class InstantiateMaze : MonoBehaviour {
             attempts++;
         }
     }
-
+    private string SetLayer0Setting() {
+        int i;
+        int random = r.Next(1, 101);
+        string[] lightColours = { "FFFFFF", "9A2E1C" };
+        string[] settingNames = { "normal", "breach" };
+        globalLight = globalLightObj.GetComponent<Light2D>();
+        globalWallLight = globalWallLightObj.GetComponent<Light2D>();
+        if (random <= 76) {
+            i = 0; // normal
+        }
+        else {
+            i = 1; // breach
+        }
+        globalLight.color = hexToColor(lightColours[i]);
+        globalWallLight.color = hexToColor(lightColours[i]);
+        return settingNames[i];
+    }
+    private string SetLayer0Power() {
+        int i;
+        int random = r.Next(1, 101);
+        float[] lightLevels = { 0.875f, 0.375f };
+        string[] settingNames = { "full", "low" };
+        globalLight = globalLightObj.GetComponent<Light2D>();
+        globalWallLight = globalWallLightObj.GetComponent<Light2D>();
+        if (random <= 76) {
+            i = 0; // full
+        }
+        else {
+            i = 1; // low
+        }
+        globalLight.intensity = lightLevels[i];
+        globalWallLight.intensity = lightLevels[i] + 0.5f;
+        return settingNames[i];
+    }
     // layer 0 setting
     private string SetLayer1Setting() {
         int i;
         int random = r.Next(1, 101);
-        string[] lightColours = { "0xFFFFFF", "4444FF", "4444FF", "0xFF0000" };
+        string[] lightColours = { "FFFFFF", "4444FF", "4444FF", "FF0000" };
         float[] lightLevels = { 0.25f, 1.25f, 2f, 0.8125f };
         string[] settingNames = { "starlight", "moonlight", "full moon", "blood moon" };
         globalLight = globalLightObj.GetComponent<Light2D>();   

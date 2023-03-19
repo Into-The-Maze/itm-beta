@@ -13,13 +13,13 @@ public class NewAI : MonoBehaviour
     private (Vector2 direction, float weight, bool blocked)[] moveDirections = new (Vector2, float, bool)[32];
     private Rigidbody2D rb;
     private Vector2 target = new Vector2(0f, 0f);
-    private bool favourRight = false;
-    private bool lineOfSight = false;
+    //private bool favourRight = false;
+    //private bool lineOfSight = false;
     private bool chasing = false;
     private Vector2 vectorToPlayer;
     private float distanceToPlayer;
     [SerializeField] private float aggroRadius = 10f;
-    [SerializeField] private float range = 4f;
+    //[SerializeField] private float range = 4f;
     [SerializeField] private float bodyWidth = 1.5f;
     [SerializeField] private float RotationSpeed = 2f;
 
@@ -82,10 +82,10 @@ public class NewAI : MonoBehaviour
                     target = collision.gameObject.transform.position;
                     vectorToPlayer = collision.gameObject.transform.position - gameObject.transform.position;
                     distanceToPlayer = vectorToPlayer.magnitude;
-                    lineOfSight = true;
+                    //lineOfSight = true;
                 }
                 else {
-                    lineOfSight = false;
+                    //lineOfSight = false;
                    
                 }
             }

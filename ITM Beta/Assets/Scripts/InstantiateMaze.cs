@@ -9,6 +9,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UIElements;
 using Random = System.Random;
 using Pathfinding;
+using UnityEditor.SceneManagement;
 
 public class InstantiateMaze : MonoBehaviour {
 
@@ -105,6 +106,10 @@ public class InstantiateMaze : MonoBehaviour {
         int layer0Upscale = 4;
         setting = SetLayer0Setting();
         power = SetLayer0Power();
+        if (setting == "breach") {
+            LabsBreachController breachController = gameObject.AddComponent<LabsBreachController>();
+            breachController.GetLights(globalLight, globalWallLight);
+        }
         Debug.Log($"{setting}, {power}");
         for (int y = 0; y < maze.GetLength(0); y ++ ) {
             for (int x = 0; x < maze.GetLength(1); x++ ) {

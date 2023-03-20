@@ -13,13 +13,15 @@ public class NewAI : MonoBehaviour
     private (Vector2 direction, float weight, bool blocked)[] moveDirections = new (Vector2, float, bool)[32];
     private Rigidbody2D rb;
     private Vector2 target = new Vector2(0f, 0f);
-    //private bool favourRight = false;
-    //private bool lineOfSight = false;
+    private bool attacking = false;
+    [SerializeField] private float attackCooldown = 2f;
+    private bool favourRight = false;
+    private bool lineOfSight = false;
     private bool chasing = false;
     private Vector2 vectorToPlayer;
     private float distanceToPlayer;
     [SerializeField] private float aggroRadius = 10f;
-    //[SerializeField] private float range = 4f;
+    [SerializeField] private float range = 4f;
     [SerializeField] private float bodyWidth = 1.5f;
     [SerializeField] private float RotationSpeed = 2f;
 
@@ -61,8 +63,9 @@ public class NewAI : MonoBehaviour
             chasing = true;
         }
 
-        if (chasing) {
-            float angle = Mathf.Atan2(target.y - transform.position.y, target.x - transform.position.x) * Mathf.Rad2Deg;
+        if (chasing && !attacking) {
+            int index = HighestWeightIndex();
+            float angle = Mathf.Atan2(moveDirections[index].direction.y, moveDirections[index].direction.x) * Mathf.Rad2Deg;
             Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, RotationSpeed * Time.deltaTime * 25f);
             if (Quaternion.Dot(transform.rotation, targetRotation) > 0.9f || Quaternion.Dot(transform.rotation, targetRotation) < -0.9f) {
@@ -70,7 +73,8 @@ public class NewAI : MonoBehaviour
             }
         }
         else {
-            StopAllCoroutines();
+            StopCoroutine(moveToPlayer());
+            //StartCoroutine(attackPlayer());
         }
         
     }

@@ -25,18 +25,13 @@ public class PlayerMovement : MonoBehaviour {
 
     #region movement
     public static float lastRadiansFromNorth = 0f;
-    float speedModifier = 1f;
+    float speedModifier = 4f;
     float moveSpeed = 1.125f;
     public static float stamina = maxStamina;
     static float maxStamina = 80f;
     private Vector2 moveInput;
     #endregion
 
-    #region dodge
-    private float activeMoveSpeed;
-    public float dodgeSpeed = 8f, dodgeLength = 0.15f, dodgeCooldown = 1f;
-    private float dodgeCounter, dodgeCooldownCounter;
-    #endregion
 
     public static MovementType movementType = MovementType.Walking;
 
@@ -46,18 +41,17 @@ public class PlayerMovement : MonoBehaviour {
     //public LayerMask vaultMask;
 
     void Start() {
-        ChangeMovementType(ref movementType, ref stamina, ref speedModifier, dodgeSpeed, maxStamina);
-        activeMoveSpeed = moveSpeed;
+        ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
+        
         staminaBar.maxValue = maxStamina;
     }
 
     void Update(){
-        ChangeMovementType(ref movementType, ref stamina, ref speedModifier, dodgeSpeed, maxStamina);
-        handleDodge();
-        handleDodgeCooldown();
+        ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
+        
 
         if (movementType != MovementType.Dodging) {
-            simpleMovement(speedModifier, activeMoveSpeed);
+            simpleMovement(speedModifier);
         }
 
         staminaBar.value = stamina;
@@ -65,38 +59,15 @@ public class PlayerMovement : MonoBehaviour {
 
     
 
-    private void simpleMovement(float speedModifier, float activeMoveSpeed) {
+    private void simpleMovement(float speedModifier) {
         moveInput.x = Input.GetAxis("Horizontal");
         moveInput.y = Input.GetAxis("Vertical");
         //moveInput.Normalize();
-        rb2d.velocity = moveInput * speedModifier * activeMoveSpeed; 
+        rb2d.velocity = moveInput * speedModifier; 
 
     }
 
-    private void doDodge() {
-        if (dodgeCooldownCounter <= 0 && dodgeCounter <= 0) {
-            activeMoveSpeed = dodgeSpeed;
-            dodgeCounter = dodgeLength;
-            stamina -= 25;
-        }
-    }
-
-    private void handleDodge() {
-        if (dodgeCounter > 0) {
-            dodgeCounter -= Time.deltaTime;
-
-            if (dodgeCounter <= 0) {
-                activeMoveSpeed = moveSpeed;
-                dodgeCooldownCounter = dodgeCooldown;
-            }
-        }
-    }
-
-    private void handleDodgeCooldown() {
-        if (dodgeCooldownCounter > 0) {
-            dodgeCooldownCounter -= Time.deltaTime;
-        }
-    }
+    
     
 
     //NOT redundant
@@ -129,7 +100,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
 
-    void ChangeMovementType(ref MovementType movementType, ref float stamina, ref float speedModifier, float dodgeSpeed, float maxStamina) {
+    void ChangeMovementType(ref MovementType movementType, ref float stamina, ref float speedModifier, float maxStamina) {
         //changes movement speed and stamina depending on wether play is running, sneaking or walking
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && stamina > 10) {
@@ -140,11 +111,9 @@ public class PlayerMovement : MonoBehaviour {
             movementType = MovementType.Sneaking;
             //ToggleInventory.openFOVRun();
         }
-        else if (Input.GetKeyDown(KeyCode.Space) && stamina >= 25f) {
-            movementType = MovementType.Dodging;
-            doDodge();
-            
-            movementType = MovementType.Walking;
+        else if (Input.GetKeyDown(KeyCode.Space) && stamina >= 25f && Dodge.canDodge_cooldown) {
+            StartCoroutine(Dodge.d.handleDodge());
+            stamina -= 25;
         }
         else if ((Input.GetKeyUp(KeyCode.LeftControl) && movementType == MovementType.Sneaking) || 
             (Input.GetKeyUp(KeyCode.LeftShift) && movementType == MovementType.Running) ||

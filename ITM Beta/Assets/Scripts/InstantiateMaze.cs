@@ -39,7 +39,6 @@ public class InstantiateMaze : MonoBehaviour {
     [SerializeField] private GameObject rainDrops;
     [SerializeField] private GameObject layer1Wall;
     [SerializeField] private GameObject layer1Floor;
-    [SerializeField] private GameObject layer1NavMesh;
     #endregion
 
     #region layer2

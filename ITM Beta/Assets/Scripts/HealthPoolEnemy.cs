@@ -19,6 +19,11 @@ public class HealthPoolEnemy : MonoBehaviour
     }
 
     private void Die() {
+        if (gameObject.CompareTag("CRATE")) {
+            CrateController.c.breakOpen(ItemDropTable.layer0DropTable, 10f);
+            Destroy(gameObject);
+            return;
+        }
         Destroy(gameObject);
         // death animation/effect
         // loot

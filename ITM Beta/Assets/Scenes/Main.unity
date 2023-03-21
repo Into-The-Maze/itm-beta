@@ -799,6 +799,7 @@ GameObject:
   - component: {fileID: 519420033}
   - component: {fileID: 519420034}
   - component: {fileID: 519420035}
+  - component: {fileID: 519420036}
   m_Layer: 3
   m_Name: Player Camera
   m_TagString: MainCamera
@@ -940,6 +941,18 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &519420036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe30fb40c483da44b0d5fe7e436fc2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &526755043
 GameObject:
   m_ObjectHideFlags: 0
@@ -2473,7 +2486,6 @@ MonoBehaviour:
   rainDrops: {fileID: 8384109409442962640, guid: 7da596502fdce53498602a509bec913b, type: 3}
   layer1Wall: {fileID: 5567696050990112427, guid: 1b743dd3149faf64f8d242adf5ed4f36, type: 3}
   layer1Floor: {fileID: 5567696050990112427, guid: 9cdddc2b86cc5774399a2e645d2fe451, type: 3}
-  layer1NavMesh: {fileID: 4625426245814743157, guid: 7991873f9464612428fb5ddd82649f8b, type: 3}
   layer2Wall: {fileID: 3700896281571399095, guid: 3f2ae33fab98cd44193fe87191f82d59, type: 3}
   layer2WaterFloor: {fileID: 5567696050990112427, guid: e7f72262e934eb64ea603f0edb502cbf, type: 3}
   layer2Floor: {fileID: 5567696050990112427, guid: c387829f240416943afac804373ae9ee, type: 3}

@@ -15,6 +15,7 @@ TagManager:
   - WALL_LAYER0
   - FLOOR_LAYER0
   - entity
+  - CRATE
   layers:
   - Default
   - TransparentFX

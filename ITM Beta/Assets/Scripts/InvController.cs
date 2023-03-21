@@ -9,6 +9,8 @@ using static UnityEngine.GraphicsBuffer;
 
 public class InvController : MonoBehaviour
 {
+    public static InvController itemDrops;
+
     [HideInInspector] //avoids confusion with assigning script
     private ItemGrid selectedItemGrid;
     private long itemAutoNum = 0;
@@ -21,7 +23,7 @@ public class InvController : MonoBehaviour
     [SerializeField] GameObject ThrownItem;
     [SerializeField] GameObject playerSprite;
     [SerializeField] GameObject playerLocation;
-    [SerializeField] List<ItemData> items;
+    [SerializeField] public List<ItemData> items;
     [SerializeField] GameObject itemPrefab;
     [SerializeField] Transform canvasTransform;
 
@@ -39,6 +41,7 @@ public class InvController : MonoBehaviour
 
     private void Awake() {
         inventoryHighlight = GetComponent<InventoryHighlight>();
+        itemDrops = this;
     }
     private void Update() {
         ItemIconDrag();

@@ -13,11 +13,17 @@ public class ItemDropTable : MonoBehaviour
 
 
     public static Dictionary<int, float> layer0DropTable = new() { //store items as their reference number followed by their (rarity)
-
+        {000, 1f },
+        {001, 1f },
+        {002, 1f },
+        {003, 1f }
     };
 
-    public static Dictionary<int, float> layer1DropTable = new() { 
-
+    public static Dictionary<int, float> layer1DropTable = new() {
+        {000, 1f },
+        {001, 1f },
+        {002, 1f },
+        {003, 1f }
     };
 
     public static Dictionary<int, float> layer2DropTable = new() {

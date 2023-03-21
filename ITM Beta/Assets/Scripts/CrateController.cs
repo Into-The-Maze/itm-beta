@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CrateController : MonoBehaviour
 {
     
     public static CrateController c;
+
+    public GameObject fragment1;
+    public GameObject fragment2;
+    public GameObject fragment3;
+
 
     public GameObject crate;
     public GameObject droppedItem;
@@ -22,12 +28,18 @@ public class CrateController : MonoBehaviour
     public void breakOpen(Dictionary<int, float> dropTable, float rarityLevel) {
         Vector3 position = transform.position;
         int itemElement = getRandomItemDrop(dropTable, rarityLevel);
-        
-        //MUST IMPLEMENT FRAGMENTATION MYSELF
+
+        Fragment(position);
 
         droppedItem.GetComponent<SpriteRenderer>().sprite = InvController.itemDrops.items[itemElement].itemIcon;
         droppedItem.GetComponent<ItemDataDump>().itemDataElementReference = itemElement;
         Instantiate(droppedItem, position, Quaternion.identity);
+    }
+
+    void Fragment(Vector3 pos) {
+        Instantiate(fragment1, pos, Quaternion.identity);
+        Instantiate(fragment2, pos, Quaternion.identity);
+        Instantiate(fragment3, pos, Quaternion.identity);
     }
 
     private int getRandomItemDrop(Dictionary<int, float> dropTable, float rarityLevel) {

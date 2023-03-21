@@ -12,11 +12,10 @@ GameObject:
   - component: {fileID: 410422779284910668}
   - component: {fileID: -53758728805185508}
   - component: {fileID: 6165977522125808978}
-  - component: {fileID: 1275117838878913594}
-  - component: {fileID: 7758109996390564912}
+  - component: {fileID: 5713229790187755909}
   m_Layer: 0
-  m_Name: Crate_wood
-  m_TagString: CRATE
+  m_Name: Fragment 3
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 72f6fc1a76f95634899a6dc4d4193c4b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 57f28767577a6724c8c5a2859ab27c55, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -100,7 +99,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 50
+  m_Mass: 30
   m_LinearDrag: 25
   m_AngularDrag: 25
   m_GravityScale: 0
@@ -126,7 +125,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.25, y: 0.25}
+    oldSize: {x: 0.2, y: 0.1}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -135,7 +134,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.25, y: 0.25}
   m_EdgeRadius: 0
---- !u!114 &1275117838878913594
+--- !u!114 &5713229790187755909
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,25 +143,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5567696050990112427}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cc25d942508da44880162f8105e62ef, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ec3a6fc935916140b5183c491cdd59e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fragment1: {fileID: 5567696050990112427, guid: c448e300636fed843be37d263911fd42, type: 3}
-  fragment2: {fileID: 5567696050990112427, guid: 181eb97e6c2f4084aa6cc315b95248ae, type: 3}
-  fragment3: {fileID: 5567696050990112427, guid: 196d35b84cc8af4449fb039019298401, type: 3}
-  crate: {fileID: 5567696050990112427}
-  droppedItem: {fileID: 1619860758556365238, guid: 2a37d6958ca3b3c41af482990b9e78c1, type: 3}
---- !u!114 &7758109996390564912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5567696050990112427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b206d06838bf37c41a6f1803427b84ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 20
-  currentHealth: 20
+  material: {fileID: 6200000, guid: 35ca0613184cc7f4796c3f063298f955, type: 2}
+  isTrigger: 0

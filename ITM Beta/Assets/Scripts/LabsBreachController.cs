@@ -11,6 +11,8 @@ public class LabsBreachController : MonoBehaviour
     Light2D wallLight2D;
     float maxIntensity;
     float maxWallIntensity;
+    WaitForSeconds timeIncrementer = new WaitForSeconds(0.001f);
+    WaitForSeconds darknessTimer = new WaitForSeconds(1f);
 
     void Update()
     {
@@ -29,15 +31,15 @@ public class LabsBreachController : MonoBehaviour
         while (light2D.intensity > 0) {
             light2D.intensity -= (maxIntensity / 50f);
             wallLight2D.intensity -= (maxWallIntensity / 50f);
-            yield return new WaitForSeconds(0.001f);
+            yield return timeIncrementer;
         }
         light2D.intensity = 0f;
         wallLight2D.intensity = 0f;
-        yield return new WaitForSeconds(1f);
+        yield return darknessTimer;
         while (light2D.intensity < maxIntensity) {
             light2D.intensity += (maxIntensity / 50f);
             wallLight2D.intensity += (maxWallIntensity / 50f);
-            yield return new WaitForSeconds(0.001f);
+            yield return timeIncrementer;
         }
         light2D.intensity = maxIntensity;
         wallLight2D.intensity = maxWallIntensity;

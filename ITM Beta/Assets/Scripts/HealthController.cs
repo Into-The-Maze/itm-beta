@@ -42,7 +42,7 @@ public class HealthController : MonoBehaviour
         }
     }
 
-    private void testDamage() { //terrible script as it allows negative hp values
+    private void testDamage() { 
         System.Random r = new();
         switch (r.Next(0, 6)) {
             case 0:

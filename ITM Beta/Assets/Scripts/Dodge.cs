@@ -49,7 +49,7 @@ public class Dodge : MonoBehaviour
         StartCoroutine(handleDodgeLength());
         if (moveInput == Vector2.zero) {
             while (isDodging) {
-                rb2d.AddForce(playerRotation.transform.rotation * playerRotation.transform.up * -1, ForceMode2D.Impulse);
+                rb2d.AddForce(playerRotation.transform.up, ForceMode2D.Impulse);
                 yield return null;
             }
         }

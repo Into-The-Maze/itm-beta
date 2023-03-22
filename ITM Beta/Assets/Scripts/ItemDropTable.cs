@@ -5,10 +5,12 @@ using UnityEngine;
 public class ItemDropTable : MonoBehaviour
 {
     public static Dictionary<int, string> masterItemDatabase = new() { //for referencing
-        {000, "Greatsword" },
+        {000, "Shortsword" },
         {001, "Pipe" },
         {002, "Medkit" },
-        {003, "Stick" }
+        {003, "Stick" },
+        {004, "Woodaxe" },
+        {005, "Zweihander" }
     };
 
 

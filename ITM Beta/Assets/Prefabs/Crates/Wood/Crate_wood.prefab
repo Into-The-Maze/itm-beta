@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 410422779284910668}
   - component: {fileID: -53758728805185508}
   - component: {fileID: 1275117838878913594}
-  - component: {fileID: 7758109996390564912}
   - component: {fileID: 5534594425037188374}
-  m_Layer: 0
+  - component: {fileID: 3621653503122380659}
+  m_Layer: 6
   m_Name: Crate_wood
   m_TagString: CRATE
   m_Icon: {fileID: 0}
@@ -124,22 +124,7 @@ MonoBehaviour:
   fragment1: {fileID: 5567696050990112427, guid: c448e300636fed843be37d263911fd42, type: 3}
   fragment2: {fileID: 5567696050990112427, guid: 181eb97e6c2f4084aa6cc315b95248ae, type: 3}
   fragment3: {fileID: 5567696050990112427, guid: 196d35b84cc8af4449fb039019298401, type: 3}
-  crate: {fileID: 5567696050990112427}
   droppedItem: {fileID: 1619860758556365238, guid: 2a37d6958ca3b3c41af482990b9e78c1, type: 3}
---- !u!114 &7758109996390564912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5567696050990112427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b206d06838bf37c41a6f1803427b84ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 20
-  currentHealth: 20
 --- !u!61 &5534594425037188374
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -166,3 +151,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 2.5}
   m_EdgeRadius: 0
+--- !u!114 &3621653503122380659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5567696050990112427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b206d06838bf37c41a6f1803427b84ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 30
+  currentHealth: 30

@@ -18,7 +18,8 @@ public class ItemDropTable : MonoBehaviour
         {000, 1f },
         {001, 1f },
         {002, 1f },
-        {003, 1f }
+        {003, 0.5f },
+        {004, 2f }
     };
 
     public static Dictionary<int, float> layer1DropTable = new() {

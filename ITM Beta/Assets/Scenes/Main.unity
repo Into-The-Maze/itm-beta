@@ -772,6 +772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaa24351bc9a854a9f73d377e76b718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 891252456}
   Thorax: {fileID: 449264270}
   Head: {fileID: 796154381}
   RArm: {fileID: 1375852010}
@@ -2480,7 +2481,8 @@ MonoBehaviour:
   globalLightObj: {fileID: 694315820}
   globalWallLightObj: {fileID: 937299983}
   fogs: {fileID: 6375808110013173114, guid: 663c650c9f1760c439d35b8ea4d12d8a, type: 3}
-  enemyTest: {fileID: 6439026066289599239, guid: dc27ba876ed31594499549658cb3dc32, type: 3}
+  woodCrate: {fileID: 5567696050990112427, guid: 8cc6aebad0fedab48bfedc21b205dc72, type: 3}
+  crawler: {fileID: 5567696050990112427, guid: 9057b5ea0baa1d643b70ac5abf5e89e1, type: 3}
   layer0Wall: {fileID: 3700896281571399095, guid: bd4c819c55b4a124da26d5cf1414f747, type: 3}
   layer0Floor: {fileID: 5567696050990112427, guid: 9c14d063f6a9ab8499bac8fdc45e7483, type: 3}
   layer0Door: {fileID: 5567696050990112427, guid: a1dae746df22f8448b2713bccd53a086, type: 3}

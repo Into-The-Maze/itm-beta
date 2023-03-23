@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class HealthController : MonoBehaviour
 {
+    public GameObject Player;
+
+    public static HealthController h;
 
     public Image Thorax;
     public Image Head;
@@ -32,41 +35,37 @@ public class HealthController : MonoBehaviour
     [SerializeField] private float totalHP = 300;
 
     private void Awake() {
+        h = this;
         handleDamage();
         handleTotalHP();
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.V)) { //v for violence :)
-            testDamage();
-        }
-    }
-
-    private void testDamage() { 
+    
+    public void testDamage(int damage) { 
         System.Random r = new();
         switch (r.Next(0, 6)) {
             case 0:
-                thoraxHP -= r.Next(1, 11);
+                thoraxHP -= r.Next(1, damage);
                 handleThoraxDamageColour();
                 break;
             case 1:
-                headHP -= r.Next(1, 11);
+                headHP -= r.Next(1, damage);
                 handleHeadDamageColour();
                 break;
             case 2:
-                rArmHP -= r.Next(1, 11);
+                rArmHP -= r.Next(1, damage);
                 handleRArmDamageColour();
                 break;
             case 3:
-                lArmHP -= r.Next(1, 11);
+                lArmHP -= r.Next(1, damage);
                 handleLArmDamageColour();
                 break;
             case 4:
-                rLegHP -= r.Next(1, 11);
+                rLegHP -= r.Next(1, damage);
                 handleRLegDamageColour();
                 break;
             case 5:
-                lLegHP -= r.Next(1, 11);
+                lLegHP -= r.Next(1, damage);
                 handleLLegDamageColour();
                 break;
         }
@@ -85,6 +84,10 @@ public class HealthController : MonoBehaviour
 
     private void handleTotalHP() {
         totalHP = thoraxHP + headHP + rArmHP + lArmHP + rLegHP + lLegHP;
+        if (totalHP <= 0) {
+            Destroy(Player);
+            Debug.Log("You died...");
+        }
     }
 
     private void handleThoraxDamageColour() {

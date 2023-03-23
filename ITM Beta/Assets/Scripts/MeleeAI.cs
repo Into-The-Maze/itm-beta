@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
-public class NewAI : MonoBehaviour
+public class MeleeAI : MonoBehaviour
 {
     private (Vector2 direction, float weight, bool blocked)[] moveDirections = new (Vector2, float, bool)[32];
     private Rigidbody2D rb;
@@ -20,6 +20,7 @@ public class NewAI : MonoBehaviour
     private bool chasing = false;
     private Vector2 vectorToPlayer;
     private float distanceToPlayer;
+    private bool playerDetected;
     [SerializeField] private float aggroRadius = 10f;
     [SerializeField] private float range = 4f;
     [SerializeField] private float bodyWidth = 1.5f;
@@ -44,6 +45,10 @@ public class NewAI : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         InitialiseMoveDirections();
 
+    }
+
+    private void Start() {
+        target = transform.position;
     }
     void Update() 
     {
@@ -72,12 +77,21 @@ public class NewAI : MonoBehaviour
                 StartCoroutine(moveToPlayer());
             }
         }
+
         else {
             StopCoroutine(moveToPlayer());
-            //StartCoroutine(attackPlayer());
+            StartCoroutine(wait());
+
         }
         
     }
+
+    IEnumerator wait() {
+        yield return new WaitForSeconds(2);
+        target = InstantiateMaze.RandomFloorPoint();
+        StopCoroutine(wait());
+    }
+
     private void OnTriggerStay2D(Collider2D collision) {
         if (collision.gameObject.tag == "Player") {
             RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, collision.transform.position - gameObject.transform.position, aggroRadius + 1, LayerMask.GetMask(new string[2] { "Player", "Wall" }));
@@ -86,16 +100,29 @@ public class NewAI : MonoBehaviour
                     target = collision.gameObject.transform.position;
                     vectorToPlayer = collision.gameObject.transform.position - gameObject.transform.position;
                     distanceToPlayer = vectorToPlayer.magnitude;
-                    //lineOfSight = true;
+                    if (distanceToPlayer < 3 && !attacking) {
+                        StartCoroutine(damage());
+                    }
+                    playerDetected = true;
                 }
                 else {
-                    //lineOfSight = false;
+                    playerDetected = false;
                    
                 }
             }
         }
     }
 
+    IEnumerator damage() {
+        attacking = true;
+        yield return new WaitForSeconds(0.4f);
+        if (distanceToPlayer < 3) {
+            HealthController.h.testDamage(100);
+        }
+        
+        StopCoroutine(damage());
+        attacking = false;
+    }
     IEnumerator moveToPlayer() {
         rb.AddForce(GetHighestWeightedVector());
         yield return null;

@@ -23,9 +23,16 @@ public class InstantiateMaze : MonoBehaviour {
     [SerializeField] private GameObject globalLightObj;
     [SerializeField] private GameObject globalWallLightObj;
     [SerializeField] private GameObject fogs;
-    [SerializeField] private GameObject enemyTest;
     private Light2D globalLight;
     private Light2D globalWallLight;
+
+    #region Crates
+    public GameObject woodCrate;
+    #endregion
+
+    #region Enemies
+    public GameObject crawler;
+    #endregion
 
     #region layer0
     [SerializeField] private GameObject layer0Wall;
@@ -93,6 +100,14 @@ public class InstantiateMaze : MonoBehaviour {
         //InstantiateMazeLayer2(initialiseMazeLayer2());
         //InstantiateMazeLayer3(initialiseMazeLayer3());
         //InstantiateLayer4Pyramid(InitialiseLayer4Pyramid());
+        PopulateMaze();
+    }
+
+    private void PopulateMaze() {
+        for (int i = 0; i < 15; i++) {
+            Instantiate(crawler, RandomFloorPoint(), Quaternion.identity);
+            Instantiate(woodCrate, RandomFloorPoint(), Quaternion.identity);
+        }
     }
 
     private void InstantiateMazeLayer0(char[,] maze) {

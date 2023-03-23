@@ -53,21 +53,21 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
-    uniqueID: 2050430089
-    locked: 0
-  - name: Walls
-    uniqueID: 2272877775
-    locked: 0
   - name: ConeOfVision
     uniqueID: 1605443809
     locked: 0
   - name: Light
     uniqueID: 1941486723
     locked: 0
-  - name: FX
-    uniqueID: 1372002119
+  - name: Player
+    uniqueID: 2050430089
+    locked: 0
+  - name: Walls
+    uniqueID: 2272877775
     locked: 0
   - name: Tall
     uniqueID: 1342838933
+    locked: 0
+  - name: FX
+    uniqueID: 1372002119
     locked: 0

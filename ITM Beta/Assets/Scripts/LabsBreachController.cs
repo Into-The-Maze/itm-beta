@@ -6,13 +6,14 @@ using UnityEngine.Rendering.Universal;
 
 public class LabsBreachController : MonoBehaviour
 {
-    private bool isFlashing = false;
+    [HideInInspector] public bool isFlashing = true;
     Light2D light2D;
     Light2D wallLight2D;
     float maxIntensity;
     float maxWallIntensity;
-    WaitForSeconds timeIncrementer = new WaitForSeconds(0.001f);
+    WaitForSeconds timeIncrementer = new WaitForSeconds(0.01f);
     WaitForSeconds darknessTimer = new WaitForSeconds(1f);
+    WaitForSeconds lightTimer = new WaitForSeconds(1f);
 
     void Update()
     {
@@ -41,6 +42,7 @@ public class LabsBreachController : MonoBehaviour
             wallLight2D.intensity += (maxWallIntensity / 50f);
             yield return timeIncrementer;
         }
+        yield return lightTimer;
         light2D.intensity = maxIntensity;
         wallLight2D.intensity = maxWallIntensity;
         isFlashing = false;

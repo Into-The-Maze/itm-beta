@@ -107,6 +107,7 @@ public class InstantiateMaze : MonoBehaviour {
         power = SetLayer0Power();
         if (setting == "breach") {
             LabsBreachController breachController = gameObject.AddComponent<LabsBreachController>();
+            breachController.isFlashing = false;
             breachController.GetLights(globalLight, globalWallLight);
         }
         Debug.Log($"{setting}, {power}");

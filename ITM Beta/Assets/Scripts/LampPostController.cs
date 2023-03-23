@@ -21,24 +21,23 @@ public class LampPostController : MonoBehaviour
     }
     private void Update() {
         if (!isFlickering) {
-            StartCoroutine(Flicker());
+            StartCoroutine(LampPost());
         }
     }
 
-    private IEnumerator Flicker() {
+    private IEnumerator LampPost() {
+        light2D = gameObject.transform.GetChild(0).GetComponent<Light2D>();
         isFlickering = true;
-        for (int i = 0; i < 100; i++) {
-            light2D.intensity -= (maxIntensity / 100f);
-            yield return new WaitForSeconds(0.01f);
+        float originalIntensity = light2D.intensity;
+        for (int i = 0; i < 10; i++) {
+            int random = r.Next(1, 5);
+            if (random == 1) { light2D.intensity = originalIntensity; }
+            else if (random == 2) { light2D.intensity = originalIntensity / 2; }
+            else { light2D.intensity = 0f; }
+            yield return new WaitForSeconds(r.Next(2, 10) / 10);
         }
-        light2D.intensity = 0f;
-        yield return new WaitForSeconds(0.5f);
-        for (int i = 0; i < 100; i++) {
-            light2D.intensity += (maxIntensity / 100f);
-            yield return new WaitForSeconds(0.01f);
-        }
-        light2D.intensity = maxIntensity;
-        yield return new WaitForSeconds(0.25f);
+        light2D.intensity = originalIntensity;
+        yield return new WaitForSeconds(r.Next(2, 100 / frequency));
         isFlickering = false;
     }
 }

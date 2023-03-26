@@ -115,9 +115,9 @@ public class MeleeAI : MonoBehaviour
 
     IEnumerator damage() {
         attacking = true;
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(2f);
         if (distanceToPlayer < 3) {
-            HealthController.h.testDamage(100);
+            HealthController.h.handleDamageF(40f); //need to make this damage number dynamic per enemy. maybe actually might need the enemyStats scriptableObject?
         }
         
         StopCoroutine(damage());

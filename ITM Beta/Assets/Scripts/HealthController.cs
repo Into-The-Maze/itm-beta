@@ -1,11 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthController : MonoBehaviour
 {
-    public GameObject Player;
+    public GameObject PlayerSprite;
+    public GameObject PlayerPos;
 
     public static HealthController h;
 
@@ -19,23 +19,27 @@ public class HealthController : MonoBehaviour
     #endregion
 
     #region lightBleed
-    public GameObject LightBleed;
-    public bool thoraxIsLightBleed = false;
-    public bool headIsLightBleed = false;
-    public bool rArmIsLightBleed = false;  
-    public bool lArmIsLightBleed = false;
-    public bool rLegIsLightBleed = false;
-    public bool lLegIsLightBleed = false;
+    public GameObject LightBleedBlood;
+    WaitForSeconds lightBleedDelay = new WaitForSeconds(2);
+    public float lightBleedDamage = 5f;
+    private bool thoraxIsLightBleed = false;
+    private bool headIsLightBleed = false;
+    private bool rArmIsLightBleed = false;  
+    private bool lArmIsLightBleed = false;
+    private bool rLegIsLightBleed = false;
+    private bool lLegIsLightBleed = false;
     #endregion
 
     #region heavyBleed
-    public GameObject HeavyBleed;
-    public bool thoraxIsHeavyBleed = false;
-    public bool headIsHeavyBleed = false;
-    public bool rArmIsHeavyBleed = false;
-    public bool lArmIsHeavyBleed = false;
-    public bool rLegIsHeavyBleed = false;
-    public bool lLegIsHeavyBleed = false;
+    public GameObject HeavyBleedBlood;
+    WaitForSeconds heavyBleedDelay = new WaitForSeconds(1);
+    public float heavyBleedDamage = 10f;
+    private bool thoraxIsHeavyBleed = false;
+    private bool headIsHeavyBleed = false;
+    private bool rArmIsHeavyBleed = false;
+    private bool lArmIsHeavyBleed = false;
+    private bool rLegIsHeavyBleed = false;
+    private bool lLegIsHeavyBleed = false;
     #endregion
 
     #region maxHPValues
@@ -49,13 +53,13 @@ public class HealthController : MonoBehaviour
     #endregion
 
     #region currentHPValues
-    [SerializeField] private float thoraxHP = 80;
-    [SerializeField] private float headHP = 20;
-    [SerializeField] private float rArmHP = 50;
-    [SerializeField] private float lArmHP = 50;
-    [SerializeField] private float rLegHP = 50;
-    [SerializeField] private float lLegHP = 50;
-    [SerializeField] private float totalHP = 300;
+    private float thoraxHP = maxThoraxHP;
+    private float headHP = maxHeadHP;
+    private float rArmHP = maxRArmHP;
+    private float lArmHP = maxLArmHP;
+    private float rLegHP = maxRLegHP;
+    private float lLegHP = maxLLegHP;
+    private float totalHP = maxTotalHP;
     #endregion
 
     private void Awake() {
@@ -66,27 +70,269 @@ public class HealthController : MonoBehaviour
 
     #region bleedHandlers
     public void handleLightBleed(float bleedChance) {
-
+        if (Random.Range(0f, 100f) < bleedChance) {
+            Debug.Log("light bleed");
+            switch(Random.Range(0, 6)) {
+                case 0:
+                    if (!thoraxIsLightBleed) {
+                        thoraxIsLightBleed = true;
+                        StartCoroutine(thoraxLightBleed());
+                    }
+                    break;
+                case 1:
+                    if (!headIsLightBleed) {
+                        headIsLightBleed = true;
+                        StartCoroutine(headLightBleed());
+                    }
+                    break;
+                case 2:
+                    if (!rArmIsLightBleed) {
+                        rArmIsLightBleed = true;
+                        StartCoroutine(rArmLightBleed());
+                    }
+                    break;
+                case 3:
+                    if (!lArmIsLightBleed) {
+                        lArmIsLightBleed = true;
+                        StartCoroutine(lArmLightBleed());
+                    }
+                    break;
+                case 4:
+                    if (!rLegIsLightBleed) {
+                        rLegIsLightBleed = true;
+                        StartCoroutine(rLegLightBleed());
+                    }
+                    break;
+                case 5:
+                    if (!lLegIsLightBleed) {
+                        lLegIsLightBleed = true;
+                        StartCoroutine(lLegLightBleed());
+                    }
+                    break;
+            }
+        }
     }
-
     public void handleLightBleed(float bleedChance, BodyParts targetLimb) {
-
+        if (Random.Range(0f, 100f) < bleedChance) {
+            switch (targetLimb) {
+                case BodyParts.Thorax:
+                    if (!thoraxIsLightBleed) {
+                        thoraxIsLightBleed = true;
+                        StartCoroutine(thoraxLightBleed());
+                    }
+                    break;
+                case BodyParts.Head:
+                    if (!headIsLightBleed) {
+                        headIsLightBleed = true;
+                        StartCoroutine(headLightBleed());  
+                    }
+                    break;
+                case BodyParts.RArm:
+                    if (!rArmIsLightBleed) {
+                        rArmIsLightBleed = true;
+                        StartCoroutine(rArmLightBleed());
+                    }
+                    break;
+                case BodyParts.LArm:
+                    if (!lArmIsLightBleed) {
+                        lArmIsLightBleed = true;
+                        StartCoroutine(lArmLightBleed());
+                    }
+                    break;
+                case BodyParts.RLeg:
+                    if (!rLegIsLightBleed) {
+                        rLegIsLightBleed = true;
+                        StartCoroutine(rLegLightBleed());
+                    }
+                    break;
+                case BodyParts.LLeg:
+                    if (!lLegIsLightBleed) {
+                        lLegIsLightBleed = true;
+                        StartCoroutine(lLegLightBleed());
+                    }
+                    break;
+            }
+        }
     }
-
     public void handleHeavyBleed(float bleedChance) {
-
+        if (Random.Range(0f, 100f) < bleedChance) {
+            Debug.Log("heavy bleed");
+            switch (Random.Range(0, 6)) {
+                case 0:
+                    if (!thoraxIsHeavyBleed) {
+                        thoraxIsHeavyBleed = true;
+                        StartCoroutine(thoraxHeavyBleed());
+                    }
+                    break;
+                case 1:
+                    if (!headIsHeavyBleed) {
+                        headIsHeavyBleed = true;
+                        StartCoroutine(headHeavyBleed());
+                    }
+                    break;
+                case 2:
+                    if (!rArmIsHeavyBleed) {
+                        rArmIsHeavyBleed = true;
+                        StartCoroutine(rArmHeavyBleed());
+                    }
+                    break;
+                case 3:
+                    if (!lArmIsHeavyBleed) {
+                        lArmIsHeavyBleed = true;
+                        StartCoroutine(lArmHeavyBleed());
+                    }
+                    break;
+                case 4:
+                    if (!rLegIsHeavyBleed) {
+                        rLegIsHeavyBleed = true;
+                        StartCoroutine(rLegHeavyBleed());
+                    }
+                    break;
+                case 5:
+                    if (!lLegIsHeavyBleed) {
+                        lLegIsHeavyBleed = true;
+                        StartCoroutine(lLegHeavyBleed());
+                    }
+                    break;
+            }
+        }
     }
-
     public void handleHeavyBleed(float bleedChance, BodyParts targetLimb) {
-
+        if (Random.Range(0f, 100f) < bleedChance) {
+            switch (targetLimb) {
+                case BodyParts.Thorax:
+                    if (!thoraxIsHeavyBleed) {
+                        thoraxIsHeavyBleed = true;
+                        StartCoroutine(thoraxHeavyBleed());
+                    }
+                    break;
+                case BodyParts.Head:
+                    if (!headIsHeavyBleed) {
+                        headIsHeavyBleed = true;
+                        StartCoroutine(headHeavyBleed());
+                    }
+                    break;
+                case BodyParts.RArm:
+                    if (!rArmIsHeavyBleed) {
+                        rArmIsHeavyBleed = true;
+                        StartCoroutine(rArmHeavyBleed());
+                    }
+                    break;
+                case BodyParts.LArm:
+                    if (!lArmIsHeavyBleed) {
+                        lArmIsHeavyBleed = true;
+                        StartCoroutine(lArmHeavyBleed());
+                    }
+                    break;
+                case BodyParts.RLeg:
+                    if (!rLegIsHeavyBleed) {
+                        rLegIsHeavyBleed = true;
+                        StartCoroutine(rLegHeavyBleed());
+                    }
+                    break;
+                case BodyParts.LLeg:
+                    if (!lLegIsHeavyBleed) {
+                        lLegIsHeavyBleed = true;
+                        StartCoroutine(lLegHeavyBleed());
+                    }
+                    break;
+            }
+        }
     }
-    #endregion //NEED TO ADD TO THIS, BUT WONT BE HARD
+
+    #region bleedCoroutines
+    IEnumerator thoraxLightBleed() {
+        while (thoraxIsLightBleed) {
+            yield return lightBleedDelay;
+            Instantiate(LightBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            handleDamageF(lightBleedDamage, BodyParts.Thorax);
+        }
+    }
+    IEnumerator headLightBleed() {
+        while (headIsLightBleed) {
+            yield return lightBleedDelay;
+            Instantiate(LightBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            handleDamageF(lightBleedDamage, BodyParts.Head);
+        }
+    }
+    IEnumerator rArmLightBleed() {
+        while (rArmIsLightBleed) {
+            yield return lightBleedDelay;
+            Instantiate(LightBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            handleDamageF(lightBleedDamage, BodyParts.RArm);
+        }
+    }
+    IEnumerator lArmLightBleed() {
+        while (lArmIsLightBleed) {
+            yield return lightBleedDelay;
+            Instantiate(LightBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            handleDamageF(lightBleedDamage, BodyParts.LArm);
+        }
+    }
+    IEnumerator rLegLightBleed() {
+        while (rLegIsLightBleed) {
+            yield return lightBleedDelay;
+            Instantiate(LightBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            handleDamageF(lightBleedDamage, BodyParts.RLeg);
+        }
+    }
+    IEnumerator lLegLightBleed() {
+        while (lLegIsLightBleed) {
+            yield return lightBleedDelay;
+            Instantiate(LightBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            handleDamageF(lightBleedDamage, BodyParts.LLeg);
+        }
+    }
+
+    IEnumerator thoraxHeavyBleed() {
+        while (thoraxIsHeavyBleed) {
+            yield return heavyBleedDelay;
+            Instantiate(HeavyBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            handleDamageF(heavyBleedDamage, BodyParts.Thorax);
+        }
+    }
+    IEnumerator headHeavyBleed() {
+        while (headIsHeavyBleed) {
+            yield return heavyBleedDelay;
+            Instantiate(HeavyBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            handleDamageF(heavyBleedDamage, BodyParts.Head);
+        }
+    }
+    IEnumerator rArmHeavyBleed() {
+        while (rArmIsHeavyBleed) {
+            yield return heavyBleedDelay;
+            Instantiate(HeavyBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            handleDamageF(heavyBleedDamage, BodyParts.RArm);
+        }
+    }
+    IEnumerator lArmHeavyBleed() {
+        while (lArmIsHeavyBleed) {
+            yield return heavyBleedDelay;
+            Instantiate(HeavyBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            handleDamageF(heavyBleedDamage, BodyParts.LArm);
+        }
+    }
+    IEnumerator rLegHeavyBleed() {
+        while (rLegIsHeavyBleed) {
+            yield return heavyBleedDelay;
+            Instantiate(HeavyBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            handleDamageF(heavyBleedDamage, BodyParts.RLeg);
+        }
+    }
+    IEnumerator lLegHeavyBleed() {
+        while (lLegIsHeavyBleed) {
+            yield return heavyBleedDelay;
+            Instantiate(HeavyBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            handleDamageF(heavyBleedDamage, BodyParts.LLeg);
+        }
+    }
+    #endregion
+
+    #endregion
 
     #region damageHandlers
 
-    //can add bleed handlers to these scripts
     public void handleDamageF(float damageDealt) {
-        
         damage(damageDealt + Random.Range(-Mathf.Sqrt(damageDealt), Mathf.Sqrt(damageDealt)));
         handleDamage();
     }
@@ -96,9 +342,8 @@ public class HealthController : MonoBehaviour
     }
 
     private void damage(float damageDealt) { 
-        System.Random r = new System.Random();
         float damageOverflow;
-        switch (r.Next(0, 6)) {
+        switch (Random.Range(0, 6)) {
             case 0:
                 damageOverflow = damageThorax(damageDealt);
                 if (damageOverflow > 0) 
@@ -194,6 +439,7 @@ public class HealthController : MonoBehaviour
             damageLLeg(damage);
     }
 
+    #region damageFunctions
     private float damageThorax(float damageDealt) {
         thoraxHP -= damageDealt;
         if (thoraxHP < 0) {
@@ -238,6 +484,8 @@ public class HealthController : MonoBehaviour
     }
     #endregion
 
+    #endregion
+
     private void handleDamage() {
         handleThoraxDamageColour();
         handleHeadDamageColour();
@@ -250,7 +498,7 @@ public class HealthController : MonoBehaviour
     private void handleTotalHP() {
         totalHP = thoraxHP + headHP + rArmHP + lArmHP + rLegHP + lLegHP;
         if (totalHP <= 0) {
-            Destroy(Player);
+            Destroy(PlayerSprite);
             Debug.Log("You died...");
         }
     }

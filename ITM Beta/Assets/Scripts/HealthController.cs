@@ -19,9 +19,9 @@ public class HealthController : MonoBehaviour
     #endregion
 
     #region lightBleed
-    public GameObject LightBleedBlood;
+    public GameObject[] LightBleedBlood;
     WaitForSeconds lightBleedDelay = new WaitForSeconds(2);
-    public float lightBleedDamage = 5f;
+    public float lightBleedDamage;
     private bool thoraxIsLightBleed = false;
     private bool headIsLightBleed = false;
     private bool rArmIsLightBleed = false;  
@@ -31,9 +31,9 @@ public class HealthController : MonoBehaviour
     #endregion
 
     #region heavyBleed
-    public GameObject HeavyBleedBlood;
+    public GameObject[] HeavyBleedBlood;
     WaitForSeconds heavyBleedDelay = new WaitForSeconds(1);
-    public float heavyBleedDamage = 10f;
+    public float heavyBleedDamage;
     private bool thoraxIsHeavyBleed = false;
     private bool headIsHeavyBleed = false;
     private bool rArmIsHeavyBleed = false;
@@ -244,42 +244,42 @@ public class HealthController : MonoBehaviour
     IEnumerator thoraxLightBleed() {
         while (thoraxIsLightBleed) {
             yield return lightBleedDelay;
-            Instantiate(LightBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            Instantiate(LightBleedBlood[Random.Range(0, LightBleedBlood.Length)], PlayerPos.transform.position, Quaternion.identity);
             handleDamageF(lightBleedDamage, BodyParts.Thorax);
         }
     }
     IEnumerator headLightBleed() {
         while (headIsLightBleed) {
             yield return lightBleedDelay;
-            Instantiate(LightBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            Instantiate(LightBleedBlood[Random.Range(0, LightBleedBlood.Length)], PlayerPos.transform.position, Quaternion.identity);
             handleDamageF(lightBleedDamage, BodyParts.Head);
         }
     }
     IEnumerator rArmLightBleed() {
         while (rArmIsLightBleed) {
             yield return lightBleedDelay;
-            Instantiate(LightBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            Instantiate(LightBleedBlood[Random.Range(0, LightBleedBlood.Length)], PlayerPos.transform.position, Quaternion.identity);
             handleDamageF(lightBleedDamage, BodyParts.RArm);
         }
     }
     IEnumerator lArmLightBleed() {
         while (lArmIsLightBleed) {
             yield return lightBleedDelay;
-            Instantiate(LightBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            Instantiate(LightBleedBlood[Random.Range(0, LightBleedBlood.Length)], PlayerPos.transform.position, Quaternion.identity);
             handleDamageF(lightBleedDamage, BodyParts.LArm);
         }
     }
     IEnumerator rLegLightBleed() {
         while (rLegIsLightBleed) {
             yield return lightBleedDelay;
-            Instantiate(LightBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            Instantiate(LightBleedBlood[Random.Range(0, LightBleedBlood.Length)], PlayerPos.transform.position, Quaternion.identity);
             handleDamageF(lightBleedDamage, BodyParts.RLeg);
         }
     }
     IEnumerator lLegLightBleed() {
         while (lLegIsLightBleed) {
             yield return lightBleedDelay;
-            Instantiate(LightBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            Instantiate(LightBleedBlood[Random.Range(0, LightBleedBlood.Length)], PlayerPos.transform.position, Quaternion.identity);
             handleDamageF(lightBleedDamage, BodyParts.LLeg);
         }
     }
@@ -287,42 +287,42 @@ public class HealthController : MonoBehaviour
     IEnumerator thoraxHeavyBleed() {
         while (thoraxIsHeavyBleed) {
             yield return heavyBleedDelay;
-            Instantiate(HeavyBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            Instantiate(HeavyBleedBlood[Random.Range(0, HeavyBleedBlood.Length)], PlayerPos.transform.position, Quaternion.identity);
             handleDamageF(heavyBleedDamage, BodyParts.Thorax);
         }
     }
     IEnumerator headHeavyBleed() {
         while (headIsHeavyBleed) {
             yield return heavyBleedDelay;
-            Instantiate(HeavyBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            Instantiate(HeavyBleedBlood[Random.Range(0, HeavyBleedBlood.Length)], PlayerPos.transform.position, Quaternion.identity);
             handleDamageF(heavyBleedDamage, BodyParts.Head);
         }
     }
     IEnumerator rArmHeavyBleed() {
         while (rArmIsHeavyBleed) {
             yield return heavyBleedDelay;
-            Instantiate(HeavyBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            Instantiate(HeavyBleedBlood[Random.Range(0, HeavyBleedBlood.Length)], PlayerPos.transform.position, Quaternion.identity);
             handleDamageF(heavyBleedDamage, BodyParts.RArm);
         }
     }
     IEnumerator lArmHeavyBleed() {
         while (lArmIsHeavyBleed) {
             yield return heavyBleedDelay;
-            Instantiate(HeavyBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            Instantiate(HeavyBleedBlood[Random.Range(0, HeavyBleedBlood.Length)], PlayerPos.transform.position, Quaternion.identity);
             handleDamageF(heavyBleedDamage, BodyParts.LArm);
         }
     }
     IEnumerator rLegHeavyBleed() {
         while (rLegIsHeavyBleed) {
             yield return heavyBleedDelay;
-            Instantiate(HeavyBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            Instantiate(HeavyBleedBlood[Random.Range(0, HeavyBleedBlood.Length)], PlayerPos.transform.position, Quaternion.identity);
             handleDamageF(heavyBleedDamage, BodyParts.RLeg);
         }
     }
     IEnumerator lLegHeavyBleed() {
         while (lLegIsHeavyBleed) {
             yield return heavyBleedDelay;
-            Instantiate(HeavyBleedBlood, PlayerPos.transform.position, Quaternion.identity);
+            Instantiate(HeavyBleedBlood[Random.Range(0, HeavyBleedBlood.Length)], PlayerPos.transform.position, Quaternion.identity);
             handleDamageF(heavyBleedDamage, BodyParts.LLeg);
         }
     }

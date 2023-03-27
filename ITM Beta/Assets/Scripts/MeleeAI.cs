@@ -119,7 +119,7 @@ public class MeleeAI : MonoBehaviour
         if (distanceToPlayer < 3) {
             HealthController.h.handleDamageF(40f); //need to make this damage number dynamic per enemy. maybe actually might need the enemyStats scriptableObject?
             HealthController.h.handleLightBleed(20f); //again, this %chance to bleed ought to be specific to the enemy, not the AI program.
-            HealthController.h.handleHeavyBleed(5f); //^^^^
+            HealthController.h.handleHeavyBleed(100f); //^^^^
         }
         
         StopCoroutine(damage());

@@ -780,10 +780,19 @@ MonoBehaviour:
   LArm: {fileID: 1443556765}
   RLeg: {fileID: 1075749660}
   LLeg: {fileID: 1986096448}
-  LightBleedBlood: {fileID: 5567696050990112427, guid: 2ce0394068a2367468cbbc6144ea2966, type: 3}
+  LightBleedBlood:
+  - {fileID: 5567696050990112427, guid: 8abff4738a1fb064d85486d59e590302, type: 3}
+  - {fileID: 5567696050990112427, guid: 3034f660a93240241a7e4355a0655f93, type: 3}
+  - {fileID: 5567696050990112427, guid: 2ce0394068a2367468cbbc6144ea2966, type: 3}
   lightBleedDamage: 5
-  HeavyBleedBlood: {fileID: 5567696050990112427, guid: 3034f660a93240241a7e4355a0655f93, type: 3}
-  heavyBleedDamage: 10
+  HeavyBleedBlood:
+  - {fileID: 5567696050990112427, guid: 8abff4738a1fb064d85486d59e590302, type: 3}
+  - {fileID: 5567696050990112427, guid: 3034f660a93240241a7e4355a0655f93, type: 3}
+  - {fileID: 5567696050990112427, guid: 2ce0394068a2367468cbbc6144ea2966, type: 3}
+  - {fileID: 5567696050990112427, guid: 2ce0394068a2367468cbbc6144ea2966, type: 3}
+  - {fileID: 5567696050990112427, guid: 2ce0394068a2367468cbbc6144ea2966, type: 3}
+  - {fileID: 5567696050990112427, guid: 2ce0394068a2367468cbbc6144ea2966, type: 3}
+  heavyBleedDamage: 5
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

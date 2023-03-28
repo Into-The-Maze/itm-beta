@@ -69,21 +69,20 @@ public class MeleeAI : MonoBehaviour
             chasing = true;
         }
 
-        if (chasing && !attacking) {
-            Quaternion facing = transform.rotation * new Quaternion(Mathf.Cos(90 / 2), Mathf.Sin(90 / 2), 0, 0);
+        if (chasing) {
             int index = HighestWeightIndex();
-            float angle = Mathf.Atan2(moveDirections[index].direction.y, moveDirections[index].direction.x) * Mathf.Rad2Deg;
+            float angle = -90f + (Mathf.Atan2(moveDirections[index].direction.y, moveDirections[index].direction.x) * Mathf.Rad2Deg);
             Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
-            transform.rotation = Quaternion.RotateTowards(facing, targetRotation, RotationSpeed * Time.deltaTime * 25f);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, RotationSpeed * Time.deltaTime * 25f);
             if (Quaternion.Dot(transform.rotation, targetRotation) > 0.9f || Quaternion.Dot(transform.rotation, targetRotation) < -0.9f) {
                 StartCoroutine(moveToPlayer());
             }
         }
 
-        else {
+        else {  
             StopCoroutine(moveToPlayer());
             StartCoroutine(wait());
-        }
+        }   
         
     }
 
@@ -116,11 +115,11 @@ public class MeleeAI : MonoBehaviour
 
     IEnumerator damage() {
         attacking = true;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.2f);
         if (distanceToPlayer < 3) {
             HealthController.h.handleDamageF(40f); //need to make this damage number dynamic per enemy. maybe actually might need the enemyStats scriptableObject?
             HealthController.h.handleLightBleed(20f); //again, this %chance to bleed ought to be specific to the enemy, not the AI program.
-            HealthController.h.handleHeavyBleed(100f); //^^^^
+            HealthController.h.handleHeavyBleed(5f); //^^^^
         }
         
         StopCoroutine(damage());

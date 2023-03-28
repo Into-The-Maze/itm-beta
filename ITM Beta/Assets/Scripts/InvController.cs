@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -81,21 +82,21 @@ public class InvController : MonoBehaviour
     }
 
     private void PickUpItemFromFloor() {
-
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
         if(hit.collider != null) {
             if (hit.collider.gameObject != null) {
                 if (hit.collider.gameObject.CompareTag("FLOORITEM")) {
                     if (Vector3.Distance(playerSprite.transform.position, hit.transform.gameObject.transform.position) < 4f) {
                         int index = hit.collider.gameObject.GetComponent<ItemDataDump>().itemDataElementReference;
+                        int magCap = hit.collider.gameObject.GetComponent<ItemDataDump>().currentMagazineCapacity;
                         Destroy(hit.collider.gameObject);
-                        CreatePickedUpItem(index);
+                        CreatePickedUpItem(index, magCap);
                     }
                 }
             }
         }
     }
-    private void CreatePickedUpItem(int index) {
+    private void CreatePickedUpItem(int index, int currentMagazineCapacity) {
         InventoryItem inventoryItem = Instantiate(itemPrefab).GetComponent<InventoryItem>();
         inventoryItem.name = $"inv{itemAutoNum}";
         selectedItem = inventoryItem;
@@ -105,6 +106,8 @@ public class InvController : MonoBehaviour
         rectTransform.SetAsLastSibling();
 
         inventoryItem.Set(items[index]);
+        inventoryItem.itemData.currentMagazineCapacity = currentMagazineCapacity;
+
         inventoryItem.itemDataElementReference = index;
         itemAutoNum++;
     }
@@ -155,6 +158,8 @@ public class InvController : MonoBehaviour
     private void CreateRandomItem() {
         InventoryItem inventoryItem = Instantiate(itemPrefab).GetComponent<InventoryItem>();
         inventoryItem.name = $"inv{itemAutoNum}";
+        
+            
         selectedItem = inventoryItem;
 
         rectTransform = inventoryItem.GetComponent<RectTransform>();

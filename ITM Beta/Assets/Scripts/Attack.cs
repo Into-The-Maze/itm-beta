@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -13,17 +14,23 @@ public class Attack : MonoBehaviour
     public static bool CurrentlySwinging = false;
     WaitForSeconds swingTime = new WaitForSeconds(0.5f);
 
+    public static ItemData.WeaponType[] meleeWeapons = { ItemData.WeaponType.ShortSword, ItemData.WeaponType.LongSword, ItemData.WeaponType.GreatSword, ItemData.WeaponType.Axe, ItemData.WeaponType.Spear };
+    public static ItemData.WeaponType[] rangedWeapons = { ItemData.WeaponType.Pistol, ItemData.WeaponType.Rifle };
+
     [SerializeField] GameObject attackPrefab;
     [SerializeField] GameObject playerSprite;
     [SerializeField] GameObject playerLocation;
 
     private void Update() {
-        if (Input.GetMouseButtonDown(0) && PlayerMovement.stamina > 25 && attackItem != null && !ToggleEquipMenu.invIsOpen && !ToggleHealthScreen.invIsOpen && !ToggleInventory.invIsOpen && !CurrentlyAttacking){
+        if (Input.GetMouseButtonDown(0) && PlayerMovement.stamina > 25 && attackItem != null && meleeWeapons.Contains(attackItem.itemData.weaponType) && !ToggleEquipMenu.invIsOpen && !ToggleHealthScreen.invIsOpen && !ToggleInventory.invIsOpen && !CurrentlyAttacking){
             damage = (attackItem == null) ? 0 : attackItem.Damage;
             PlayerMovement.movementType = PlayerMovement.MovementType.ChargingAttack;
             CurrentlyAttacking = true;
             showWeapon();
             StartCoroutine(chargeAttack());
+        }
+        else if (Input.GetMouseButtonDown(1) && attackItem != null && rangedWeapons.Contains(attackItem.itemData.weaponType) && !ToggleEquipMenu.invIsOpen && !ToggleHealthScreen.invIsOpen && !ToggleInventory.invIsOpen && !CurrentlyAttacking) {
+            Debug.Log("Shooting gun");
         }
     }
 

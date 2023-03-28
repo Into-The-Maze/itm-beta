@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -52,8 +53,17 @@ public class InventoryItem : MonoBehaviour {
 
     internal void Set(ItemData itemData) {
         this.itemData = itemData;
+        if (Attack.rangedWeapons.Contains(itemData.weaponType)) {
+            itemData.currentMagazineCapacity = UnityEngine.Random.Range(0, itemData.maxMagazineCapacity + 1);
+        }
+        if (itemData.weaponType == ItemData.WeaponType.Pistol || itemData.weaponType == ItemData.WeaponType.Rifle) {
+            GetComponent<Image>().sprite = (itemData.currentMagazineCapacity > 0) ? itemData.itemIcon_GunLoaded : itemData.itemIcon_GunEmpty;
+        }
+        else {
+            GetComponent<Image>().sprite = itemData.itemIcon;
+        }
+        
 
-        GetComponent<Image>().sprite = itemData.itemIcon;
 
         Vector2 size = new Vector2();
         size.x = itemData.width * ItemGrid.tileWidth;

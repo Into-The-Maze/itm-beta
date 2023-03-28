@@ -15,10 +15,17 @@ MonoBehaviour:
   width: 1
   height: 2
   itemIcon: {fileID: 21300000, guid: 9cb3bf067c8bdd047b3b1dc48b73f99f, type: 3}
+  flavourText: 
+  itemIcon_GunEmpty: {fileID: 0}
+  itemIcon_GunLoaded: {fileID: 0}
+  model_Gun: {fileID: 0}
+  maxMagazineCapacity: 0
+  currentMagazineCapacity: 0
   isWeapon: 1
   isArmor: 0
   isHeadgear: 0
   isRing: 0
   isHeavy: 0
-  flavourText: 
+  weaponType: 4
   damage: 15
+  isHealing: 0

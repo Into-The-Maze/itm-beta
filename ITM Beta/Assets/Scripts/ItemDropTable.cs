@@ -10,7 +10,8 @@ public class ItemDropTable : MonoBehaviour
         {002, "Medkit" },
         {003, "Stick" },
         {004, "Woodaxe" },
-        {005, "Zweihander" }
+        {005, "Zweihander" },
+        {006, "Pistol" }
     };
 
 

@@ -31,6 +31,9 @@ public class CrateController : MonoBehaviour
 
         droppedItem.GetComponent<SpriteRenderer>().sprite = InvController.itemDrops.items[itemElement].itemIcon;
         droppedItem.GetComponent<ItemDataDump>().itemDataElementReference = itemElement;
+        if (Attack.rangedWeapons.Contains(InvController.itemDrops.items[itemElement].weaponType)) {
+            droppedItem.GetComponent<ItemDataDump>().currentMagazineCapacity = Random.Range(0, InvController.itemDrops.items[itemElement].maxMagazineCapacity+1);
+        }
         Instantiate(droppedItem, position, Quaternion.identity);
     }
 

@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7f9d85d6a6755145b90eb15fb35fabb, type: 3}
-  m_Name: Zweihander
+  m_Name: Pistol
   m_EditorClassIdentifier: 
-  width: 1
-  height: 4
-  itemIcon: {fileID: 21300000, guid: 6812edd1404fe9742aa8f677223490fe, type: 3}
-  flavourText: BEEG
-  itemIcon_GunEmpty: {fileID: 0}
-  itemIcon_GunLoaded: {fileID: 0}
-  model_Gun: {fileID: 0}
-  maxMagazineCapacity: 0
+  width: 2
+  height: 2
+  itemIcon: {fileID: 21300000, guid: cfbb3839c85cd344388bd613a2a1c3c2, type: 3}
+  flavourText: 
+  itemIcon_GunEmpty: {fileID: 21300000, guid: 301c442593cea234eb5d1cb75b07109b, type: 3}
+  itemIcon_GunLoaded: {fileID: 21300000, guid: bfac512187c59d34294bbaa612787d4b, type: 3}
+  model_Gun: {fileID: 8209929944718868009, guid: a75d49f10aabb0a4bbc53d22f68fc69a, type: 3}
+  maxMagazineCapacity: 8
   currentMagazineCapacity: 0
   isWeapon: 1
   isArmor: 0
   isHeadgear: 0
   isRing: 0
-  isHeavy: 1
-  weaponType: 3
-  damage: 35
+  isHeavy: 0
+  weaponType: 6
+  damage: 20
   isHealing: 0

@@ -5,4 +5,5 @@ using UnityEngine;
 public class ItemDataDump : MonoBehaviour
 {
     public int itemDataElementReference;
+    public int currentMagazineCapacity;
 }

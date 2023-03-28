@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class MeleeAI : MonoBehaviour
 {
@@ -69,10 +70,11 @@ public class MeleeAI : MonoBehaviour
         }
 
         if (chasing && !attacking) {
+            Quaternion facing = transform.rotation * new Quaternion(Mathf.Cos(90 / 2), Mathf.Sin(90 / 2), 0, 0);
             int index = HighestWeightIndex();
             float angle = Mathf.Atan2(moveDirections[index].direction.y, moveDirections[index].direction.x) * Mathf.Rad2Deg;
             Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, RotationSpeed * Time.deltaTime * 25f);
+            transform.rotation = Quaternion.RotateTowards(facing, targetRotation, RotationSpeed * Time.deltaTime * 25f);
             if (Quaternion.Dot(transform.rotation, targetRotation) > 0.9f || Quaternion.Dot(transform.rotation, targetRotation) < -0.9f) {
                 StartCoroutine(moveToPlayer());
             }
@@ -81,7 +83,6 @@ public class MeleeAI : MonoBehaviour
         else {
             StopCoroutine(moveToPlayer());
             StartCoroutine(wait());
-
         }
         
     }

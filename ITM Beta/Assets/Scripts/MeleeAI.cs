@@ -60,6 +60,7 @@ public class MeleeAI : MonoBehaviour
         DeWeightBlocked();
         NormaliseWeights();
         DrawRays();
+        // check states and movement and set correct animation
     }
     private void FixedUpdate() {
         if (Vector3.Distance(gameObject.transform.position, new Vector3(target.x, target.y, 0)) < 1.5f) {
@@ -115,8 +116,9 @@ public class MeleeAI : MonoBehaviour
 
     IEnumerator damage() {
         attacking = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(2f);
         if (distanceToPlayer < 3) {
+            // make it start an attack animation
             HealthController.h.handleDamageF(40f); //need to make this damage number dynamic per enemy. maybe actually might need the enemyStats scriptableObject?
             HealthController.h.handleLightBleed(20f); //again, this %chance to bleed ought to be specific to the enemy, not the AI program.
             HealthController.h.handleHeavyBleed(5f); //^^^^

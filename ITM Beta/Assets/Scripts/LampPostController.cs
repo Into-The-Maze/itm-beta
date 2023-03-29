@@ -11,13 +11,11 @@ public class LampPostController : MonoBehaviour
     private bool isFlickering = false;
     Light2D light2D;
     int frequency;
-    float maxIntensity;
 
 
     private void Awake() {
         frequency = (InstantiateMaze.weather == "storm") ? 10 : 5;
         light2D = gameObject.transform.GetChild(0).GetComponent<Light2D>();
-        maxIntensity = light2D.intensity;
     }
     private void Update() {
         if (!isFlickering) {
@@ -27,18 +25,24 @@ public class LampPostController : MonoBehaviour
 
     private IEnumerator Flicker() {
         isFlickering = true;
-        for (int i = 0; i < 100; i++) {
-            light2D.intensity -= (maxIntensity / 100f);
-            yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(r.Next(2, 100 / frequency));
+        float originalIntensity = light2D.intensity;
+        for (int i = 0; i < r.Next(frequency, frequency * 2); i++) {
+            int random = r.Next(1, 6);
+            if (random == 1 || random == 2) {
+                light2D.intensity = originalIntensity;
+                yield return new WaitForSeconds(r.Next(1, 3) / 100f);
+            }
+            else if (random == 3 || random == 4) {
+                light2D.intensity = originalIntensity / 2.5f;
+                yield return new WaitForSeconds(r.Next(1, 3) / 100f);
+            }
+            else {
+                light2D.intensity = 0f;
+                yield return new WaitForSeconds(r.Next(1, 3) / 100f);
+            }
         }
-        light2D.intensity = 0f;
-        yield return new WaitForSeconds(0.5f);
-        for (int i = 0; i < 100; i++) {
-            light2D.intensity += (maxIntensity / 100f);
-            yield return new WaitForSeconds(0.01f);
-        }
-        light2D.intensity = maxIntensity;
-        yield return new WaitForSeconds(0.25f);
+        light2D.intensity = originalIntensity;
         isFlickering = false;
     }
 }

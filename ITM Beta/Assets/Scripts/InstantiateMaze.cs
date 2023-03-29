@@ -90,13 +90,13 @@ public class InstantiateMaze : MonoBehaviour {
     [HideInInspector] public static string setting;
 
     private void Start() {
-        Vector3 spawn = RandomFloorPoint();
+        Vector3 spawn = RandomFloorPoint();     
         player.transform.position = spawn;
     }
     private void Awake() {
         Volume volume = GetComponent<Volume>();
-        InstantiateMazeLayer0(InitialiseLayer0());
-        //InstantiateMazeLayer1(initialiseMazeLayer1());
+        //InstantiateMazeLayer0(InitialiseLayer0());
+        InstantiateMazeLayer1(initialiseMazeLayer1());
         //InstantiateMazeLayer2(initialiseMazeLayer2());
         //InstantiateMazeLayer3(initialiseMazeLayer3());
         //InstantiateLayer4Pyramid(InitialiseLayer4Pyramid());

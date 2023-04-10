@@ -10,6 +10,7 @@ using UnityEngine.UIElements;
 using Random = System.Random;
 using Pathfinding;
 using UnityEditor.SceneManagement;
+using System.Collections;
 
 public class InstantiateMaze : MonoBehaviour {
 
@@ -89,18 +90,40 @@ public class InstantiateMaze : MonoBehaviour {
     [HideInInspector] public static string power;
     [HideInInspector] public static string setting;
 
-    private void Start() {
-        Vector3 spawn = RandomFloorPoint();     
-        player.transform.position = spawn;
-    }
     private void Awake() {
         Volume volume = GetComponent<Volume>();
-        //InstantiateMazeLayer0(InitialiseLayer0());
-        InstantiateMazeLayer1(initialiseMazeLayer1());
-        //InstantiateMazeLayer2(initialiseMazeLayer2());
-        //InstantiateMazeLayer3(initialiseMazeLayer3());
-        //InstantiateLayer4Pyramid(InitialiseLayer4Pyramid());
+        StartCoroutine(instantiateSelectedMaze());
+    }
+
+    IEnumerator instantiateSelectedMaze() {
+        bool mazeInputGot = false;
+        while (!mazeInputGot) {
+            if (Input.GetKeyDown(KeyCode.Alpha0)) {
+                InstantiateMazeLayer0(InitialiseLayer0());
+                mazeInputGot = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha1)) {
+                InstantiateMazeLayer1(initialiseMazeLayer1());
+                mazeInputGot = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+                InstantiateMazeLayer2(initialiseMazeLayer2());
+                mazeInputGot = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+                InstantiateMazeLayer3(initialiseMazeLayer3());
+                mazeInputGot = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4)) {
+                InstantiateLayer4Pyramid(InitialiseLayer4Pyramid());
+                mazeInputGot = true;
+            }
+            yield return null;
+        }
+        Vector3 spawn = RandomFloorPoint();
+        player.transform.position = spawn;
         PopulateMaze();
+        StopCoroutine(instantiateSelectedMaze());
     }
 
     private void PopulateMaze() {

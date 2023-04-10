@@ -1,18 +1,24 @@
+using Mono.Cecil;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 
 public class Attack : MonoBehaviour
 {
     public static InventoryItem attackItem;
+
     public static float damage;
     private GameObject weapon;
+
     [HideInInspector] public static bool CurrentlyAttacking = false;
     public static bool CurrentlySwinging = false;
     WaitForSeconds swingTime = new WaitForSeconds(0.5f);
+
+    [HideInInspector] public static bool CurrentlyAiming = false;
 
     public static ItemData.WeaponType[] meleeWeapons = { ItemData.WeaponType.ShortSword, ItemData.WeaponType.LongSword, ItemData.WeaponType.GreatSword, ItemData.WeaponType.Axe, ItemData.WeaponType.Spear };
     public static ItemData.WeaponType[] rangedWeapons = { ItemData.WeaponType.Pistol, ItemData.WeaponType.Rifle };
@@ -29,11 +35,46 @@ public class Attack : MonoBehaviour
             showWeapon();
             StartCoroutine(chargeAttack());
         }
-        else if (Input.GetMouseButtonDown(1) && attackItem != null && rangedWeapons.Contains(attackItem.itemData.weaponType) && !ToggleEquipMenu.invIsOpen && !ToggleHealthScreen.invIsOpen && !ToggleInventory.invIsOpen && !CurrentlyAttacking) {
-            Debug.Log("Shooting gun");
+
+        //replace f with Input.GetMouseButtonDown(1) later. My laptop cant handle simultaneous lmb & rmb so i cant test properly.
+        else if (Input.GetKeyDown(KeyCode.F) && !CurrentlyAiming && attackItem != null && rangedWeapons.Contains(attackItem.itemData.weaponType) && !ToggleEquipMenu.invIsOpen && !ToggleHealthScreen.invIsOpen && !ToggleInventory.invIsOpen && !CurrentlyAttacking) {
+            Debug.Log("Aiming successful");
+            StartCoroutine(aim());
         }
     }
 
+    IEnumerator aim() {
+        attackPrefab = attackItem.itemData.model_Gun;
+        weapon = Instantiate(attackPrefab, playerLocation.transform.TransformPoint(playerSprite.transform.up * -1f), playerSprite.transform.rotation, playerSprite.transform);
+
+        PlayerMovement.movementType = PlayerMovement.MovementType.ChargingAttack;
+        CurrentlyAiming = true;
+        while (CurrentlyAiming) {
+            //replace f with Input.GetMouseButtonUp(1) later. My laptop cant handle simultaneous lmb & rmb so i cant test properly.
+            if (Input.GetKeyUp(KeyCode.F)) { break; }
+            if (Input.GetMouseButtonDown(0) && CurrentlyAiming && attackItem.itemData.currentMagazineCapacity > 0) {
+                fire();
+            }
+            else if (Input.GetMouseButtonDown(0) && CurrentlyAiming && attackItem.itemData.currentMagazineCapacity <= 0) {
+                Debug.Log("Gun Empty");
+            }
+            yield return null;
+        }
+        CurrentlyAiming = false;
+        Destroy(weapon);
+        PlayerMovement.movementType = PlayerMovement.MovementType.Walking;
+        
+        StopCoroutine(aim());
+    }
+
+    void fire() {
+        Debug.Log($"Shooting gun: current ammo {attackItem.itemData.currentMagazineCapacity}; capacity after shot {attackItem.itemData.currentMagazineCapacity - 1}");
+        --attackItem.itemData.currentMagazineCapacity;
+        attackItem.GetComponent<Image>().sprite = (attackItem.itemData.currentMagazineCapacity <= 0) ? attackItem.itemData.itemIcon_GunEmpty : attackItem.itemData.itemIcon_GunLoaded;
+
+    }
+
+    #region meleeHandlers
     IEnumerator chargeAttack() {
         while (!Input.GetKeyUp(KeyCode.Mouse0)) {
             damage += Time.deltaTime;
@@ -83,4 +124,5 @@ public class Attack : MonoBehaviour
         weapon.transform.SetParent(playerSprite.transform, true);
         weapon.transform.SetAsLastSibling();
     }
+    #endregion
 }

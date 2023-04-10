@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 
 //Calculation of item size for highlighting can be optimised
@@ -107,6 +108,9 @@ public class InvController : MonoBehaviour
 
         inventoryItem.Set(items[index]);
         inventoryItem.itemData.currentMagazineCapacity = currentMagazineCapacity;
+        if (Attack.rangedWeapons.Contains(inventoryItem.itemData.weaponType))
+            inventoryItem.GetComponent<Image>().sprite = (inventoryItem.itemData.currentMagazineCapacity <= 0) ? inventoryItem.itemData.itemIcon_GunEmpty : inventoryItem.itemData.itemIcon_GunLoaded;
+
 
         inventoryItem.itemDataElementReference = index;
         itemAutoNum++;

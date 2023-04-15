@@ -118,6 +118,9 @@ public class InvController : MonoBehaviour
     private void throwItem() {
         ThrownItem.GetComponent<SpriteRenderer>().sprite = selectedItem.itemData.itemIcon;
         ThrownItem.GetComponent<ItemDataDump>().itemDataElementReference = selectedItem.itemDataElementReference;
+        if (Attack.rangedWeapons.Contains(selectedItem.itemData.weaponType)) {
+            ThrownItem.GetComponent<ItemDataDump>().currentMagazineCapacity = selectedItem.itemData.currentMagazineCapacity;
+        }
         Destroy(GameObject.Find(selectedItem.name));
         selectedItem = null;
         Instantiate(ThrownItem, playerLocation.transform.TransformPoint(playerSprite.transform.up * -1.5f), playerSprite.transform.rotation);

@@ -1,10 +1,10 @@
-using Mono.Cecil;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public class Attack : MonoBehaviour
@@ -69,9 +69,39 @@ public class Attack : MonoBehaviour
 
     void fire() {
         Debug.Log($"Shooting gun: current ammo {attackItem.itemData.currentMagazineCapacity}; capacity after shot {attackItem.itemData.currentMagazineCapacity - 1}");
-        --attackItem.itemData.currentMagazineCapacity;
-        attackItem.GetComponent<Image>().sprite = (attackItem.itemData.currentMagazineCapacity <= 0) ? attackItem.itemData.itemIcon_GunEmpty : attackItem.itemData.itemIcon_GunLoaded;
 
+        raycastBullet();
+        //StartCoroutine(handleMuzzleFlash());
+
+
+        
+        --attackItem.itemData.currentMagazineCapacity;
+        //updates inventory image to show whether the gun is still usable due to ammo
+        attackItem.GetComponent<UnityEngine.UI.Image>().sprite = (attackItem.itemData.currentMagazineCapacity <= 0) ? attackItem.itemData.itemIcon_GunEmpty : attackItem.itemData.itemIcon_GunLoaded;
+
+    }
+
+    void raycastBullet() {
+
+        //WHY IS THIS NOT A STARIGHT LINE FROM THE PLAYER TO MOUSE WHY DOES IT GO INTO THE SCREEN WHY WHY WHY
+
+        RaycastHit2D hit = Physics2D.Raycast(weapon.transform.position, (Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)) - weapon.transform.position).normalized, 1000f);
+        Debug.DrawRay(weapon.transform.position, (Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)) - weapon.transform.position).normalized * 1000f, Color.red, 1f);
+        if (hit.collider != null) {
+            if (hit.collider.gameObject != null) {
+                if (hit.collider.gameObject.CompareTag("entity")) {
+                    hit.collider.gameObject.GetComponent<HealthPoolEnemy>().TakeDamage(damage);
+                }
+            }
+        }
+    }
+
+    IEnumerator handleMuzzleFlash() {
+        //var flash = Instantiate(, weapon.transform.TransformPoint(weapon.transform.up * -1.1f), Quaternion.identity);
+
+        yield return new WaitForSeconds(0.05f);
+
+        StopCoroutine(handleMuzzleFlash());
     }
 
     #region meleeHandlers

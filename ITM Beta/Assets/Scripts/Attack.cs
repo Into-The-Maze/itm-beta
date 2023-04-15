@@ -83,10 +83,9 @@ public class Attack : MonoBehaviour
 
     void raycastBullet() {
 
-        //WHY IS THIS NOT A STARIGHT LINE FROM THE PLAYER TO MOUSE WHY DOES IT GO INTO THE SCREEN WHY WHY WHY
-
-        RaycastHit2D hit = Physics2D.Raycast(weapon.transform.position, (Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)) - weapon.transform.position).normalized, 1000f);
-        Debug.DrawRay(weapon.transform.position, (Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)) - weapon.transform.position).normalized * 1000f, Color.red, 1f);
+        //z + 10f should account for the position of the camera
+        RaycastHit2D hit = Physics2D.Raycast(weapon.transform.position, (Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z+10f)) - weapon.transform.position).normalized, 1000f);
+        Debug.DrawRay(weapon.transform.position, (Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z + 10f)) - weapon.transform.position).normalized * 1000f, Color.red, 1f);
         if (hit.collider != null) {
             if (hit.collider.gameObject != null) {
                 if (hit.collider.gameObject.CompareTag("entity")) {

@@ -666,7 +666,7 @@ namespace Pathfinding {
 				c = c.parent;
 				count++;
 				if (count > 2048) {
-					//Debug.LogWarning("Infinite loop? >2048 node path. Remove this message if you really have that long paths (Path.cs, Trace method)");
+					Debug.LogWarning("Infinite loop? >2048 node path. Remove this message if you really have that long paths (Path.cs, Trace method)");
 					break;
 				}
 			}

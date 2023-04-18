@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDataElementReference: 6
-  currentMagazineCapacity: 6
+  currentMagazineCapacity: 7
 --- !u!114 &-7539026012956293674
 MonoBehaviour:
   m_ObjectHideFlags: 0

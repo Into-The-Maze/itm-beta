@@ -178,11 +178,11 @@ namespace Pathfinding {
 		/// <summary>Depth (height) of the grid in nodes. See: SetDimensions</summary>
 		public int depth;
 
-        /// <summary>
-        /// Scaling of the graph along the X axis.
-        /// This should be used if you want different scales on the X and Y axis of the grid
-        /// </summary>
-        [JsonMember]
+		/// <summary>
+		/// Scaling of the graph along the X axis.
+		/// This should be used if you want different scales on the X and Y axis of the grid
+		/// </summary>
+		[JsonMember]
 		public float aspectRatio = 1F;
 
 		/// <summary>

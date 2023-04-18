@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
@@ -13,6 +15,7 @@ public class Attack : MonoBehaviour
 
     public static float damage;
     private GameObject weapon;
+    public Light2D muzzleFlashPistol;
 
     [HideInInspector] public static bool CurrentlyAttacking = false;
     public static bool CurrentlySwinging = false;
@@ -28,6 +31,7 @@ public class Attack : MonoBehaviour
     [SerializeField] GameObject playerLocation;
 
     private void Update() {
+
         if (Input.GetMouseButtonDown(0) && PlayerMovement.stamina > 25 && attackItem != null && meleeWeapons.Contains(attackItem.itemData.weaponType) && !ToggleEquipMenu.invIsOpen && !ToggleHealthScreen.invIsOpen && !ToggleInventory.invIsOpen && !CurrentlyAttacking){
             damage = (attackItem == null) ? 0 : attackItem.Damage;
             PlayerMovement.movementType = PlayerMovement.MovementType.ChargingAttack;
@@ -39,6 +43,7 @@ public class Attack : MonoBehaviour
         //replace f with Input.GetMouseButtonDown(1) later. My laptop cant handle simultaneous lmb & rmb so i cant test properly.
         else if (Input.GetKeyDown(KeyCode.F) && !CurrentlyAiming && attackItem != null && rangedWeapons.Contains(attackItem.itemData.weaponType) && !ToggleEquipMenu.invIsOpen && !ToggleHealthScreen.invIsOpen && !ToggleInventory.invIsOpen && !CurrentlyAttacking) {
             Debug.Log("Aiming successful");
+            damage = (attackItem == null) ? 0 : attackItem.Damage;
             StartCoroutine(aim());
         }
     }
@@ -71,7 +76,7 @@ public class Attack : MonoBehaviour
         Debug.Log($"Shooting gun: current ammo {attackItem.itemData.currentMagazineCapacity}; capacity after shot {attackItem.itemData.currentMagazineCapacity - 1}");
 
         raycastBullet();
-        //StartCoroutine(handleMuzzleFlash());
+        StartCoroutine(handleMuzzleFlash());
 
 
         
@@ -88,7 +93,9 @@ public class Attack : MonoBehaviour
         Debug.DrawRay(weapon.transform.position, (Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z + 10f)) - weapon.transform.position).normalized * 1000f, Color.red, 1f);
         if (hit.collider != null) {
             if (hit.collider.gameObject != null) {
+                Debug.Log("hit something that is also not nothing");
                 if (hit.collider.gameObject.CompareTag("entity")) {
+                    Debug.Log($"trying to damage enemy for {damage} damage");
                     hit.collider.gameObject.GetComponent<HealthPoolEnemy>().TakeDamage(damage);
                 }
             }
@@ -96,9 +103,12 @@ public class Attack : MonoBehaviour
     }
 
     IEnumerator handleMuzzleFlash() {
-        //var flash = Instantiate(, weapon.transform.TransformPoint(weapon.transform.up * -1.1f), Quaternion.identity);
+        
+        var flash = Instantiate(muzzleFlashPistol, weapon.transform.position, Quaternion.identity, weapon.transform);
 
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.3f);
+
+        Destroy(flash.gameObject);
 
         StopCoroutine(handleMuzzleFlash());
     }

@@ -1254,6 +1254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc4b8d5314070914eb9220ec48848b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  muzzleFlashPistol: {fileID: 8733130893714714050, guid: cea4d2cffd1879343ab9fb869459041b, type: 3}
   attackPrefab: {fileID: 1619860758556365238, guid: 38a9b665591eb9141a878d5646b0bf25, type: 3}
   playerSprite: {fileID: 891252456}
   playerLocation: {fileID: 622508036}

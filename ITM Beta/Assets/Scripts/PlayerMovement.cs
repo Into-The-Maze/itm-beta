@@ -128,6 +128,9 @@ public class PlayerMovement : MonoBehaviour {
         else if (movementType == MovementType.ChargingAttack) {
             speedModifier = 1.7f;
         }
+        else if (movementType == MovementType.Aiming) {
+            speedModifier = 1.7f;
+        }
         else if (movementType == MovementType.Attacking){
             speedModifier = 0f;
         }
@@ -148,6 +151,7 @@ public class PlayerMovement : MonoBehaviour {
         Sneaking,
         Dodging,
         ChargingAttack,
-        Attacking
+        Attacking,
+        Aiming
     }
 }

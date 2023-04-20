@@ -52,11 +52,13 @@ public class Attack : MonoBehaviour
         attackPrefab = attackItem.itemData.model_Gun;
         weapon = Instantiate(attackPrefab, playerLocation.transform.TransformPoint(playerSprite.transform.up * -1f), playerSprite.transform.rotation, playerSprite.transform);
 
-        PlayerMovement.movementType = PlayerMovement.MovementType.ChargingAttack;
+        PlayerMovement.movementType = PlayerMovement.MovementType.Aiming;
         CurrentlyAiming = true;
         while (CurrentlyAiming) {
             //replace f with Input.GetMouseButtonUp(1) later. My laptop cant handle simultaneous lmb & rmb so i cant test properly.
             if (Input.GetKeyUp(KeyCode.F)) { break; }
+            if (Oxygen.oxygen <= 0) { break; }
+
             if (Input.GetMouseButtonDown(0) && CurrentlyAiming && attackItem.itemData.currentMagazineCapacity > 0) {
                 fire();
             }
@@ -116,6 +118,7 @@ public class Attack : MonoBehaviour
     #region meleeHandlers
     IEnumerator chargeAttack() {
         while (!Input.GetKeyUp(KeyCode.Mouse0)) {
+            if (Oxygen.oxygen <= 0) { stopAttacking(); StopCoroutine(chargeAttack());  break; }
             damage += Time.deltaTime;
             yield return null;
         }
@@ -134,12 +137,17 @@ public class Attack : MonoBehaviour
             yield return null;
         }
         
+        stopAttacking();
+        
+        
+    }
+
+    void stopAttacking() {
         Destroy(weapon);
         CurrentlyAttacking = false;
         playerLocation.GetComponent<Rigidbody2D>().mass = 1f;
         damage = attackItem.Damage;
         PlayerMovement.movementType = PlayerMovement.MovementType.Walking;
-        
         StopAllCoroutines();
     }
 

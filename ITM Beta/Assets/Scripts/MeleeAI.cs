@@ -1,3 +1,4 @@
+using Pathfinding;
 using Pathfinding.Examples;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ public class MeleeAI : MonoBehaviour
 {
     private (Vector2 direction, float weight, bool blocked)[] moveDirections = new (Vector2, float, bool)[32];
     private Rigidbody2D rb;
-    private Vector2 target = new Vector2(0f, 0f);
+    private Vector2 target;
     private bool attacking = false;
     [SerializeField] private float attackCooldown = 2f;
     private bool favourRight = false;
@@ -22,7 +23,6 @@ public class MeleeAI : MonoBehaviour
     private bool chasing = false;
     private Vector2 vectorToPlayer;
     private float distanceToPlayer;
-    private bool playerDetected;
     private GameObject wanderTarget;
     [SerializeField] private float aggroRadius = 10f;
     [SerializeField] private float range = 4f;
@@ -50,30 +50,35 @@ public class MeleeAI : MonoBehaviour
     }
 
     private void Start() {
-        target = transform.position;
         wanderTarget = makeNewTarget();
-        gameObject.GetComponent<AstarSmoothFollow2>().target = wanderTarget.transform;
+        gameObject.GetComponent<AIDestinationSetter>().target = wanderTarget.transform;
+        gameObject.GetComponent<AIDestinationSetter>().enabled = true;
+        gameObject.GetComponent<AIPath>().enabled = true;
     }
     void Update() 
     {
-        CalculateWeights();
-        DeWeightBlocked();
-        NormaliseWeights();
-        ExtendBlocks();
-        DeWeightBlocked();
-        NormaliseWeights();
-        DrawRays();
-        // check states and movement and set correct animation
+        Debug.Log($"{target}");
+        if (chasing) {
+            CalculateWeights();
+            DeWeightBlocked();
+            NormaliseWeights();
+            ExtendBlocks();
+            DeWeightBlocked();
+            NormaliseWeights();
+            DrawRays();
+        }
     }
     private void FixedUpdate() {
-        if (Vector3.Distance(gameObject.transform.position, new Vector3(target.x, target.y, 0)) < 1.5f) {
-            chasing = false;
-        }
-        else {
-            chasing = true;
+
+        if (chasing) {
+            if (Vector3.Distance(gameObject.transform.position, new Vector3(target.x, target.y, 0)) < 1.5f) {
+                chasing = false;
+                //Debug.Log("reached target");
+            }
         }
         if (chasing) {
-            gameObject.GetComponent<AstarSmoothFollow2>().enabled = false;
+            gameObject.GetComponent<AIDestinationSetter>().enabled = false;
+            gameObject.GetComponent<AIPath>().enabled = false;
             int index = HighestWeightIndex();
             float angle = -90f + (Mathf.Atan2(moveDirections[index].direction.y, moveDirections[index].direction.x) * Mathf.Rad2Deg);
             Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
@@ -87,9 +92,11 @@ public class MeleeAI : MonoBehaviour
             //StartCoroutine(wait());
             if (Vector3.Distance(gameObject.transform.position, wanderTarget.transform.position) < 1f) {
                 wanderTarget = makeNewTarget(wanderTarget);
-                gameObject.GetComponent<AstarSmoothFollow2>().target = wanderTarget.transform;
+                gameObject.GetComponent<AIDestinationSetter>().target = wanderTarget.transform;
             }
-            gameObject.GetComponent<AstarSmoothFollow2>().enabled = true;
+            //Debug.Log("wandering");
+            gameObject.GetComponent<AIDestinationSetter>().enabled = true;
+            gameObject.GetComponent<AIPath>().enabled = true;
         }   
     }
 
@@ -110,11 +117,7 @@ public class MeleeAI : MonoBehaviour
                     if (distanceToPlayer < 3 && !attacking) {
                         StartCoroutine(damage());
                     }
-                    playerDetected = true;
-                }
-                else {
-                    playerDetected = false;
-                   
+                    chasing = true;
                 }
             }
         }
@@ -138,15 +141,15 @@ public class MeleeAI : MonoBehaviour
         yield return null;
     }
     private GameObject makeNewTarget() {
-        GameObject target = new GameObject();
-        target.transform.position = InstantiateMaze.RandomFloorPoint();
-        return target;
+        GameObject wanderTarget = new GameObject();
+        wanderTarget.transform.position = InstantiateMaze.RandomFloorPoint();
+        return wanderTarget;
     }
     private GameObject makeNewTarget(GameObject oldTarget) {
-        GameObject target = new GameObject();
-        target.transform.position = InstantiateMaze.RandomFloorPoint();
+        GameObject wanderTarget = new GameObject();
+        wanderTarget.transform.position = InstantiateMaze.RandomFloorPoint();
         Destroy(oldTarget);
-        return target;
+        return wanderTarget;
     }
     private void InitialiseMoveDirections() {
         int count = 0;

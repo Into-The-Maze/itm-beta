@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -53758728805185508}
   - component: {fileID: 4664808062775924155}
   - component: {fileID: -7826801854922577711}
+  - component: {fileID: -7752689014066809349}
   m_Layer: 0
   m_Name: Dummy
   m_TagString: entity
@@ -139,7 +140,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4, y: 4}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -156,3 +157,23 @@ PolygonCollider2D:
       - {x: 1.9375, y: -0.3125}
       - {x: 1.9375, y: 1.4375}
       - {x: 1.25, y: 2}
+--- !u!114 &-7752689014066809349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5567696050990112427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46fb00c7e6ad9485282a146ad398a2a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  distance: 3
+  height: 3
+  damping: 5
+  smoothRotation: 1
+  followBehind: 1
+  rotationDamping: 10
+  staticOffset: 0

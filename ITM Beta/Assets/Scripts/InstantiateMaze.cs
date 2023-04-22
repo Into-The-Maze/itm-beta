@@ -44,6 +44,7 @@ public class InstantiateMaze : MonoBehaviour {
     #region layer1
 
     [HideInInspector] public List<GameObject> lampPosts = new List<GameObject>();
+    [SerializeField] private GameObject Layer1Navmesh;
     [SerializeField] private GameObject rainDrops;
     [SerializeField] private GameObject layer1Wall;
     [SerializeField] private GameObject layer1Floor;
@@ -166,6 +167,7 @@ public class InstantiateMaze : MonoBehaviour {
         }
     }
     private void InstantiateMazeLayer1(char[,] maze) {
+        GameObject Navmesh = Instantiate(Layer1Navmesh, new Vector3(0, 0, 0), Quaternion.identity);
         Bloom bloom;
         volume.profile.TryGet(out bloom);
         {
@@ -217,6 +219,7 @@ public class InstantiateMaze : MonoBehaviour {
                 }
             }
         }
+        AstarPath.active.Scan();
     }
     private void InstantiateMazeLayer2(char[,] maze) {
 

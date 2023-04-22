@@ -1,3 +1,4 @@
+using Pathfinding.Examples;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ public class MeleeAI : MonoBehaviour
     private Vector2 vectorToPlayer;
     private float distanceToPlayer;
     private bool playerDetected;
+    private GameObject wanderTarget;
     [SerializeField] private float aggroRadius = 10f;
     [SerializeField] private float range = 4f;
     [SerializeField] private float bodyWidth = 1.5f;
@@ -45,11 +47,12 @@ public class MeleeAI : MonoBehaviour
         gameObject.GetComponent<CircleCollider2D>().radius = aggroRadius;
         rb = gameObject.GetComponent<Rigidbody2D>();
         InitialiseMoveDirections();
-
     }
 
     private void Start() {
         target = transform.position;
+        wanderTarget = makeNewTarget();
+        gameObject.GetComponent<AstarSmoothFollow2>().target = wanderTarget.transform;
     }
     void Update() 
     {
@@ -69,8 +72,8 @@ public class MeleeAI : MonoBehaviour
         else {
             chasing = true;
         }
-
         if (chasing) {
+            gameObject.GetComponent<AstarSmoothFollow2>().enabled = false;
             int index = HighestWeightIndex();
             float angle = -90f + (Mathf.Atan2(moveDirections[index].direction.y, moveDirections[index].direction.x) * Mathf.Rad2Deg);
             Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
@@ -79,19 +82,22 @@ public class MeleeAI : MonoBehaviour
                 StartCoroutine(moveToPlayer());
             }
         }
-
         else {  
             StopCoroutine(moveToPlayer());
-            StartCoroutine(wait());
+            //StartCoroutine(wait());
+            if (Vector3.Distance(gameObject.transform.position, wanderTarget.transform.position) < 1f) {
+                wanderTarget = makeNewTarget(wanderTarget);
+                gameObject.GetComponent<AstarSmoothFollow2>().target = wanderTarget.transform;
+            }
+            gameObject.GetComponent<AstarSmoothFollow2>().enabled = true;
         }   
-        
     }
 
-    IEnumerator wait() {
-        yield return new WaitForSeconds(2);
-        target = InstantiateMaze.RandomFloorPoint();
-        StopCoroutine(wait());
-    }
+    //IEnumerator wait() {
+    //    yield return new WaitForSeconds(2);
+    //    target = InstantiateMaze.RandomFloorPoint();
+    //    StopCoroutine(wait());
+    //}
 
     private void OnTriggerStay2D(Collider2D collision) {
         if (collision.gameObject.tag == "Player") {
@@ -131,7 +137,17 @@ public class MeleeAI : MonoBehaviour
         rb.AddForce(GetHighestWeightedVector());
         yield return null;
     }
-
+    private GameObject makeNewTarget() {
+        GameObject target = new GameObject();
+        target.transform.position = InstantiateMaze.RandomFloorPoint();
+        return target;
+    }
+    private GameObject makeNewTarget(GameObject oldTarget) {
+        GameObject target = new GameObject();
+        target.transform.position = InstantiateMaze.RandomFloorPoint();
+        Destroy(oldTarget);
+        return target;
+    }
     private void InitialiseMoveDirections() {
         int count = 0;
         for (float angle = 0f; angle < 360f; angle += 11.25f) {

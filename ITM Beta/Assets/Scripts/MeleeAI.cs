@@ -57,7 +57,6 @@ public class MeleeAI : MonoBehaviour
     }
     void Update() 
     {
-        Debug.Log($"{target}");
         if (chasing) {
             CalculateWeights();
             DeWeightBlocked();

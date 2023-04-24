@@ -2591,6 +2591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b82fb683cb43b04aadc1c1758009482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NavMesh: {fileID: 3541281927212784258, guid: cb603395889c67449afd25b2b74bb623, type: 3}
   player: {fileID: 622508036}
   volume: {fileID: 1966302301}
   mazeParent: {fileID: 1436951011}
@@ -2605,7 +2606,6 @@ MonoBehaviour:
   layer0Floor: {fileID: 5567696050990112427, guid: 9c14d063f6a9ab8499bac8fdc45e7483, type: 3}
   layer0Door: {fileID: 5567696050990112427, guid: a1dae746df22f8448b2713bccd53a086, type: 3}
   lampPosts: []
-  Layer1Navmesh: {fileID: 3541281927212784258, guid: cb603395889c67449afd25b2b74bb623, type: 3}
   rainDrops: {fileID: 8384109409442962640, guid: 7da596502fdce53498602a509bec913b, type: 3}
   layer1Wall: {fileID: 5567696050990112427, guid: 1b743dd3149faf64f8d242adf5ed4f36, type: 3}
   layer1Floor: {fileID: 5567696050990112427, guid: 9cdddc2b86cc5774399a2e645d2fe451, type: 3}

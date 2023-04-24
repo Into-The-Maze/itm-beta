@@ -15,6 +15,7 @@ using System.Collections;
 public class InstantiateMaze : MonoBehaviour {
 
     private Random r = new Random();
+    [SerializeField] private GameObject NavMesh;
     [SerializeField] private GameObject player;
     [SerializeField] private Volume volume;
     [SerializeField] private GameObject mazeParent;
@@ -44,7 +45,6 @@ public class InstantiateMaze : MonoBehaviour {
     #region layer1
 
     [HideInInspector] public List<GameObject> lampPosts = new List<GameObject>();
-    [SerializeField] private GameObject Layer1Navmesh;
     [SerializeField] private GameObject rainDrops;
     [SerializeField] private GameObject layer1Wall;
     [SerializeField] private GameObject layer1Floor;
@@ -135,6 +135,9 @@ public class InstantiateMaze : MonoBehaviour {
     }
 
     private void InstantiateMazeLayer0(char[,] maze) {
+        GameObject Navmesh = Instantiate(NavMesh, new Vector3(0, 0, 0), Quaternion.identity);
+        AstarPath.active.data.gridGraph.SetDimensions(40, 40, 4f);
+        AstarPath.active.data.gridGraph.center = new Vector3(78f, 78f, 0f);
         Bloom bloom;
         volume.profile.TryGet(out bloom);
         {
@@ -165,9 +168,12 @@ public class InstantiateMaze : MonoBehaviour {
                 }
             }
         }
+        AstarPath.active.Scan();
     }
     private void InstantiateMazeLayer1(char[,] maze) {
-        GameObject Navmesh = Instantiate(Layer1Navmesh, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject Navmesh = Instantiate(NavMesh, new Vector3(0, 0, 0), Quaternion.identity);
+        AstarPath.active.data.gridGraph.SetDimensions(35, 35, 8f);
+        AstarPath.active.data.gridGraph.center = new Vector3(136f, 136f, 0f);
         Bloom bloom;
         volume.profile.TryGet(out bloom);
         {

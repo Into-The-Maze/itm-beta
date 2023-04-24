@@ -228,26 +228,29 @@ public class InstantiateMaze : MonoBehaviour {
         AstarPath.active.Scan();
     }
     private void InstantiateMazeLayer2(char[,] maze) {
-
+        GameObject Navmesh = Instantiate(NavMesh, new Vector3(0, 0, 0), Quaternion.identity);
+        AstarPath.active.data.gridGraph.SetDimensions(41, 41, 4f);
+        AstarPath.active.data.gridGraph.center = new Vector3(80f, 80f, 0f);
         globalLight = globalLightObj.GetComponent<Light2D>();
         globalWallLight = globalWallLightObj.GetComponent<Light2D>();
         globalLight.intensity = 0f;
-        globalWallLight.intensity = 0.125f;
+        globalWallLight.intensity = 0.25f;
+        int layer2Upscale = 4;
         for (int y = 0; y < maze.GetLength(0); y++) {
             for (int x = 0; x < maze.GetLength(1); x++) {
                 if (maze[y, x] == '#') {
-                    GameObject wall = Instantiate(layer2Wall, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
+                    GameObject wall = Instantiate(layer2Wall, new Vector3(layer2Upscale * x, layer2Upscale * y, 0), Quaternion.identity);
                     wall.transform.parent = mazeParent.transform;
                 }
                 else {
                     System.Random r = new();
                     string floorPicker = Convert.ToString(r.Next(0, 10));
                     if ("01234".Contains(floorPicker)) {
-                        GameObject floor = Instantiate(layer2Floor, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
+                        GameObject floor = Instantiate(layer2Floor, new Vector3(layer2Upscale * x, layer2Upscale * y, 0), Quaternion.identity);
                         floor.transform.parent = mazeParent.transform;
                     }
                     else if ("56789".Contains(floorPicker)) {
-                        GameObject floor = Instantiate(layer2WaterFloor, new Vector3(4 * x, 4 * y, 0), Quaternion.identity);
+                        GameObject floor = Instantiate(layer2WaterFloor, new Vector3(layer2Upscale * x, layer2Upscale * y, 0), Quaternion.identity);
                         floor.transform.parent = mazeParent.transform;
                     }
                     //ADD ILLUSION FLOOR FUNCTIONALITY LATER BECAUSE THIS METHOD MAKES TOO MANY ILLUSION FLOORS AND THEYRE ALL UNAVOIDABLE
@@ -258,6 +261,7 @@ public class InstantiateMaze : MonoBehaviour {
                 }
             }
         }
+        AstarPath.active.Scan();
     }
     private void InstantiateMazeLayer3(char[,] maze) {
         globalLight = globalLightObj.GetComponent<Light2D>();

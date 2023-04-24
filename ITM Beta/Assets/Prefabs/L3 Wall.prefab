@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2929734762214470195}
   - component: {fileID: 410422779284910668}
-  - component: {fileID: 9000210560351198553}
-  - component: {fileID: 1312931703762721847}
+  - component: {fileID: 7144888573108894420}
+  - component: {fileID: -8341051558157918047}
   m_Layer: 6
   m_Name: L3 Wall
   m_TagString: WALL_LAYER0
@@ -73,20 +73,20 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2022089521
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: f823fb4264b97b945a1fe7a35ae04331, type: 3}
-  m_Color: {r: 0.7264151, g: 0.67996716, b: 0.5870713, a: 1}
+  m_Color: {r: 0.7735849, g: 0.58013535, b: 0.46269134, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.32}
+  m_Size: {x: 0.88, y: 0.88}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &9000210560351198553
+--- !u!61 &7144888573108894420
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,8 +103,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 0.88, y: 0.88}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!114 &1312931703762721847
+--- !u!114 &-8341051558157918047
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,12 +130,12 @@ MonoBehaviour:
   m_UseRendererSilhouette: 0
   m_CastsShadows: 1
   m_SelfShadows: 1
-  m_ApplyToSortingLayers: 000000008914377ae120b15f83bcb873
+  m_ApplyToSortingLayers: 00000000cf5c79878914377ae120b15f4717c751
   m_ShapePath:
   - {x: -1, y: -1, z: 0}
   - {x: -1, y: 1, z: 0}
   - {x: 1, y: 1, z: 0}
   - {x: 1, y: -1, z: 0}
-  m_ShapePathHash: 0
+  m_ShapePathHash: 764802325
   m_Mesh: {fileID: 0}
-  m_InstanceId: -204166
+  m_InstanceId: 45206

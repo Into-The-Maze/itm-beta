@@ -935,7 +935,7 @@ Camera:
   far clip plane: 1000
   field of view: 90
   orthographic: 1
-  orthographic size: 11.25
+  orthographic size: 12.857142
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1031,7 +1031,7 @@ MonoBehaviour:
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
-  m_Dithering: 1
+  m_Dithering: 0
   m_ClearDepth: 1
   m_AllowXRRendering: 1
   m_RequiresDepthTexture: 0
@@ -1062,7 +1062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
-  m_AssetsPPU: 8
+  m_AssetsPPU: 7
   m_RefResolutionX: 200
   m_RefResolutionY: 160
   m_CropFrame: 0
@@ -1491,7 +1491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
   m_LightType: 4
-  m_BlendStyleIndex: 2
+  m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 0.5
@@ -2173,7 +2173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
   m_LightType: 4
-  m_BlendStyleIndex: 2
+  m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
@@ -2613,7 +2613,7 @@ MonoBehaviour:
   layer2WaterFloor: {fileID: 5567696050990112427, guid: e7f72262e934eb64ea603f0edb502cbf, type: 3}
   layer2Floor: {fileID: 5567696050990112427, guid: c387829f240416943afac804373ae9ee, type: 3}
   layer2IllusionFloor: {fileID: 5567696050990112427, guid: ee0b1e1cf369afa449a16bc3f03247f3, type: 3}
-  layer3Wall: {fileID: 5567696050990112427, guid: 323080cc19b15a648b498956332ec767, type: 3}
+  layer3Wall: {fileID: 5567696050990112427, guid: b59e3dbcc85b5dd44b8faf3d3747adc8, type: 3}
   layer3Floor: {fileID: 5567696050990112427, guid: 90867670829a76c45997d0bbbbec38d1, type: 3}
   layer3RoomFloor: {fileID: 5567696050990112427, guid: f47ca544bf8a0824db64ba8e669351b6, type: 3}
   layer3RoomEdgeRight: {fileID: 5567696050990112427, guid: c8fb9d1c6b3080d42b76864509d8cb65, type: 3}
@@ -2629,8 +2629,6 @@ MonoBehaviour:
   layer4WallVertical: {fileID: 5567696050990112427, guid: 65264be27c3fb674ca49bf3abd2e0f19, type: 3}
   layer4Floor: {fileID: 5567696050990112427, guid: e0b3bf35a95d2be4bb829d159ad0375d, type: 3}
   layer4Corner: {fileID: 5567696050990112427, guid: 4635151b57593ad4887e3a6794dc32ef, type: 3}
-  layer4VerticalBlock: {fileID: 3700896281571399095, guid: 818de76b8e67d244ba08432a7c8a9bf0, type: 3}
-  layer4HorizontalBlock: {fileID: 3700896281571399095, guid: e11644f2f4df1364884e36120c45d17f, type: 3}
   candle: {fileID: 2966696981907231166, guid: 372c2aabe500cb7428a7278f003152f7, type: 3}
   lampPost: {fileID: 2966696981907231166, guid: 8cc137b186e108149b6f1add03d9aeca, type: 3}
 --- !u!1 &1443556763
@@ -2740,7 +2738,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
   m_LightType: 4
-  m_BlendStyleIndex: 2
+  m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1

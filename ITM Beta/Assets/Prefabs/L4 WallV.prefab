@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2929734762214470195}
   - component: {fileID: 410422779284910668}
   - component: {fileID: 1267867788299393559}
+  - component: {fileID: -8386600429013479661}
   m_Layer: 6
   m_Name: L4 WallV
   m_TagString: WALL_LAYER0
@@ -102,7 +103,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 16}
+    oldSize: {x: 0.5, y: 8}
     newSize: {x: 0.08, y: 1.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -111,3 +112,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 8}
   m_EdgeRadius: 0
+--- !u!114 &-8386600429013479661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5567696050990112427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 0
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: 000000008914377acf5c7987e120b15f4717c751
+  m_ShapePath:
+  - {x: -0.25, y: -4, z: 0}
+  - {x: -0.25, y: 4, z: 0}
+  - {x: 0.25, y: 4, z: 0}
+  - {x: 0.25, y: -4, z: 0}
+  m_ShapePathHash: 0
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -615458

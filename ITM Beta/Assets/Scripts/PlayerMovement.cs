@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour {
     #region movement
     public static float lastRadiansFromNorth = 0f;
     float speedModifier = 4f;
-    float moveSpeed = 1.125f;
+    //float moveSpeed = 1.125f;
     public static float stamina = maxStamina;
     static float maxStamina = 80f;
     private Vector2 moveInput;
@@ -64,7 +64,6 @@ public class PlayerMovement : MonoBehaviour {
         moveInput.y = Input.GetAxis("Vertical");
         //moveInput.Normalize();
         rb2d.velocity = moveInput * speedModifier; 
-
     }
 
     

@@ -17,15 +17,15 @@ public class MeleeAI : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 target;
     private bool attacking = false;
-    [SerializeField] private float attackCooldown = 2f;
-    private bool favourRight = false;
-    private bool lineOfSight = false;
+    //[SerializeField] private float attackCooldown = 2f;
+    //private bool favourRight = false;
+    //private bool lineOfSight = false;
     private bool chasing = false;
     private Vector2 vectorToPlayer;
     private float distanceToPlayer;
     private GameObject wanderTarget;
     [SerializeField] private float aggroRadius = 10f;
-    [SerializeField] private float range = 4f;
+    //[SerializeField] private float range = 4f;
     [SerializeField] private float bodyWidth = 1.5f;
     [SerializeField] private float RotationSpeed = 2f;
 

@@ -77,8 +77,6 @@ public class InstantiateMaze : MonoBehaviour {
     [SerializeField] private GameObject layer4WallVertical;
     [SerializeField] private GameObject layer4Floor;
     [SerializeField] private GameObject layer4Corner;
-    [SerializeField] private GameObject layer4VerticalBlock;
-    [SerializeField] private GameObject layer4HorizontalBlock;
     #endregion
 
     #region lights
@@ -347,16 +345,17 @@ public class InstantiateMaze : MonoBehaviour {
         globalWallLight = globalWallLightObj.GetComponent<Light2D>();
         globalLight.intensity = 0f;
         globalWallLight.intensity = 0;
+        int layer4Upscale = 8;
         for (int y = 0; y < maze.GetLength(0); y ++) {
             for (int x = 0; x < maze.GetLength(1); x ++) {
-                var floor = Instantiate(layer4Floor, new Vector3((8 * x), (8 * y), 0), Quaternion.identity);
-                var corner1 = Instantiate(layer4Corner, new Vector3((8 * x) + 3.75f, (8 * y) + 3.75f, 0), Quaternion.identity);
-                var corner2 = Instantiate(layer4Corner, new Vector3((8 * x) - 3.75f, (8 * y) + 3.75f, 0), Quaternion.identity);
-                var corner3 = Instantiate(layer4Corner, new Vector3((8 * x) + 3.75f, (8 * y) - 3.75f, 0), Quaternion.identity);
-                var corner4 = Instantiate(layer4Corner, new Vector3((8 * x) - 3.75f, (8 * y) - 3.75f, 0), Quaternion.identity);
+                var floor = Instantiate(layer4Floor, new Vector3((layer4Upscale * x), (layer4Upscale * y), 0), Quaternion.identity);
+                var corner1 = Instantiate(layer4Corner, new Vector3((layer4Upscale * x) + 3.75f, (layer4Upscale * y) + 3.75f, 0), Quaternion.identity);
+                var corner2 = Instantiate(layer4Corner, new Vector3((layer4Upscale * x) - 3.75f, (layer4Upscale * y) + 3.75f, 0), Quaternion.identity);
+                var corner3 = Instantiate(layer4Corner, new Vector3((layer4Upscale * x) + 3.75f, (layer4Upscale * y) - 3.75f, 0), Quaternion.identity);
+                var corner4 = Instantiate(layer4Corner, new Vector3((layer4Upscale * x) - 3.75f, (layer4Upscale * y) - 3.75f, 0), Quaternion.identity);
                 floor.transform.parent = mazeParent.transform;
                 if (r.Next(0, 100) < 25) {
-                    GameObject item = Instantiate(candle, new Vector3((8 * x) + (r.Next(-80, 80) / 25f), (8 * y) + (r.Next(-80, 80) / 25f)), Quaternion.identity);
+                    GameObject item = Instantiate(candle, new Vector3((layer4Upscale * x) + (r.Next(-80, 80) / 25f), (layer4Upscale * y) + (r.Next(-80, 80) / 25f)), Quaternion.identity);
                     item.transform.parent = mazeParent.transform;
                 }
                 corner1.transform.parent = mazeParent.transform;
@@ -364,28 +363,20 @@ public class InstantiateMaze : MonoBehaviour {
                 corner3.transform.parent = mazeParent.transform;
                 corner4.transform.parent = mazeParent.transform;
                 if (maze[x, y].TopWall == true) {
-                    var topwall = Instantiate(layer4WallHorizontal, new Vector3((8 * x), (8 * y) + 3.75f, 0), Quaternion.identity);
-                    var topblock = Instantiate(layer4HorizontalBlock, new Vector3((8 * x), (8 * y) + 4f, 0), Quaternion.identity);
+                    var topwall = Instantiate(layer4WallHorizontal, new Vector3((layer4Upscale * x), (layer4Upscale * y) + 3.75f, 0), Quaternion.identity);
                     topwall.transform.parent = mazeParent.transform;
-                    topblock.transform.parent = mazeParent.transform;
                 }   
                 if (maze[x, y].RightWall == true) {
-                    var rightwall = Instantiate(layer4WallVertical, new Vector3((8 * x) + 3.75f, (8 * y), 0), Quaternion.identity);
-                    var rightblock = Instantiate(layer4VerticalBlock, new Vector3((8 * x) + 4f, (8 * y), 0), Quaternion.identity);
+                    var rightwall = Instantiate(layer4WallVertical, new Vector3((layer4Upscale * x) + 3.75f, (layer4Upscale * y), 0), Quaternion.identity);
                     rightwall.transform.parent = mazeParent.transform;
-                    rightblock.transform.parent = mazeParent.transform;
                 }
                 if (maze[x, y].BottomWall == true) {
-                    var bottomwall = Instantiate(layer4WallHorizontal, new Vector3((8 * x), (8 * y) - 3.75f, 0), Quaternion.identity);
-                    var bottomblock = Instantiate(layer4HorizontalBlock, new Vector3((8 * x), (8 * y) - 4f, 0), Quaternion.identity);
+                    var bottomwall = Instantiate(layer4WallHorizontal, new Vector3((layer4Upscale * x), (layer4Upscale * y) - 3.75f, 0), Quaternion.identity);
                     bottomwall.transform.parent = mazeParent.transform;
-                    bottomblock.transform.parent = mazeParent.transform;
                 }
                 if (maze[x, y].LeftWall == true) {
-                    var leftwall = Instantiate(layer4WallVertical, new Vector3((8 * x) - 3.75f, (8 * y), 0), Quaternion.identity);
-                    var leftblock = Instantiate(layer4VerticalBlock, new Vector3((8 * x) - 4f, (8 * y), 0), Quaternion.identity);
+                    var leftwall = Instantiate(layer4WallVertical, new Vector3((layer4Upscale * x) - 3.75f, (layer4Upscale * y), 0), Quaternion.identity);
                     leftwall.transform.parent = mazeParent.transform;
-                    leftblock.transform.parent = mazeParent.transform;
                 }
             }
         }
@@ -462,7 +453,7 @@ public class InstantiateMaze : MonoBehaviour {
             i = 1; // low
         }
         globalLight.intensity = lightLevels[i];
-        globalWallLight.intensity = lightLevels[i] + 0.5f;
+        globalWallLight.intensity = lightLevels[i];
         return settingNames[i];
     }
     // layer 0 setting

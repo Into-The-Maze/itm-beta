@@ -20,7 +20,7 @@ public class GenerateMazeLayer0 : MonoBehaviour
         (char, int, int, int) start;
         return Mazeify(ref maze, ref roomList, ref currentRoom, out start);
     }
-
+ 
     public static char[,] Mazeify(ref char[,] maze, ref Room[] roomList, ref int currentRoom, out (char, int, int, int) start) {
         start = (' ', -1, -1, -1);
         while (!roomsVisited(roomList)) {

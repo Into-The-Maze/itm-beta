@@ -231,8 +231,8 @@ public class InstantiateMaze : MonoBehaviour {
         AstarPath.active.data.gridGraph.center = new Vector3(80f, 80f, 0f);
         globalLight = globalLightObj.GetComponent<Light2D>();
         globalWallLight = globalWallLightObj.GetComponent<Light2D>();
-        globalLight.intensity = 0f;
-        globalWallLight.intensity = 0.25f;
+        globalLight.intensity = 0.625f;
+        globalWallLight.intensity = 0.75f;
         int layer2Upscale = 4;
         for (int y = 0; y < maze.GetLength(0); y++) {
             for (int x = 0; x < maze.GetLength(1); x++) {
@@ -241,16 +241,18 @@ public class InstantiateMaze : MonoBehaviour {
                     wall.transform.parent = mazeParent.transform;
                 }
                 else {
-                    System.Random r = new();
-                    string floorPicker = Convert.ToString(r.Next(0, 10));
-                    if ("01234".Contains(floorPicker)) {
-                        GameObject floor = Instantiate(layer2Floor, new Vector3(layer2Upscale * x, layer2Upscale * y, 0), Quaternion.identity);
-                        floor.transform.parent = mazeParent.transform;
-                    }
-                    else if ("56789".Contains(floorPicker)) {
-                        GameObject floor = Instantiate(layer2WaterFloor, new Vector3(layer2Upscale * x, layer2Upscale * y, 0), Quaternion.identity);
-                        floor.transform.parent = mazeParent.transform;
-                    }
+                    
+                    //string floorPicker = Convert.ToString(r.Next(0, 10));
+                    //GameObject floor = Instantiate(layer2Floor, new Vector3(layer2Upscale * x, layer2Upscale * y, 0), Quaternion.identity);
+                    //floor.transform.parent = mazeParent.transform;
+                    //if ("56789".Contains(floorPicker)) {
+                    //    GameObject water = Instantiate(layer2WaterFloor, new Vector3(layer2Upscale * x, layer2Upscale * y, 0), Quaternion.identity);
+                    //    water.transform.parent = mazeParent.transform;
+                    //}
+
+                    GameObject floor = Instantiate((maze[y, x] == '0') ? layer2Floor : layer2WaterFloor, new Vector3(layer2Upscale * x, layer2Upscale * y, 0), Quaternion.identity, mazeParent.transform);
+                    if (maze[y,x] != '0') { floor.GetComponent<WaterDepthContainer>().depth = (float)((maze[y, x] != '*') ? char.GetNumericValue(maze[y, x]) * 0.1f : 1); }
+
                     //ADD ILLUSION FLOOR FUNCTIONALITY LATER BECAUSE THIS METHOD MAKES TOO MANY ILLUSION FLOORS AND THEYRE ALL UNAVOIDABLE
 
                     //else {

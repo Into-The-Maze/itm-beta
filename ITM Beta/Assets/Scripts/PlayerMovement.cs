@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour {
     public Slider staminaBar;
     public GameObject playerSprite;
     public Rigidbody2D rb2d;
-
+    private CircleCollider2D hitbox;
     //private Rigidbody2D playerBody;
     //float currentSpeed = 0f;
     //float weight = 10f;
@@ -41,8 +41,8 @@ public class PlayerMovement : MonoBehaviour {
     //public LayerMask vaultMask;
 
     void Start() {
+        hitbox = gameObject.GetComponent<CircleCollider2D>();
         ChangeMovementType(ref movementType, ref stamina, ref speedModifier, maxStamina);
-        
         staminaBar.maxValue = maxStamina;
     }
 
@@ -102,7 +102,7 @@ public class PlayerMovement : MonoBehaviour {
     void ChangeMovementType(ref MovementType movementType, ref float stamina, ref float speedModifier, float maxStamina) {
         //changes movement speed and stamina depending on wether play is running, sneaking or walking
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && stamina > 10) {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && stamina > 10 && movementType != MovementType.Underwater) {
             movementType = MovementType.Running;
             //ToggleInventory.shutFOVRun();
         }
@@ -137,6 +137,9 @@ public class PlayerMovement : MonoBehaviour {
             speedModifier = 1.4f;
             stamina = Mathf.Clamp(stamina + (10 * Time.deltaTime), 0, maxStamina);
         }
+        else if (movementType == MovementType.Underwater) {
+            speedModifier = 1f - Water.depthLevel;
+        }
         else {
             speedModifier = 4f;
             stamina = Mathf.Clamp(stamina + (5 * Time.deltaTime), 0, maxStamina);
@@ -151,6 +154,7 @@ public class PlayerMovement : MonoBehaviour {
         Dodging,
         ChargingAttack,
         Attacking,
-        Aiming
+        Aiming,
+        Underwater
     }
 }

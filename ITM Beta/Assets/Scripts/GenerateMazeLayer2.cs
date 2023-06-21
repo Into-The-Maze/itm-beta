@@ -10,6 +10,7 @@ public class GenerateMazeLayer2 : MonoBehaviour {
     public static char[,] makeBinaryTreeMaze() {
         char[,] maze = initMaze();
         mazeify(ref maze);
+        waterifyMaze(ref maze);
         return maze;
     }
 
@@ -26,6 +27,17 @@ public class GenerateMazeLayer2 : MonoBehaviour {
             }
         }
         return maze;
+    }
+
+    static void waterifyMaze(ref char[,] maze) {
+        char[] depths = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '*' };
+        for (int y = 0; y < maze.GetLength(0); y++) {
+            for (int x = 0; x < maze.GetLength(1); x++) {
+                if (maze[y, x] != '#') {
+                    maze[y, x] = depths[UnityEngine.Random.Range(0, depths.Length)];
+                }
+            }
+        }
     }
 
     static void mazeify(ref char[,] maze) {

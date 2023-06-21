@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2929734762214470195}
   - component: {fileID: 410422779284910668}
+  - component: {fileID: -1421744471312940622}
   m_Layer: 8
   m_Name: L2 WaterFloor
   m_TagString: FLOOR_LAYER0
@@ -72,9 +73,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.15901265, g: 0.33373418, b: 0.6320754, a: 1}
+  m_Color: {r: 0.15901265, g: 0.33373418, b: 0.6320754, a: 0.6}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -84,3 +85,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-1421744471312940622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5567696050990112427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7534e274e9abeb4429054d900653f913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  depth: 0
